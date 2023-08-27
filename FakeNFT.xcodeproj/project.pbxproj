@@ -26,6 +26,8 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */; };
+		5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */; };
 		5989722E2A9BA85A00F8811E /* CartTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989722D2A9BA85A00F8811E /* CartTableView.swift */; };
 		598972302A9BAAF000F8811E /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989722F2A9BAAF000F8811E /* CartCell.swift */; };
 		59CAB77C2A9AAA2900C4938D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */; };
@@ -78,6 +80,8 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		5989722D2A9BA85A00F8811E /* CartTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableView.swift; sourceTree = "<group>"; };
 		5989722F2A9BAAF000F8811E /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
 		59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -252,6 +256,23 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		5923ACEE2A9BDC7900E31FA5 /* CartViewController */ = {
+			isa = PBXGroup;
+			children = (
+				59CAB78C2A9AC1E100C4938D /* CartViewController.swift */,
+				5989722C2A9BA82600F8811E /* CartTableView */,
+			);
+			path = CartViewController;
+			sourceTree = "<group>";
+		};
+		5923ACEF2A9BDC9300E31FA5 /* PaymentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */,
+			);
+			path = PaymentViewController;
+			sourceTree = "<group>";
+		};
 		5989722C2A9BA82600F8811E /* CartTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +288,7 @@
 				59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */,
 				59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */,
 				59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */,
+				5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -310,8 +332,8 @@
 		59CAB7872A9AC13700C4938D /* CartFlow */ = {
 			isa = PBXGroup;
 			children = (
-				59CAB78C2A9AC1E100C4938D /* CartViewController.swift */,
-				5989722C2A9BA82600F8811E /* CartTableView */,
+				5923ACEE2A9BDC7900E31FA5 /* CartViewController */,
+				5923ACEF2A9BDC9300E31FA5 /* PaymentViewController */,
 			);
 			path = CartFlow;
 			sourceTree = "<group>";
@@ -477,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
+				5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */,
 				5989722E2A9BA85A00F8811E /* CartTableView.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
@@ -489,6 +512,7 @@
 				59CAB7822A9AB39E00C4938D /* TabBarController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
+				5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
