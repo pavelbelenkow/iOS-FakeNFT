@@ -1,6 +1,12 @@
 import UIKit
 
 final class CartViewController: UIViewController {
+    
+    private lazy var cartTableView: UITableView = {
+        let view = CartTableView(viewController: self)
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -12,6 +18,7 @@ private extension CartViewController {
     
     func addSubviews() {
         addSortingButton()
+        addCartTableView()
     }
     
     func addSortingButton() {
@@ -22,6 +29,17 @@ private extension CartViewController {
             action: #selector(sortingButtonTapped)
         )
         navigationItem.rightBarButtonItem?.tintColor = UIColor.NFTColor.black
+    }
+    
+    func addCartTableView() {
+        view.addSubview(cartTableView)
+        
+        NSLayoutConstraint.activate([
+            cartTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            cartTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            cartTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            cartTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
 }
 
