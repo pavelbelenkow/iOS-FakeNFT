@@ -7,6 +7,16 @@ final class CartViewController: UIViewController {
         return view
     }()
     
+    private lazy var emptyCartLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Корзина пуста"
+        label.textAlignment = .center
+        label.textColor = UIColor.NFTColor.black
+        label.font = UIFont.NFTFont.bold17
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -19,6 +29,7 @@ private extension CartViewController {
     func addSubviews() {
         addSortingButton()
         addCartTableView()
+        addEmptyCartLabel()
     }
     
     func addSortingButton() {
@@ -39,6 +50,15 @@ private extension CartViewController {
             cartTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             cartTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             cartTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+    }
+    
+    func addEmptyCartLabel() {
+        view.addSubview(emptyCartLabel)
+        
+        NSLayoutConstraint.activate([
+            emptyCartLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            emptyCartLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
 }
