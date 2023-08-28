@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SortedAlert {
+final class SortedAlert {
     func callAlert(nameAction: @escaping () -> (), ratingAction: @escaping () -> ()) -> UIAlertController {
         let alert = UIAlertController(
             title: "",
