@@ -34,10 +34,29 @@ final class ProfileViewController: UIViewController {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Joaquin Phoenix"
+        label.text = ""
         label.numberOfLines = .zero
         label.font = .headline3
         label.textColor = .black
+        return label
+    }()
+
+    private lazy var descriptionlabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .caption2
+        label.textAlignment = .left
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = ""
+        return label
+    }()
+
+    private lazy var websiteLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.textColor = UIColor.NFTColor.blue
         return label
     }()
 
@@ -55,6 +74,8 @@ final class ProfileViewController: UIViewController {
         view.addSubview(avatarAndNameStackView)
         avatarAndNameStackView.addArrangedSubview(avatarImage)
         avatarAndNameStackView.addArrangedSubview(nameLabel)
+        view.addSubview(descriptionlabel)
+        view.addSubview(websiteLabel)
     }
 
     private func activateConstraints() {
@@ -69,7 +90,14 @@ final class ProfileViewController: UIViewController {
             avatarAndNameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
             avatarImage.widthAnchor.constraint(equalToConstant: ProfileConstants.avatarSize),
-            avatarImage.heightAnchor.constraint(equalToConstant: ProfileConstants.avatarSize)
+            avatarImage.heightAnchor.constraint(equalToConstant: ProfileConstants.avatarSize),
+
+            descriptionlabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            descriptionlabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            descriptionlabel.topAnchor.constraint(equalTo: avatarAndNameStackView.bottomAnchor, constant: 20),
+
+            websiteLabel.topAnchor.constraint(equalTo: descriptionlabel.bottomAnchor, constant: 8),
+            websiteLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
 
         ])
 
