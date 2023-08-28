@@ -22,4 +22,16 @@ extension UIImage {
         static let fourStars = UIImage(named: "FourStars") ?? UIImage(systemName: "star")!
         static let fiveStars = UIImage(named: "FiveStars") ?? UIImage(systemName: "star")!
     }
+    
+    class func colorForTabBar(color: UIColor) -> UIImage {
+        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
 }
