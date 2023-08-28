@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RatingTableViewCell: UITableViewCell {
+final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var numberView: UIView = {
         let numberView = UIView()
         numberView.backgroundColor = UIColor.NFTColor.white
@@ -60,6 +60,7 @@ final class RatingTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         numberView.addSubview(numberLabel)
         cardView.addSubview(avatarImageView)
         cardView.addSubview(nameLabel)

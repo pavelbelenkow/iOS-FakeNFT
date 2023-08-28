@@ -1,7 +1,9 @@
 import UIKit
 
 final class RatingScreenViewController: UIViewController {
+    private let viewModel = RatingScreenViewModel()
     private var navBar: UINavigationBar?
+    private var listUsers: [User] = []
     private lazy var ratingTableView: UITableView = {
         let ratingTableView = UITableView()
         ratingTableView.dataSource = self
@@ -11,7 +13,7 @@ final class RatingScreenViewController: UIViewController {
         ratingTableView.separatorStyle = .none
         ratingTableView.bounces = false
         ratingTableView.allowsMultipleSelection = false
-        ratingTableView.register(RatingTableViewCell.self, forCellReuseIdentifier: "RatingTableViewCell")
+        ratingTableView.register(RatingTableViewCell.self)
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
         return ratingTableView
     }()
@@ -22,6 +24,12 @@ final class RatingScreenViewController: UIViewController {
         makeNavBarWithSortingButton()
         addSubviews()
         makeConstraints()
+        viewModel.$listUsers.bind { [weak self] listUsers in
+            guard let self = self else { return }
+            self.listUsers = listUsers
+            print(self.listUsers)
+        }
+        viewModel.getListUsers()
     }
     
     private func makeNavBarWithSortingButton() {
@@ -76,12 +84,8 @@ extension RatingScreenViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "RatingTableViewCell",
-            for: indexPath
-        ) as? RatingTableViewCell
-        cell?.selectionStyle = .none
-        cell?.configureRatingTableViewCell(
+        let cell = tableView.dequeueReusableCell() as RatingTableViewCell
+        cell.configureRatingTableViewCell(
             with: RatingTableViewCellModel(
                 indexRow: indexPath.row,
                 avatar: UIImage(named: "TestImage") ?? UIImage(),
@@ -90,7 +94,7 @@ extension RatingScreenViewController: UITableViewDataSource {
             )
         )
         
-        return cell ?? UITableViewCell()
+        return cell
     }
 }
 
