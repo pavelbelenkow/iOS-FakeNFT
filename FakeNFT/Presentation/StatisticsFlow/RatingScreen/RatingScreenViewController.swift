@@ -3,7 +3,6 @@ import UIKit
 final class RatingScreenViewController: UIViewController {
     private let viewModel = RatingScreenViewModel()
     private var navBar: UINavigationBar?
-    private var listUsers: [User] = []
     private lazy var ratingTableView: UITableView = {
         let ratingTableView = UITableView()
         ratingTableView.dataSource = self
@@ -26,8 +25,7 @@ final class RatingScreenViewController: UIViewController {
         makeConstraints()
         viewModel.$listUsers.bind { [weak self] listUsers in
             guard let self = self else { return }
-            self.listUsers = listUsers
-            print(self.listUsers)
+            self.ratingTableView.reloadData()
         }
         viewModel.getListUsers()
     }
@@ -80,19 +78,12 @@ final class RatingScreenViewController: UIViewController {
 
 extension RatingScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return viewModel.listUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as RatingTableViewCell
-        cell.configureRatingTableViewCell(
-            with: RatingTableViewCellModel(
-                indexRow: indexPath.row,
-                avatar: UIImage(named: "TestImage") ?? UIImage(),
-                name: "Вася",
-                rating: "999"
-            )
-        )
+        cell.configureRatingTableViewCell(with: viewModel.setInfoRatingTableViewCell(indexRow: indexPath.row))
         
         return cell
     }

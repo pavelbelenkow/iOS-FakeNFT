@@ -110,7 +110,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
     
     func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
         self.numberLabel.text = String(model.indexRow + 1)
-        self.avatarImageView.image = model.avatar
+        self.avatarImageView.loadImage(url: model.avatar, cornerRadius: 28)
         self.nameLabel.text = model.name
         self.numberRatingLabel.text = model.rating
     }

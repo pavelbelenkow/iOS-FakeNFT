@@ -9,7 +9,7 @@ import UIKit
 
 struct RatingTableViewCellModel {
     let indexRow: Int
-    let avatar: UIImage
+    let avatar: URL
     let name: String
     let rating: String
 }

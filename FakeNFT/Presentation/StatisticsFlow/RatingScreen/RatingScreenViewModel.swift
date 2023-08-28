@@ -5,7 +5,7 @@
 //  Created by Anton Reynikov on 28.08.2023.
 //
 
-import Foundation
+import UIKit
 
 final class RatingScreenViewModel {
     private let listUsersNetReqService = ListUsersNetworkRequestService()
@@ -24,6 +24,17 @@ final class RatingScreenViewModel {
                 }
             }
         }
+    }
+    
+    func setInfoRatingTableViewCell(indexRow: Int) -> RatingTableViewCellModel {
+        if let url = URL(string: listUsers[indexRow].avatar) {
+            return RatingTableViewCellModel(
+                indexRow: indexRow,
+                avatar: url,
+                name: listUsers[indexRow].name,
+                rating: listUsers[indexRow].rating)
+        }
+        return RatingTableViewCellModel(indexRow: Int(), avatar: URL(fileURLWithPath: String()), name: String(), rating: String())
     }
     
     private func sortedByRating(list: [User]) -> [User] {
