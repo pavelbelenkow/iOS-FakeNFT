@@ -1,9 +1,13 @@
 import UIKit
 
-private enum Constants {
+enum Constants {
     static let radius: CGFloat = 12
     static let nftImageHeight: CGFloat = 108
     static let ratingImageWidth: CGFloat = 68
+}
+
+protocol CartCellDelegate: AnyObject {
+    func cartCellDidTapRemoveButton()
 }
 
 final class CartCell: UITableViewCell {
@@ -67,6 +71,8 @@ final class CartCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    weak var delegate: CartCellDelegate?
 }
 
 private extension CartCell {
@@ -153,7 +159,7 @@ private extension CartCell {
 private extension CartCell {
     
     @objc func removeNftFromCart() {
-        // TODO: add impl of removing nft
+        delegate?.cartCellDidTapRemoveButton()
     }
 }
 

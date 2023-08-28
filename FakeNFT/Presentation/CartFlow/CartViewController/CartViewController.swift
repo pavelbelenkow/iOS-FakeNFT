@@ -173,3 +173,12 @@ private extension CartViewController {
         navigationController?.pushViewController(paymentViewController, animated: true)
     }
 }
+
+extension CartViewController: CartCellDelegate {
+    
+    func cartCellDidTapRemoveButton() {
+        let viewController = RemoveNftViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController?.present(viewController, animated: true)
+    }
+}

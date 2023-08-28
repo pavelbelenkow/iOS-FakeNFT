@@ -42,6 +42,7 @@ extension CartTableView: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        cartCell.delegate = viewController
         cartCell.configure()
         
         return cartCell
