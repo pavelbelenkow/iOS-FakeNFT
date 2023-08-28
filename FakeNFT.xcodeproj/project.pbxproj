@@ -33,7 +33,7 @@
 		59CAB7892A9AC16A00C4938D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB7882A9AC16A00C4938D /* ProfileViewController.swift */; };
 		59CAB78B2A9AC1B300C4938D /* CatalogueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78A2A9AC1B300C4938D /* CatalogueViewController.swift */; };
 		59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78C2A9AC1E100C4938D /* CartViewController.swift */; };
-		59CAB78F2A9AC20900C4938D /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78E2A9AC20900C4938D /* StatisticsViewController.swift */; };
+		59CAB78F2A9AC20900C4938D /* RatingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78E2A9AC20900C4938D /* RatingScreenViewController.swift */; };
 		59CAB7912A9AC85800C4938D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB7902A9AC85800C4938D /* Observable.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,7 +83,7 @@
 		59CAB7882A9AC16A00C4938D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		59CAB78A2A9AC1B300C4938D /* CatalogueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueViewController.swift; sourceTree = "<group>"; };
 		59CAB78C2A9AC1E100C4938D /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
-		59CAB78E2A9AC20900C4938D /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		59CAB78E2A9AC20900C4938D /* RatingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreenViewController.swift; sourceTree = "<group>"; };
 		59CAB7902A9AC85800C4938D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -289,7 +289,7 @@
 		59CAB7862A9AC12B00C4938D /* StatisticsFlow */ = {
 			isa = PBXGroup;
 			children = (
-				59CAB78E2A9AC20900C4938D /* StatisticsViewController.swift */,
+				6CD6EA952A9C85860039D3D4 /* RatingScreen */,
 			);
 			path = StatisticsFlow;
 			sourceTree = "<group>";
@@ -300,6 +300,14 @@
 				59CAB78C2A9AC1E100C4938D /* CartViewController.swift */,
 			);
 			path = CartFlow;
+			sourceTree = "<group>";
+		};
+		6CD6EA952A9C85860039D3D4 /* RatingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				59CAB78E2A9AC20900C4938D /* RatingScreenViewController.swift */,
+			);
+			path = RatingScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,7 +477,7 @@
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
-				59CAB78F2A9AC20900C4938D /* StatisticsViewController.swift in Sources */,
+				59CAB78F2A9AC20900C4938D /* RatingScreenViewController.swift in Sources */,
 				59CAB7892A9AC16A00C4938D /* ProfileViewController.swift in Sources */,
 				59CAB7822A9AB39E00C4938D /* TabBarController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
@@ -651,6 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5UR5Q4TK2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -678,6 +687,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5UR5Q4TK2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

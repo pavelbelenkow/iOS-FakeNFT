@@ -9,7 +9,7 @@ final class TabBarController: UITabBarController {
         let profileViewController = ProfileViewController()
         let catalogueViewController = CatalogueViewController()
         let cartViewController = CartViewController()
-        let statisticsViewController = StatisticsViewController()
+        let statisticsViewController = RatingScreenViewController()
         
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         let catalogueNavigationController = UINavigationController(rootViewController: catalogueViewController)
