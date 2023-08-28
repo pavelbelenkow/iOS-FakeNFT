@@ -2,6 +2,11 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
+    private struct ProfileConstants {
+        static let editButtonSize: CGFloat = 42
+        static let avatarSize: CGFloat = 70
+    }
+
     private lazy var editButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -10,7 +15,33 @@ final class ProfileViewController: UIViewController {
         return button
     }()
 
-    //MARK: - Lifecycle
+    private lazy var avatarAndNameStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 16
+        stackView.distribution = .fill
+        return stackView
+    }()
+
+    private lazy var avatarImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = UIColor.NFTColor.black
+        return imageView
+    }()
+
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Joaquin Phoenix"
+        label.numberOfLines = .zero
+        label.font = .headline3
+        label.textColor = .black
+        return label
+    }()
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -18,19 +49,31 @@ final class ProfileViewController: UIViewController {
         activateConstraints()
     }
 
-    //MARK: - Private functions
+    // MARK: - Private functions
     private func setupView() {
         view.addSubview(editButton)
+        view.addSubview(avatarAndNameStackView)
+        avatarAndNameStackView.addArrangedSubview(avatarImage)
+        avatarAndNameStackView.addArrangedSubview(nameLabel)
     }
 
     private func activateConstraints() {
-        let editButtonSize: CGFloat = 42
         NSLayoutConstraint.activate([
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
             editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            editButton.widthAnchor.constraint(equalToConstant: editButtonSize),
-            editButton.heightAnchor.constraint(equalToConstant: editButtonSize)
+            editButton.widthAnchor.constraint(equalToConstant: ProfileConstants.editButtonSize),
+            editButton.heightAnchor.constraint(equalToConstant: ProfileConstants.editButtonSize),
+
+            avatarAndNameStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 108),
+            avatarAndNameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            avatarAndNameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            avatarImage.widthAnchor.constraint(equalToConstant: ProfileConstants.avatarSize),
+            avatarImage.heightAnchor.constraint(equalToConstant: ProfileConstants.avatarSize)
+
         ])
 
+        avatarImage.layer.cornerRadius = ProfileConstants.avatarSize / 2
+        avatarImage.layer.masksToBounds = true
     }
 }
