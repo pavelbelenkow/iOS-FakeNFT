@@ -5,10 +5,11 @@
 //  Created by Anton Reynikov on 28.08.2023.
 //
 
-import UIKit
+import Foundation
 
 final class RatingScreenViewModel {
     private let listUsersNetReqService = ListUsersNetworkRequestService()
+    
     @Observable
     private(set) var listUsers: [User] = []
     
@@ -35,6 +36,14 @@ final class RatingScreenViewModel {
                 rating: listUsers[indexRow].rating)
         }
         return RatingTableViewCellModel(indexRow: Int(), avatar: URL(fileURLWithPath: String()), name: String(), rating: String())
+    }
+    
+    func sortedByRatingAlert() {
+        listUsers = sortedByRating(list: listUsers)
+    }
+    
+    func sortedByNameAlert() {
+        listUsers = sortedByName(list: listUsers)
     }
     
     private func sortedByRating(list: [User]) -> [User] {

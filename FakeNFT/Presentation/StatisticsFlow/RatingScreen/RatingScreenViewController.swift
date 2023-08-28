@@ -2,6 +2,7 @@ import UIKit
 
 final class RatingScreenViewController: UIViewController {
     private let viewModel = RatingScreenViewModel()
+    private let sortedAlert = SortedAlert()
     private var navBar: UINavigationBar?
     private lazy var ratingTableView: UITableView = {
         let ratingTableView = UITableView()
@@ -72,7 +73,13 @@ final class RatingScreenViewController: UIViewController {
     }
     
     @objc private func didSortingButton() {
-        print("didSortingButton")
+        self.present(
+            sortedAlert.callAlert(
+                nameAction: viewModel.sortedByNameAlert,
+                ratingAction: viewModel.sortedByRatingAlert
+            ),
+            animated: true
+        )
     }
 }
 
