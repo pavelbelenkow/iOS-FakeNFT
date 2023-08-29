@@ -33,7 +33,7 @@ final class ProfileViewCell: UITableViewCell {
     func configCell(title: String, nfts count: Int) {
         infoLabel.text = "\(title) (\(count))"
     }
-
+    
     func configCell(with title: String) {
         infoLabel.text = title
     }
@@ -46,11 +46,11 @@ final class ProfileViewCell: UITableViewCell {
     private func activateConstraints() {
         let edge: CGFloat = 16
         NSLayoutConstraint.activate([
-        infoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edge),
-        infoLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            infoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edge),
+            infoLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-        arrowImage.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: -edge),
-        arrowImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            arrowImage.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: -edge),
+            arrowImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }

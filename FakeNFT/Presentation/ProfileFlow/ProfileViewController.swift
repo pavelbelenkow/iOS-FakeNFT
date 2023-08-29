@@ -2,6 +2,11 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
+    private let profileViewModel = ProfileViewModel()
+
+    private var myNFTs = 0
+    private var favoriteNFTs = 0
+
     private struct ProfileConstants {
         static let editButtonSize: CGFloat = 42
         static let avatarSize: CGFloat = 70
@@ -17,6 +22,8 @@ final class ProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "ProfileEdit"), for: .normal)
         button.tintColor = UIColor.NFTColor.black
+        let width = ProfileConstants.editButtonSize
+        button.frame.size = CGSize(width: width, height: width)
         return button
     }()
 
@@ -81,6 +88,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
+        bind()
         setupView()
         activateConstraints()
         tableView.delegate = self
@@ -88,8 +96,22 @@ final class ProfileViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func bind() {
+        profileViewModel.$user.bind { [weak self] user in
+            guard let user else { return }
+            self?.nameLabel.text = user.name
+            self?.descriptionlabel.text = user.description
+            self?.websiteLabel.text = user.website
+            self?.avatarImage.loadImage(url: user.avatar.toURL,
+                                        cornerRadius: ProfileConstants.avatarSize/2)
+            self?.myNFTs = user.nfts.count
+            self?.favoriteNFTs = user.likes.count
+            self?.tableView.reloadData()
+        }
+    }
+
     private func setupView() {
-        view.addSubview(editButton)
+        setupNavBar()
         view.addSubview(avatarAndNameStackView)
         avatarAndNameStackView.addArrangedSubview(avatarImage)
         avatarAndNameStackView.addArrangedSubview(nameLabel)
@@ -98,14 +120,13 @@ final class ProfileViewController: UIViewController {
         view.addSubview(tableView)
     }
 
+    private func setupNavBar() {
+        self.navigationItem.rightBarButtonItem = .init(customView: editButton)
+    }
+
     private func activateConstraints() {
         NSLayoutConstraint.activate([
-            editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9),
-            editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            editButton.widthAnchor.constraint(equalToConstant: ProfileConstants.editButtonSize),
-            editButton.heightAnchor.constraint(equalToConstant: ProfileConstants.editButtonSize),
-
-            avatarAndNameStackView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 20),
+            avatarAndNameStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             avatarAndNameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             avatarAndNameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 
@@ -147,10 +168,12 @@ extension ProfileViewController: UITableViewDataSource {
         else { return ProfileViewCell() }
 
         switch indexPath.row {
-        case 2:
-            cell.configCell(with: ProfileConstants.aboutDeveloper)
+        case 0:
+            cell.configCell(title: ProfileConstants.cellTitles[indexPath.row], nfts: myNFTs)
+        case 1:
+            cell.configCell(title: ProfileConstants.cellTitles[indexPath.row], nfts: favoriteNFTs)
         default:
-            cell.configCell(title: ProfileConstants.cellTitles[indexPath.row], nfts: 12)
+            cell.configCell(with: ProfileConstants.aboutDeveloper)
         }
         return cell
     }
