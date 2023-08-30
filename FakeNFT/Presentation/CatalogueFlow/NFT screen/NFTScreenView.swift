@@ -116,8 +116,16 @@ final class NFTScreenView: UIView {
 
     //MARK: Private Methods
     private func makeView() {
-        backgroundColor = UIColor.NFTColor.white
+        setBackgroundColor()
+        addSubviews()
+        applyConstraints()
+    }
 
+    private func setBackgroundColor() {
+        backgroundColor = UIColor.NFTColor.white
+    }
+
+    private func addSubviews() {
         [
             coverImage,
             headerLabel,
@@ -129,7 +137,9 @@ final class NFTScreenView: UIView {
             addSubview(item)
             item.translatesAutoresizingMaskIntoConstraints = false
         }
+    }
 
+    private func applyConstraints() {
         NSLayoutConstraint.activate([
             coverImage.topAnchor.constraint(
                 equalTo: topAnchor

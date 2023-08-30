@@ -87,6 +87,11 @@ final class NFTScreenCell: UICollectionViewCell {
 
     //MARK: Private Methods
     private func makeCell() {
+        addSubviews()
+        applyConstraints()
+    }
+
+    private func addSubviews() {
         [
             NFTImage,
             ratingImage,
@@ -99,7 +104,9 @@ final class NFTScreenCell: UICollectionViewCell {
         }
         NFTImage.addSubview(likeButton)
         likeButton.translatesAutoresizingMaskIntoConstraints = false
+    }
 
+    private func applyConstraints() {
         NSLayoutConstraint.activate([
             NFTImage.topAnchor.constraint(
                 equalTo: contentView.topAnchor

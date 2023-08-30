@@ -33,7 +33,15 @@ final class CatalogueView: UIView {
 
     //MARK: Private Methods
     private func makeView() {
+        addSubviews()
+        applyConstraints()
+    }
+
+    private func addSubviews() {
         addSubview(tableView)
+    }
+
+    private func applyConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([

@@ -33,7 +33,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        applyConstraints()
+        makeView()
         loadPage()
     }
 
@@ -77,8 +77,16 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
         }
     }
 
-    private func applyConstraints() {
+    private func makeView() {
+        addSubviews()
+        applyConstraints()
+    }
+
+    private func addSubviews() {
         webView.addSubview(progressView)
+    }
+
+    private func applyConstraints() {
         progressView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([

@@ -53,13 +53,23 @@ final class CatalogueCell: UITableViewCell {
 
     //MARK: Private Methods
     private func makeCell() {
-        contentView.backgroundColor = UIColor.NFTColor.white
+        setBackgroundColor()
+        addSubviews()
+        applyConstraints()
+    }
 
+    private func setBackgroundColor() {
+        contentView.backgroundColor = UIColor.NFTColor.white
+    }
+
+    private func addSubviews() {
         [collectionImageView, nameLabel].forEach { item in
             contentView.addSubview(item)
             item.translatesAutoresizingMaskIntoConstraints = false
         }
+    }
 
+    private func applyConstraints() {
         NSLayoutConstraint.activate([
             contentView.heightAnchor.constraint(
                 equalToConstant: 179
