@@ -53,7 +53,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         let numberRatingLabel = UILabel()
         numberRatingLabel.font = UIFont.NFTFont.bold22
         numberRatingLabel.textColor = UIColor.NFTColor.black
-        numberLabel.textAlignment = .right
+        numberRatingLabel.textAlignment = .right
         numberRatingLabel.translatesAutoresizingMaskIntoConstraints = false
         return numberRatingLabel
     }()
