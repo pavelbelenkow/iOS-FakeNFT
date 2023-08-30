@@ -8,8 +8,8 @@
 import UIKit
 
 final class CatalogueView: UIView {
-    //MARK: Internal Properties
-    let tableView: UITableView = {
+    //MARK: Private Properties
+    private let tableView: UITableView = {
         let view = UITableView()
 
         view.register(
@@ -29,6 +29,12 @@ final class CatalogueView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    convenience init(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) {
+        self.init()
+        tableView.dataSource = dataSource
+        tableView.delegate = delegate
     }
 
     //MARK: Private Methods

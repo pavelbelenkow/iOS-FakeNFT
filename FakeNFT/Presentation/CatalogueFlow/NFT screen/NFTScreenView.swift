@@ -66,8 +66,7 @@ final class NFTScreenView: UIView {
         return flowLayout
     }()
 
-    //MARK: Internal Properties
-    let authorLink: UITextView = {
+    private let authorLink: UITextView = {
         let textView = UITextView()
 
         textView.isEditable = false
@@ -93,7 +92,7 @@ final class NFTScreenView: UIView {
         return textView
     }()
 
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         view.register(
@@ -112,6 +111,17 @@ final class NFTScreenView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    convenience init(
+        dataSource: UICollectionViewDataSource,
+        collectionViewDelegate: UICollectionViewDelegateFlowLayout,
+        textViewDelegate: UITextViewDelegate
+    ) {
+        self.init()
+        collectionView.delegate = collectionViewDelegate
+        collectionView.dataSource = dataSource
+        authorLink.delegate = textViewDelegate
     }
 
     //MARK: Private Methods

@@ -2,15 +2,7 @@ import UIKit
 
 final class CatalogueViewController: UIViewController {
     //MARK: Internal Properties
-    lazy var catalogueView: UIView = {
-        let view = CatalogueView()
-
-        view.tableView.delegate = self
-        view.tableView.dataSource = self
-
-        return view
-
-    }()
+    lazy var catalogueView = CatalogueView(dataSource: self, delegate: self)
 
     //MARK: View Controller Life Cycle
     override func loadView() {

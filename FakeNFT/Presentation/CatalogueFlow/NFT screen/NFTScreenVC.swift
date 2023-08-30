@@ -9,15 +9,11 @@ import UIKit
 
 final class NFTScreenVC: UIViewController {
     //MARK: Internal Properties
-    lazy var NFTView: UIView = {
-        let view = NFTScreenView()
-
-        view.collectionView.delegate = self
-        view.collectionView.dataSource = self
-        view.authorLink.delegate = self
-
-        return view
-    }()
+    lazy var NFTView = NFTScreenView(
+        dataSource: self,
+        collectionViewDelegate: self,
+        textViewDelegate: self
+    )
 
     let gridGeometric = GridGeometric(
         cellCount: 3, leftInset: 16, rightInset: 16, cellSpacing: 10
