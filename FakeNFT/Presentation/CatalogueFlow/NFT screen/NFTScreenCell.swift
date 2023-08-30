@@ -12,7 +12,7 @@ final class NFTScreenCell: UICollectionViewCell {
     static let identifier = "NFTScreenCell"
 
     //MARK: Private Properties
-    private let NFTImage: UIImageView = {
+    private let NFTImageView: UIImageView = {
         let view = UIImageView()
 
         view.backgroundColor = .gray
@@ -93,7 +93,7 @@ final class NFTScreenCell: UICollectionViewCell {
 
     private func addSubviews() {
         [
-            NFTImage,
+            NFTImageView,
             ratingImage,
             nameLabel,
             priceLabel,
@@ -102,23 +102,23 @@ final class NFTScreenCell: UICollectionViewCell {
             contentView.addSubview(item)
             item.translatesAutoresizingMaskIntoConstraints = false
         }
-        NFTImage.addSubview(likeButton)
+        NFTImageView.addSubview(likeButton)
         likeButton.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            NFTImage.topAnchor.constraint(
+            NFTImageView.topAnchor.constraint(
                 equalTo: contentView.topAnchor
             ),
-            NFTImage.trailingAnchor.constraint(
+            NFTImageView.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor
             ),
-            NFTImage.bottomAnchor.constraint(
+            NFTImageView.bottomAnchor.constraint(
                 equalTo: ratingImage.topAnchor,
                 constant: -8
             ),
-            NFTImage.leadingAnchor.constraint(
+            NFTImageView.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor
             ),
             cartButton.trailingAnchor.constraint(
@@ -155,10 +155,10 @@ final class NFTScreenCell: UICollectionViewCell {
                 equalTo: nameLabel.leadingAnchor
             ),
             likeButton.topAnchor.constraint(
-                equalTo: NFTImage.topAnchor
+                equalTo: NFTImageView.topAnchor
             ),
             likeButton.trailingAnchor.constraint(
-                equalTo: NFTImage.trailingAnchor
+                equalTo: NFTImageView.trailingAnchor
             ),
             likeButton.heightAnchor.constraint(
                 equalToConstant: 42
