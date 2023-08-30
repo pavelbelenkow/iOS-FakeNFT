@@ -26,12 +26,12 @@ extension UIImage {
     class func colorForTabBar(color: UIColor) -> UIImage {
         let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
         UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        context!.setFillColor(color.cgColor)
-        context!.fill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        guard let context = UIGraphicsGetCurrentContext() else { return UIImage() }
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
         UIGraphicsEndImageContext()
         
-        return image!
+        return image
     }
 }

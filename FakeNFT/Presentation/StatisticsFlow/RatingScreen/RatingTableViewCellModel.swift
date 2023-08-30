@@ -6,10 +6,10 @@
 //
 
 import UIKit
-
+//Структура для заполнения ячеек таблицы ретинга юзера
 struct RatingTableViewCellModel {
-    let indexRow: Int
-    let avatar: URL
-    let name: String
-    let rating: String
+    let indexRow: Int   //порядковый номер юзера в таблице
+    let avatar: URL //url адрес аватара юзера
+    let name: String    //имя юзера
+    let rating: String  //рейтинг юзера
 }

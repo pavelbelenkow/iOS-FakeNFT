@@ -74,7 +74,10 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
             numberView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             numberView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             numberLabel.centerYAnchor.constraint(equalTo: numberView.centerYAnchor),
-            numberLabel.centerXAnchor.constraint(equalTo: numberView.centerXAnchor),
+            numberLabel.centerXAnchor.constraint(equalTo: numberView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
             cardView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: 4
@@ -87,20 +90,29 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
             cardView.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
                 constant: -4
-            ),
+            )
+        ])
+        
+        NSLayoutConstraint.activate([
             avatarImageView.heightAnchor.constraint(equalToConstant: 28),
             avatarImageView.widthAnchor.constraint(equalToConstant: 28),
             avatarImageView.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             avatarImageView.leadingAnchor.constraint(
                 equalTo: cardView.leadingAnchor,
                 constant: 16
-            ),
+            )
+        ])
+        
+        NSLayoutConstraint.activate([
             nameLabel.widthAnchor.constraint(equalToConstant: 186),
             nameLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(
                 equalTo: avatarImageView.trailingAnchor,
                 constant: 8
-            ),
+            )
+        ])
+        
+        NSLayoutConstraint.activate([
             numberRatingLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             numberRatingLabel.trailingAnchor.constraint(
                 equalTo: cardView.trailingAnchor,
@@ -110,7 +122,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
     
     func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
         self.numberLabel.text = String(model.indexRow + 1)
-        self.avatarImageView.loadImage(url: model.avatar, cornerRadius: 28)
+        self.avatarImageView.loadImage(url: model.avatar)
         self.nameLabel.text = model.name
         self.numberRatingLabel.text = model.rating
     }
