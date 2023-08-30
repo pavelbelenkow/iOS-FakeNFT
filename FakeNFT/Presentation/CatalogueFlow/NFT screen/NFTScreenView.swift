@@ -61,9 +61,9 @@ final class NFTScreenView: UIView {
     }()
 
     private let layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 8
-        return layout
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 8
+        return flowLayout
     }()
 
     //MARK: Internal Properties
