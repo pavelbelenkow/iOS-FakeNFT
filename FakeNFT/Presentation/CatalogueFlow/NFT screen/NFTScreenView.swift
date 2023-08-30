@@ -8,6 +8,7 @@
 import UIKit
 
 final class NFTScreenView: UIView {
+    //MARK: Private Properties
     private let coverImage: UIImageView = {
         let view = UIImageView()
 
@@ -45,6 +46,27 @@ final class NFTScreenView: UIView {
         return label
     }()
 
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+
+        label.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
+        label.font = UIFont(
+            name: "SF Pro Text Regular",
+            size: 13
+        )
+        label.numberOfLines = 4
+        label.textColor = UIColor.NFTColor.black
+
+        return label
+    }()
+
+    private let layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 8
+        return layout
+    }()
+
+    //MARK: Internal Properties
     let authorLink: UITextView = {
         let textView = UITextView()
 
@@ -52,6 +74,7 @@ final class NFTScreenView: UIView {
         textView.isSelectable = true
         textView.isUserInteractionEnabled = true
         textView.dataDetectorTypes = [.link]
+        textView.isScrollEnabled = false
 
         let attributedString = NSMutableAttributedString(string: "")
         let linkAttributes: [NSAttributedString.Key: Any] = [
@@ -70,20 +93,6 @@ final class NFTScreenView: UIView {
         return textView
     }()
 
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-
-        label.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
-        label.font = UIFont(
-            name: "SF Pro Text Regular",
-            size: 13
-        )
-        label.numberOfLines = 4
-        label.textColor = UIColor.NFTColor.black
-
-        return label
-    }()
-
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
@@ -95,12 +104,7 @@ final class NFTScreenView: UIView {
         return view
     }()
 
-    let layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 8
-        return layout
-    }()
-
+    //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeView()
@@ -110,6 +114,7 @@ final class NFTScreenView: UIView {
         fatalError()
     }
 
+    //MARK: Private Methods
     private func makeView() {
         backgroundColor = UIColor.NFTColor.white
 

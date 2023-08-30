@@ -8,6 +8,7 @@
 import UIKit
 
 final class CatalogueView: UIView {
+    //MARK: Internal Properties
     let tableView: UITableView = {
         let view = UITableView()
 
@@ -20,6 +21,7 @@ final class CatalogueView: UIView {
         return view
     }()
 
+    //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeView()
@@ -29,6 +31,7 @@ final class CatalogueView: UIView {
         fatalError()
     }
 
+    //MARK: Private Methods
     private func makeView() {
         addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false

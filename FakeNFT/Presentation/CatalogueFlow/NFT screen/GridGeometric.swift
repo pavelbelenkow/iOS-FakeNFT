@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: Collection View Model
 struct GridGeometric {
     let cellCount: Int
     let leftInset: CGFloat

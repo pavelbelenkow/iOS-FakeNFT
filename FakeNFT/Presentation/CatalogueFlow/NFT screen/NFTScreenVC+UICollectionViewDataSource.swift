@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - UICollectionViewDataSource
 extension NFTScreenVC: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,

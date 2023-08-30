@@ -8,8 +8,10 @@
 import UIKit
 
 final class NFTScreenCell: UICollectionViewCell {
+    //MARK: Static Properties
     static let identifier = "NFTScreenCell"
 
+    //MARK: Private Properties
     private let NFTImage: UIImageView = {
         let view = UIImageView()
 
@@ -73,6 +75,7 @@ final class NFTScreenCell: UICollectionViewCell {
         return button
     }()
 
+    //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeCell()
@@ -82,6 +85,7 @@ final class NFTScreenCell: UICollectionViewCell {
         fatalError()
     }
 
+    //MARK: Private Methods
     private func makeCell() {
         [
             NFTImage,

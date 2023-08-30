@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - UITableViewDelegate
 extension CatalogueViewController: UITableViewDelegate {
     func tableView(
         _ tableView: UITableView,

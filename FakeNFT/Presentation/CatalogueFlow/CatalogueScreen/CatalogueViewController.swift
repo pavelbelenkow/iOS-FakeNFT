@@ -1,6 +1,7 @@
 import UIKit
 
 final class CatalogueViewController: UIViewController {
+    //MARK: Internal Properties
     lazy var catalogueView: UIView = {
         let view = CatalogueView()
 
@@ -11,6 +12,7 @@ final class CatalogueViewController: UIViewController {
 
     }()
 
+    //MARK: View Controller Life Cycle
     override func loadView() {
         view = catalogueView
     }
@@ -22,6 +24,7 @@ final class CatalogueViewController: UIViewController {
         view.backgroundColor = UIColor.NFTColor.white
     }
 
+    //MARK: Private Methods
     private func setNavigationBar() {
         let image = UIImage(named: "Sorting")
         let imageConfig = UIImage.SymbolConfiguration(
@@ -39,7 +42,5 @@ final class CatalogueViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = .black
 
         navigationController?.navigationBar.barTintColor = .white
-    }
-
-    
+    }    
 }

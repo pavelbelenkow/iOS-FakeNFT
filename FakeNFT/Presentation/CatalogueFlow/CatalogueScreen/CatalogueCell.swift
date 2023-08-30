@@ -8,8 +8,10 @@
 import UIKit
 
 final class CatalogueCell: UITableViewCell {
+    //MARK: Static Properties
     static let identifier = "CatalogueCell"
 
+    //MARK: Private Properties
     private let collectionImageView: UIImageView = {
         let view = UIImageView()
 
@@ -32,6 +34,7 @@ final class CatalogueCell: UITableViewCell {
         return label
     }()
 
+    //MARK: Initialisers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeCell()
@@ -41,12 +44,14 @@ final class CatalogueCell: UITableViewCell {
         super.init(coder: coder)
     }
 
+    //MARK: Overrides Methods
     override func prepareForReuse() {
         //TODO: Чистить информацию ячейки
         collectionImageView.backgroundColor = .clear
         super.prepareForReuse()
     }
 
+    //MARK: Private Methods
     private func makeCell() {
         contentView.backgroundColor = UIColor.NFTColor.white
 
@@ -84,6 +89,7 @@ final class CatalogueCell: UITableViewCell {
         ])
     }
 
+    //MARK: Internal Methods
     func configCell() {
         //TODO: Тянуть изображения из сети
         let red = CGFloat(arc4random_uniform(256)) / 255.0

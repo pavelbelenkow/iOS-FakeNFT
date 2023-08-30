@@ -8,6 +8,7 @@
 import UIKit
 
 final class NFTScreenVC: UIViewController {
+    //MARK: Internal Properties
     lazy var NFTView: UIView = {
         let view = NFTScreenView()
 
@@ -22,6 +23,7 @@ final class NFTScreenVC: UIViewController {
         cellCount: 3, leftInset: 16, rightInset: 16, cellSpacing: 10
     )
 
+    //MARK: View Controller Life Cycle
     override func loadView() {
         view = NFTView
     }
@@ -36,7 +38,7 @@ final class NFTScreenVC: UIViewController {
         showTabBar()
     }
 
-
+    //MARK: Private Methods
     private func hideTabBar() {
         if let tabBarController = self.tabBarController {
             UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut]) {
@@ -66,6 +68,7 @@ final class NFTScreenVC: UIViewController {
     }
 }
 
+//MARK: - UITextViewDelegate
 extension NFTScreenVC: UITextViewDelegate {
     func textView(
         _ textView: UITextView,

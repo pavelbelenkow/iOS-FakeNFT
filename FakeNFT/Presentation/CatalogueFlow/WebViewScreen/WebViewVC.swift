@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 final class WebViewVC: UIViewController, WKNavigationDelegate {
-
+    //MARK: Private Properties
     private var webView: WKWebView!
     var urlString: String?
 
@@ -22,6 +22,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
 
     private var observer: NSKeyValueObservation?
 
+    //MARK: View Controller Life Cycle
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -46,16 +47,14 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
         observer?.invalidate()
     }
 
+    //MARK: Private Methods
     private func loadPage() {
         if let urlString = urlString, let url = URL(string: urlString) {
             let request = URLRequest(url: url)
             webView.load(request)
         }
     }
-}
 
-
-extension WebViewVC {
     private func updateProgress() {
         let duration = 0.8
         let progress: Float = Float(webView.estimatedProgress)
