@@ -264,7 +264,10 @@ extension UserInfoScreenViewController: UITableViewDataSource {
 
 extension UserInfoScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("collection NFT")
+        guard let nfts = viewModel.getNFTs() else { return }
+        let userCollectionScreenVC = UserCollectionScreenViewController()
+        userCollectionScreenVC.nfts = nfts
+        navigationController?.pushViewController(userCollectionScreenVC, animated: true)
     }
 }
 

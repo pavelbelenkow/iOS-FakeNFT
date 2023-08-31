@@ -49,5 +49,16 @@ final class UserInfoScreenViewModel {
     func setCountCollectionNFT() -> Int {
         return user?.nfts.count ?? .zero
     }
+    
+    func getNFTs() -> [String]? {
+        if let user = user {
+            if user.nfts.count == 0 {
+                return nil
+            } else {
+                return user.nfts
+            }
+        }
+        return nil
+    }
 }
 
