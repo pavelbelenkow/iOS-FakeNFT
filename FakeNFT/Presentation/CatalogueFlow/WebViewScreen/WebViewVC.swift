@@ -15,8 +15,11 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
 
     private let progressView: UIProgressView = {
         let progressView = UIProgressView()
+
         progressView.tintColor = UIColor.NFTColor.black
         progressView.progress = 0.0
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+
         return progressView
     }()
 
@@ -87,8 +90,6 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
     }
 
     private func applyConstraints() {
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             progressView.topAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.topAnchor

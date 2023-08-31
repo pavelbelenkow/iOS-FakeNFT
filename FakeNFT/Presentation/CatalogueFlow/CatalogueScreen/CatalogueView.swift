@@ -17,6 +17,7 @@ final class CatalogueView: UIView {
         )
         view.backgroundColor = .clear
         view.separatorStyle = .none
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
@@ -48,8 +49,6 @@ final class CatalogueView: UIView {
     }
 
     private func applyConstraints() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor,

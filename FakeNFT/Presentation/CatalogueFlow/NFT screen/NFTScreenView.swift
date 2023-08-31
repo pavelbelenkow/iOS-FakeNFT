@@ -16,6 +16,7 @@ final class NFTScreenView: UIView {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
@@ -29,6 +30,7 @@ final class NFTScreenView: UIView {
             size: 22
         )
         label.textColor = UIColor.NFTColor.black
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -42,6 +44,7 @@ final class NFTScreenView: UIView {
             size: 13
         )
         label.textColor = UIColor.NFTColor.black
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -56,6 +59,7 @@ final class NFTScreenView: UIView {
         )
         label.numberOfLines = 4
         label.textColor = UIColor.NFTColor.black
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -74,6 +78,7 @@ final class NFTScreenView: UIView {
         textView.isUserInteractionEnabled = true
         textView.dataDetectorTypes = [.link]
         textView.isScrollEnabled = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
 
         let attributedString = NSMutableAttributedString(string: "")
         let linkAttributes: [NSAttributedString.Key: Any] = [
@@ -99,6 +104,7 @@ final class NFTScreenView: UIView {
             NFTScreenCell.self, forCellWithReuseIdentifier: NFTScreenCell.identifier
         )
         view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
@@ -145,7 +151,6 @@ final class NFTScreenView: UIView {
             authorLink
         ].forEach { item in
             addSubview(item)
-            item.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 

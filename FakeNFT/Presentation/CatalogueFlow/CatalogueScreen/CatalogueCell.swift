@@ -17,6 +17,7 @@ final class CatalogueCell: UITableViewCell {
 
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
+        view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
     }()
@@ -30,6 +31,7 @@ final class CatalogueCell: UITableViewCell {
             name: "SF Pro Text Bold",
             size: 17
         )
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -65,7 +67,6 @@ final class CatalogueCell: UITableViewCell {
     private func addSubviews() {
         [collectionImageView, nameLabel].forEach { item in
             contentView.addSubview(item)
-            item.translatesAutoresizingMaskIntoConstraints = false
         }
     }
 
