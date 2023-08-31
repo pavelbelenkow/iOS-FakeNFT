@@ -298,7 +298,7 @@ extension UserInfoScreenViewController: UITableViewDelegate {
     ) {
         guard let nfts = viewModel.getNFTs() else { return }
         let userCollectionScreenVC = UserCollectionScreenViewController()
-//        userCollectionScreenVC.nfts = nfts
+        userCollectionScreenVC.nfts = nfts
         navigationController?.pushViewController(userCollectionScreenVC, animated: true)
     }
 }

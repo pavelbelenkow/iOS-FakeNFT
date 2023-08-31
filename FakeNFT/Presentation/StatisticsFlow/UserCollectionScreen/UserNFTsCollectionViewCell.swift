@@ -30,10 +30,15 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         return imageNFTImageView
     }()
     
-    private lazy var likedImageView: UIImageView = {
-        let likedImageView = UIImageView()
-        likedImageView.translatesAutoresizingMaskIntoConstraints = false
-        return likedImageView
+    private lazy var likedButton: UIButton = {
+        let likedButton = UIButton()
+        likedButton.translatesAutoresizingMaskIntoConstraints = false
+        likedButton.addTarget(
+            self,
+            action: #selector(didLikedButton),
+            for: .touchUpInside
+        )
+        return likedButton
     }()
     
     private lazy var cartButton: UIButton = {
@@ -76,11 +81,13 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }()
     
     private var id = String()
+    private var isLiked = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
+        
     }
     
     func configureUserNFTsCollectionViewCell(with model: UserNFTsCollectionViewCellModel) {
@@ -89,7 +96,8 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         self.nameLabel.text = model.name
         self.priceLabel.text = String(format: "%.2f", model.price) + " ETH"
         self.id = model.id
-        self.likedImageView.image = UIImage.NFTIcon.notLiked
+        isLiked = true// допустим
+        setLikeImage()
     }
     
     private func addSubviews() {
@@ -99,7 +107,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         infoView.addSubview(ratingImageView)
         cardView.addSubview(imageNFTImageView)
         cardView.addSubview(infoView)
-        cardView.addSubview(likedImageView)
+        cardView.addSubview(likedButton)
         contentView.addSubview(cardView)
     }
     
@@ -132,10 +140,10 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         ])
 
         NSLayoutConstraint.activate([
-            likedImageView.heightAnchor.constraint(equalToConstant: 40),
-            likedImageView.widthAnchor.constraint(equalToConstant: 40),
-            likedImageView.topAnchor.constraint(equalTo: cardView.topAnchor),
-            likedImageView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor)
+            likedButton.heightAnchor.constraint(equalToConstant: 40),
+            likedButton.widthAnchor.constraint(equalToConstant: 40),
+            likedButton.topAnchor.constraint(equalTo: cardView.topAnchor),
+            likedButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -165,6 +173,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private func setRatingStars(rating: Int) -> UIImage {
         switch rating {
+        case 0: return UIImage.NFTIcon.zeroStars
         case 1: return UIImage.NFTIcon.oneStar
         case 2: return UIImage.NFTIcon.twoStars
         case 3: return UIImage.NFTIcon.threeStars
@@ -174,8 +183,23 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
+    private func setLikeImage() {
+        let image = isLiked ? UIImage.NFTIcon.liked : UIImage.NFTIcon.notLiked
+        likedButton.setImage(
+            image,
+            for: .normal
+        )
+    }
+    
     @objc private func didCartButton() {
-        print(id)
+        print(id)//id или name передать через delegate
+    }
+    
+    @objc private func didLikedButton() {
+        isLiked.toggle()
+        setLikeImage()
+        print(id)//id или name передать через delegate
+        print(isLiked)//like передать через delegate
     }
     
     required init?(coder: NSCoder) {

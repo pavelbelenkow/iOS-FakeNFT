@@ -25,7 +25,7 @@ final class UserInfoScreenViewModel {
                 switch result {
                 case .success(let infoUser):
                     self.user = infoUser
-                case.failure(let error):
+                case .failure(let error):
                     print(error.localizedDescription)
                 }
             }

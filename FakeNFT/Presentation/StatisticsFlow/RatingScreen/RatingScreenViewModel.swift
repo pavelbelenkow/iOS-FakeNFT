@@ -25,7 +25,7 @@ final class RatingScreenViewModel {
                 switch result {
                 case .success(let listUsers):
                     self.listUsers = self.sortedByRating(list: listUsers)
-                case.failure(let error):
+                case .failure(let error):
                     print(error.localizedDescription)
                 }
             }

@@ -6,20 +6,11 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class UserCollectionScreenViewController: UIViewController {
-    var ntfTest = [
-        NFT(
-            createdAt: "хз",
-            name: "Вася",
-            images: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png"],
-            rating: 3,
-            description: "щшопщупщшопщойцщп",
-            price: 1.565949,
-            author: "5",
-            id: "6"
-        )
-    ]
+    var nfts: [String]?
+    private let viewModel = UserCollectionScreenViewModel()
     private var navBar: UINavigationBar?
     private lazy var userNFTsCollectionView: UICollectionView = {
         let userNFTsCollectionView = UICollectionView(
@@ -50,6 +41,33 @@ final class UserCollectionScreenViewController: UIViewController {
         makeNavBarWithBackButtonAndTitle()
         addSubviews()
         makeConstraints()
+        bind()
+        viewModel.getNFTsUser(nfts: nfts ?? [String()])
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+    }
+    
+    private func bind() {
+        viewModel.$nfts.bind { [weak self] _ in
+            guard let self = self else { return }
+            self.userNFTsCollectionView.reloadData()
+        }
+        
+        viewModel.$isLoading.bind { [weak self] isLoading in
+            guard let self = self else { return }
+            self.progressStatus(isLoading)
+        }
+    }
+    
+    private func progressStatus(_ isLoadind: Bool) {
+        if isLoadind {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
     }
     
     private func makeNavBarWithBackButtonAndTitle() {
@@ -158,7 +176,7 @@ extension UserCollectionScreenViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 30
+        return viewModel.nfts.count
     }
     
     func collectionView(
@@ -166,15 +184,7 @@ extension UserCollectionScreenViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(indexPath: indexPath) as UserNFTsCollectionViewCell
-        cell.configureUserNFTsCollectionViewCell(
-            with: UserNFTsCollectionViewCellModel(
-                name: ntfTest[0].name,
-                image: URL(string: ntfTest[0].images[0]) ?? URL(fileURLWithPath: String()),
-                rating: ntfTest[0].rating,
-                price: ntfTest[0].price,
-                id: ntfTest[0].id
-            )
-        )
+        cell.configureUserNFTsCollectionViewCell(with: viewModel.setUserNFTsCollectionViewCell(indexRow: indexPath.row))
         
         return cell
     }
