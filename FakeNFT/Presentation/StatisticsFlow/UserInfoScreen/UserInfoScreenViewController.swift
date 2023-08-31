@@ -273,11 +273,17 @@ final class UserInfoScreenViewController: UIViewController {
 }
 
 extension UserInfoScreenViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as CollectionNFTTableViewCell
         cell.configureCollectionNFTTableViewCell(countCollectionNFT: viewModel.setCountCollectionNFT())
 
@@ -286,10 +292,13 @@ extension UserInfoScreenViewController: UITableViewDataSource {
 }
 
 extension UserInfoScreenViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         guard let nfts = viewModel.getNFTs() else { return }
         let userCollectionScreenVC = UserCollectionScreenViewController()
-        userCollectionScreenVC.nfts = nfts
+//        userCollectionScreenVC.nfts = nfts
         navigationController?.pushViewController(userCollectionScreenVC, animated: true)
     }
 }

@@ -61,13 +61,27 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        addSubviews()
+        makeConstraints()
+    }
+    
+    func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
+        self.numberLabel.text = String(model.indexRow + 1)
+        self.avatarImageView.loadImage(url: model.avatar)
+        self.nameLabel.text = model.name
+        self.numberRatingLabel.text = model.rating
+    }
+    
+    private func addSubviews() {
         numberView.addSubview(numberLabel)
         cardView.addSubview(avatarImageView)
         cardView.addSubview(nameLabel)
         cardView.addSubview(numberRatingLabel)
         contentView.addSubview(numberView)
         contentView.addSubview(cardView)
-        
+    }
+    
+    private func makeConstraints() {
         NSLayoutConstraint.activate([
             numberView.heightAnchor.constraint(equalToConstant: 20),
             numberView.widthAnchor.constraint(equalToConstant: 27),
@@ -118,13 +132,6 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
                 equalTo: cardView.trailingAnchor,
                 constant: -16)
         ])
-    }
-    
-    func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
-        self.numberLabel.text = String(model.indexRow + 1)
-        self.avatarImageView.loadImage(url: model.avatar)
-        self.nameLabel.text = model.name
-        self.numberRatingLabel.text = model.rating
     }
     
     required init?(coder: NSCoder) {

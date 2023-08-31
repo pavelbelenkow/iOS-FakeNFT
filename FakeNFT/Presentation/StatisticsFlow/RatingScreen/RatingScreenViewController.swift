@@ -107,11 +107,17 @@ final class RatingScreenViewController: UIViewController {
 }
 
 extension RatingScreenViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return viewModel.listUsers.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as RatingTableViewCell
         cell.configureRatingTableViewCell(with: viewModel.setInfoRatingTableViewCell(indexRow: indexPath.row))
         
@@ -120,7 +126,10 @@ extension RatingScreenViewController: UITableViewDataSource {
 }
 
 extension RatingScreenViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         let userInfoScreenVC = UserInfoScreenViewController()
         userInfoScreenVC.userId = viewModel.listUsers[indexPath.row].id
         navigationController?.pushViewController(userInfoScreenVC, animated: true)

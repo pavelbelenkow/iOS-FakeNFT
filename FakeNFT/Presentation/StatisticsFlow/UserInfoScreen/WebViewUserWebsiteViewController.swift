@@ -83,7 +83,10 @@ final class WebViewUserWebsiteViewController: UIViewController {
 }
 
 extension WebViewUserWebsiteViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(
+        _ webView: WKWebView,
+        didFinish navigation: WKNavigation!
+    ) {
         ProgressHUD.dismiss()
     }
 }

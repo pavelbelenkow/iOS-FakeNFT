@@ -44,11 +44,22 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        addSubviews()
+        makeConstraints()
+    }
+    
+    func configureCollectionNFTTableViewCell(countCollectionNFT: Int) {
+        countLabel.text = "(\(countCollectionNFT))"
+    }
+    
+    private func addSubviews() {
         itemsView.addSubview(titleLabel)
         itemsView.addSubview(countLabel)
         itemsView.addSubview(chevronForwardImageView)
         contentView.addSubview(itemsView)
-        
+    }
+    
+    private func makeConstraints() {
         NSLayoutConstraint.activate([
             itemsView.heightAnchor.constraint(equalToConstant: 22),
             itemsView.leadingAnchor.constraint(
@@ -79,10 +90,6 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             chevronForwardImageView.trailingAnchor.constraint(equalTo: itemsView.trailingAnchor),
             chevronForwardImageView.centerYAnchor.constraint(equalTo: itemsView.centerYAnchor)
         ])
-    }
-    
-    func configureCollectionNFTTableViewCell(countCollectionNFT: Int) {
-        countLabel.text = "(\(countCollectionNFT))"
     }
     
     required init?(coder: NSCoder) {
