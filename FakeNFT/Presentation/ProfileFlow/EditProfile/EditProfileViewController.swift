@@ -6,7 +6,9 @@ final class EditProfileViewController: UIViewController {
 
     private var editingViewModel = EditProfileViewModel()
 
-    private let photoSize: CGFloat = 70
+    private enum Constants {
+        static let photoSize: CGFloat = 70
+    }
 
     // MARK: - UI objects
     private lazy var overlayView: UIView = {
@@ -46,7 +48,7 @@ final class EditProfileViewController: UIViewController {
         TitleAndTextFieldStackView()
     }()
     private lazy var nameLabel: EditScreenCustomLabel = {
-        EditScreenCustomLabel(frame: .zero, text: "Имя")
+        EditScreenCustomLabel(frame: .zero, string: "Имя")
     }()
 
     private lazy var nameTextField: EditScreenCustomTextField = {
@@ -58,7 +60,7 @@ final class EditProfileViewController: UIViewController {
     }()
 
     private lazy var descriptionLabel: EditScreenCustomLabel = {
-        EditScreenCustomLabel(frame: .zero, text: "Описание")
+        EditScreenCustomLabel(frame: .zero, string: "Описание")
     }()
 
     private lazy var descriptionTextField: EditScreenCustomTextField = {
@@ -70,7 +72,7 @@ final class EditProfileViewController: UIViewController {
     }()
 
     private lazy var websiteLabel: EditScreenCustomLabel = {
-        EditScreenCustomLabel(frame: .zero, text: "Сайт")
+        EditScreenCustomLabel(frame: .zero, string: "Сайт")
     }()
 
     private lazy var websiteTextField: EditScreenCustomTextField = {
@@ -102,18 +104,13 @@ final class EditProfileViewController: UIViewController {
         websiteTextField.addTarget(self, action: #selector(websiteTextFieldDidChange), for: .editingChanged)
     }
 
-    // MARK: - deinit
-    deinit {
-        print("deinited edit vc")
-    }
-
     // MARK: - Private functions
     private func setDataToTextFields() {
         guard let user = profileViewModel?.user else { return }
         self.nameTextField.text = user.name
         self.descriptionTextField.text = user.description
         self.websiteTextField.text = user.website
-        self.photoImageView.loadImage(url: user.avatar.toURL, cornerRadius: photoSize/2)
+        self.photoImageView.loadImage(url: user.avatar.toURL, cornerRadius: Constants.photoSize/2)
         editingViewModel.newName = user.name
         editingViewModel.newDesc = user.description
         editingViewModel.newWebsite = user.website
@@ -160,8 +157,8 @@ final class EditProfileViewController: UIViewController {
         let edge: CGFloat = 16
         NSLayoutConstraint.activate([
             photoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            photoImageView.heightAnchor.constraint(equalToConstant: photoSize),
-            photoImageView.widthAnchor.constraint(equalToConstant: photoSize),
+            photoImageView.heightAnchor.constraint(equalToConstant: Constants.photoSize),
+            photoImageView.widthAnchor.constraint(equalToConstant: Constants.photoSize),
             photoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
 
             containerStackView.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 24),
@@ -180,7 +177,7 @@ final class EditProfileViewController: UIViewController {
 
         ])
 
-        photoImageView.layer.cornerRadius = photoSize / 2
+        photoImageView.layer.cornerRadius = Constants.photoSize / 2
         photoImageView.layer.masksToBounds = true
     }
 

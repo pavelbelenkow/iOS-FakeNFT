@@ -82,6 +82,7 @@ final class ProfileViewController: UIViewController {
         )
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.isScrollEnabled = false
         return tableView
     }()
 

@@ -9,12 +9,12 @@ import UIKit
 
 final class EditScreenCustomLabel: UILabel {
 
-    init(frame: CGRect, text: String) {
+    init(frame: CGRect, string: String) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         font = .headline3
         textColor = UIColor.NFTColor.black
-        self.text = text
+        text = string
         backgroundColor = .white
 
     }
