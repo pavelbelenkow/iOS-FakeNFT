@@ -16,6 +16,17 @@ final class EditProfileViewController: UIViewController {
         return view
     }()
 
+    private lazy var changePhotoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 10, weight: .regular)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = .zero
+        label.text = "Сменить фото"
+        return label
+    }()
+
     private lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -140,6 +151,7 @@ final class EditProfileViewController: UIViewController {
         view.addSubview(photoImageView)
         stacks.forEach {containerStackView.addArrangedSubview($0)}
         photoImageView.addSubview(overlayView)
+        overlayView.addSubview(changePhotoLabel)
 
     }
 
@@ -159,7 +171,11 @@ final class EditProfileViewController: UIViewController {
             overlayView.leadingAnchor.constraint(equalTo: photoImageView.leadingAnchor),
             overlayView.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor),
             overlayView.topAnchor.constraint(equalTo: photoImageView.topAnchor),
-            overlayView.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor)
+            overlayView.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor),
+
+            changePhotoLabel.leadingAnchor.constraint(equalTo: photoImageView.leadingAnchor, constant: 12),
+            changePhotoLabel.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: -12),
+            changePhotoLabel.centerYAnchor.constraint(equalTo: overlayView.centerYAnchor)
 
         ])
 

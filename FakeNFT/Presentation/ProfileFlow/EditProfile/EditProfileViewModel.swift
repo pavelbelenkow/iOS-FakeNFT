@@ -32,7 +32,6 @@ final class EditProfileViewModel {
         user = UserEditing(name: newName,
                            description: newDesc,
                            website: newWebsite)
-        print(user)
     }
 
     private func subscribeForChanges() {
