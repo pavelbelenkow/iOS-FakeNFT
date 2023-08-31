@@ -1,6 +1,10 @@
 import UIKit
 
+// MARK: - RemoveNftViewController class
+
 final class RemoveNftViewController: UIViewController {
+    
+    // MARK: - Properties
     
     private lazy var blurEffectView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .systemUltraThinMaterial)
@@ -32,7 +36,7 @@ final class RemoveNftViewController: UIViewController {
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .center
-        view.layer.cornerRadius = Constants.radius
+        view.layer.cornerRadius = Constants.Cart.radius
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -40,7 +44,7 @@ final class RemoveNftViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Вы уверены, что хотите удалить объект из корзины?"
+        label.text = Constants.Cart.removeFromCart
         label.textAlignment = .center
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular13
@@ -62,7 +66,7 @@ final class RemoveNftViewController: UIViewController {
         let button = UIButton(type: .system)
         button.configure(
             with: .other,
-            for: "Удалить",
+            for: Constants.Cart.remove,
             titleColor: UIColor.NFTColor.red
         )
         button.addTarget(
@@ -75,7 +79,7 @@ final class RemoveNftViewController: UIViewController {
     
     private lazy var cancelActionButton: UIButton = {
         let button = UIButton(type: .system)
-        button.configure(with: .other, for: "Вернуться")
+        button.configure(with: .other, for: Constants.Cart.back)
         button.addTarget(
             self,
             action: #selector(dismissViewController),
@@ -84,12 +88,31 @@ final class RemoveNftViewController: UIViewController {
         return button
     }()
     
+    private let viewModel: CartViewModelProtocol
+    private var nftId: String?
+    
+    // MARK: - Initializers
+    
+    init(viewModel: CartViewModelProtocol, nftId: String) {
+        self.viewModel = viewModel
+        self.nftId = nftId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         addSubviews()
     }
 }
+
+// MARK: - Add Subviews
 
 private extension RemoveNftViewController {
     
@@ -133,9 +156,15 @@ private extension RemoveNftViewController {
     }
 }
 
+// MARK: - Private methods
+
 private extension RemoveNftViewController {
     
-    @objc func removeNftFromCart() {}
+    @objc func removeNftFromCart() {
+        guard let id = nftId else { return }
+        viewModel.removeNft(by: id)
+        dismiss(animated: true)
+    }
     
     @objc func dismissViewController() {
         dismiss(animated: true)
