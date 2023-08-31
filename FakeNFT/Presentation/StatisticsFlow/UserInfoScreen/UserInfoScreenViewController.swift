@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class UserInfoScreenViewController: UIViewController {
     var userId: String?
@@ -103,11 +104,33 @@ final class UserInfoScreenViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         addSubviews()
         makeConstraints()
+        bind()
+        viewModel.getInfoUser(userId: userId ?? "")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+    }
+    
+    private func bind() {
         viewModel.$user.bind { [weak self] _ in
             guard let self = self else { return }
             self.setUserInfo(with: self.viewModel.setUserInfo())
         }
-        viewModel.getInfoUser(userId: userId ?? "")
+        
+        viewModel.$isLoading.bind { [weak self] isLoading in
+            guard let self = self else { return }
+            self.progressStatus(isLoading)
+        }
+    }
+    
+    private func progressStatus(_ isLoadind: Bool) {
+        if isLoadind {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
     }
     
     private func makeNavBarWithBackButton() {

@@ -13,9 +13,14 @@ final class UserInfoScreenViewModel {
     @Observable
     private(set) var user: User? = nil
     
+    @Observable
+    private(set) var isLoading: Bool = false
+    
     func getInfoUser(userId: String) {
+        isLoading = true
         infoUserNetReqService.getInfoUser(userId: userId) { [weak self] result in
             guard let self = self else { return }
+            self.isLoading = false
             DispatchQueue.main.async {
                 switch result {
                 case .success(let infoUser):

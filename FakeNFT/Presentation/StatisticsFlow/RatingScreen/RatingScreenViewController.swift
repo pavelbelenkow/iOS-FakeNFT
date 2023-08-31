@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class RatingScreenViewController: UIViewController {
     private let viewModel = RatingScreenViewModel()
@@ -24,11 +25,33 @@ final class RatingScreenViewController: UIViewController {
         makeNavBarWithSortingButton()
         addSubviews()
         makeConstraints()
+        bind()
+        viewModel.getListUsers()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+    }
+    
+    private func bind() {
         viewModel.$listUsers.bind { [weak self] _ in
             guard let self = self else { return }
             self.ratingTableView.reloadData()
         }
-        viewModel.getListUsers()
+        
+        viewModel.$isLoading.bind { [weak self] isLoading in
+            guard let self = self else { return }
+            self.progressStatus(isLoading)
+        }
+    }
+    
+    private func progressStatus(_ isLoadind: Bool) {
+        if isLoadind {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
     }
     
     private func makeNavBarWithSortingButton() {
