@@ -33,7 +33,7 @@ final class ProfileViewCell: UITableViewCell {
     func configCell(title: String, nfts count: Int) {
         infoLabel.text = "\(title) (\(count))"
     }
-    
+
     func configCell(with title: String) {
         infoLabel.text = title
     }

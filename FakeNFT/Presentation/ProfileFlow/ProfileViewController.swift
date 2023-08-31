@@ -24,6 +24,7 @@ final class ProfileViewController: UIViewController {
         button.tintColor = UIColor.NFTColor.black
         let width = ProfileConstants.editButtonSize
         button.frame.size = CGSize(width: width, height: width)
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -108,6 +109,18 @@ final class ProfileViewController: UIViewController {
             self?.favoriteNFTs = user.likes.count
             self?.tableView.reloadData()
         }
+    }
+
+    @objc
+    private func editButtonTapped() {
+        showEditProfile()
+    }
+
+    private func showEditProfile() {
+        let viewController = EditProfileViewController()
+        viewController.profileViewModel = profileViewModel
+        let nvc = UINavigationController(rootViewController: viewController)
+        present(nvc, animated: true)
     }
 
     private func setupView() {
