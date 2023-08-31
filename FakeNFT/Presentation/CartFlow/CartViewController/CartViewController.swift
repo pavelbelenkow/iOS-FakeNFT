@@ -1,15 +1,19 @@
 import UIKit
 
+// MARK: - CartViewController class
+
 final class CartViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private lazy var cartTableView: UITableView = {
-        let view = CartTableView(viewController: self)
+        let view = CartTableView(viewModel: viewModel, viewController: self)
         return view
     }()
     
     private lazy var emptyCartLabel: UILabel = {
         let label = UILabel()
-        label.text = "Корзина пуста"
+        label.text = Constants.Cart.emptyCartText
         label.textAlignment = .center
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.bold17
@@ -20,7 +24,7 @@ final class CartViewController: UIViewController {
     private lazy var paymentContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.NFTColor.lightGray
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = Constants.Cart.radius
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -37,7 +41,7 @@ final class CartViewController: UIViewController {
     
     private lazy var nftAmountLabel: UILabel = {
         let label = UILabel()
-        label.text = "0 NFT"
+        label.text = "0" + Constants.Cart.nftText
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular15
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +50,7 @@ final class CartViewController: UIViewController {
     
     private lazy var totalValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "00,00 ETH"
+        label.text = "00,00" + Constants.Cart.currency
         label.textColor = UIColor.NFTColor.green
         label.font = UIFont.NFTFont.bold17
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,17 +59,34 @@ final class CartViewController: UIViewController {
     
     private lazy var paymentButton: UIButton = {
         let button = UIButton(type: .system)
-        button.configure(with: .payment, for: "К оплате")
-        button.addTarget(self, action: #selector(paymentButtonTapped), for: .touchUpInside)
+        button.configure(with: .payment, for: Constants.Cart.payment)
+        button.addTarget(
+            self,
+            action: #selector(paymentButtonTapped),
+            for: .touchUpInside
+        )
         return button
     }()
+    
+    private let viewModel: CartViewModelProtocol = CartViewModel()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         addSubviews()
+        bindViewModel()
+        updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getOrder()
     }
 }
+
+// MARK: - Add Subviews
 
 private extension CartViewController {
     
@@ -141,22 +162,96 @@ private extension CartViewController {
     }
 }
 
+// MARK: - Private methods
+
 private extension CartViewController {
     
+    func updateNftAmountLabel() {
+        let nftCount = viewModel.listNfts.count
+        nftAmountLabel.text = "\(nftCount)" + Constants.Cart.nftText
+    }
+    
+    func formatTotalValue(_ value: Float) -> String {
+        let valueString = NumberFormatter
+            .currencyFormatter
+            .string(from: value as NSNumber) ?? ""
+        return "\(valueString.replacingOccurrences(of: ".", with: ","))" + Constants.Cart.currency
+    }
+    
+    func updateTotalValueLabel() {
+        let totalValue = viewModel.getNftsTotalValue()
+        let formattedTotalValue = formatTotalValue(totalValue)
+        totalValueLabel.text = formattedTotalValue
+    }
+    
+    func updateUI() {
+        let isCartEmpty = viewModel.listNfts.isEmpty
+        
+        emptyCartLabel.isHidden = !isCartEmpty
+        cartTableView.isHidden = isCartEmpty
+        paymentContainerView.isHidden = isCartEmpty
+        updateNftAmountLabel()
+        updateTotalValueLabel()
+    }
+    
+    func updateUIAfterBindingNfts() {
+        UIBlockingProgressHUD.dismiss()
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.cartTableView.reloadData()
+            self.updateUI()
+        }
+    }
+    
+    func bindViewModel() {
+        UIBlockingProgressHUD.show()
+        
+        viewModel.bindNfts { [weak self] _ in
+            guard let self else { return }
+            self.updateUIAfterBindingNfts()
+        }
+    }
+    
     func presentSheetOfSortTypes() {
-        let sheetTitle = "Сортировка"
-        let priceSortTitle = "По цене"
-        let rateSortTitle = "По рейтингу"
-        let nameSortTitle = "По названию"
-        let closeSheetTitle = "Закрыть"
+        let sheetTitle = Constants.Cart.sortText
+        let priceSortTitle = Constants.Cart.byPrice
+        let rateSortTitle = Constants.Cart.byRating
+        let nameSortTitle = Constants.Cart.byTitle
+        let closeSheetTitle = Constants.Cart.closeText
         
-        let priceSortAction = UIAlertAction(title: priceSortTitle, style: .default)
-        let rateSortAction = UIAlertAction(title: rateSortTitle, style: .default)
-        let nameSortAction = UIAlertAction(title: nameSortTitle, style: .default)
-        let closeSheetAction = UIAlertAction(title: closeSheetTitle, style: .cancel)
+        let priceSortAction = UIAlertAction(
+            title: priceSortTitle,
+            style: .default
+        ) { [weak self] _ in
+            self?.viewModel.sortBy(option: .price)
+        }
+        let rateSortAction = UIAlertAction(
+            title: rateSortTitle,
+            style: .default
+        ) { [weak self] _ in
+            self?.viewModel.sortBy(option: .rating)
+        }
+        let nameSortAction = UIAlertAction(
+            title: nameSortTitle,
+            style: .default
+        ) { [weak self] _ in
+            self?.viewModel.sortBy(option: .name)
+        }
+        let closeSheetAction = UIAlertAction(
+            title: closeSheetTitle,
+            style: .cancel
+        )
         
-        let actionSheet = UIAlertController(title: sheetTitle, message: nil, preferredStyle: .actionSheet)
-        let actions = [priceSortAction, rateSortAction, nameSortAction, closeSheetAction]
+        let actionSheet = UIAlertController(
+            title: sheetTitle,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let actions = [
+            priceSortAction, rateSortAction,
+            nameSortAction, closeSheetAction
+        ]
         
         actions.forEach { action in
             actionSheet.addAction(action)
@@ -174,10 +269,12 @@ private extension CartViewController {
     }
 }
 
+// MARK: - Delegate methods
+
 extension CartViewController: CartCellDelegate {
     
-    func cartCellDidTapRemoveButton() {
-        let viewController = RemoveNftViewController()
+    func cartCellDidTapRemoveButton(by nftId: String) {
+        let viewController = RemoveNftViewController(viewModel: viewModel, nftId: nftId)
         viewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(viewController, animated: true)
     }
