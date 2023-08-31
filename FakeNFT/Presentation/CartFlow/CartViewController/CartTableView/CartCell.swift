@@ -1,22 +1,23 @@
 import UIKit
+import Kingfisher
 
-enum Constants {
-    static let radius: CGFloat = 12
-    static let nftImageHeight: CGFloat = 108
-    static let ratingImageWidth: CGFloat = 68
-}
+// MARK: - Protocols
 
 protocol CartCellDelegate: AnyObject {
-    func cartCellDidTapRemoveButton()
+    func cartCellDidTapRemoveButton(by nftId: String)
 }
+
+// MARK: - CartCell class
 
 final class CartCell: UITableViewCell {
     
-    static let reuseIdentifier = "cart"
+    // MARK: - Properties
+    
+    static let reuseIdentifier = Constants.Cart.reuseIdentifier
     
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
-        view.layer.cornerRadius = Constants.radius
+        view.layer.cornerRadius = Constants.Cart.radius
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -44,7 +45,7 @@ final class CartCell: UITableViewCell {
     
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Цена"
+        label.text = Constants.Cart.priceText
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular13
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,8 +73,21 @@ final class CartCell: UITableViewCell {
         return button
     }()
     
+    var nft: NFT?
     weak var delegate: CartCellDelegate?
+    
+    // MARK: - Lifecycle
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nftImageView.image = nil
+        nftTitleLabel.text = nil
+        nftRatingImageView.image = nil
+        nftPriceLabel.text = nil
+    }
 }
+
+// MARK: - Add Subviews
 
 private extension CartCell {
     
@@ -91,8 +105,8 @@ private extension CartCell {
         contentView.addSubview(nftImageView)
         
         NSLayoutConstraint.activate([
-            nftImageView.heightAnchor.constraint(equalToConstant: Constants.nftImageHeight),
-            nftImageView.widthAnchor.constraint(equalToConstant: Constants.nftImageHeight),
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.Cart.nftImageHeight),
+            nftImageView.widthAnchor.constraint(equalToConstant: Constants.Cart.nftImageHeight),
             nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
@@ -121,8 +135,8 @@ private extension CartCell {
         detailNftView.addSubview(nftRatingImageView)
         
         NSLayoutConstraint.activate([
-            nftRatingImageView.heightAnchor.constraint(equalToConstant: Constants.radius),
-            nftRatingImageView.widthAnchor.constraint(equalToConstant: Constants.ratingImageWidth),
+            nftRatingImageView.heightAnchor.constraint(equalToConstant: Constants.Cart.radius),
+            nftRatingImageView.widthAnchor.constraint(equalToConstant: Constants.Cart.ratingImageWidth),
             nftRatingImageView.topAnchor.constraint(equalTo: nftTitleLabel.bottomAnchor, constant: 4),
             nftRatingImageView.leadingAnchor.constraint(equalTo: nftTitleLabel.leadingAnchor)
         ])
@@ -132,7 +146,7 @@ private extension CartCell {
         detailNftView.addSubview(priceTitleLabel)
         
         NSLayoutConstraint.activate([
-            priceTitleLabel.topAnchor.constraint(equalTo: nftRatingImageView.bottomAnchor, constant: Constants.radius),
+            priceTitleLabel.topAnchor.constraint(equalTo: nftRatingImageView.bottomAnchor, constant: Constants.Cart.radius),
             priceTitleLabel.leadingAnchor.constraint(equalTo: nftTitleLabel.leadingAnchor)
         ])
     }
@@ -156,22 +170,48 @@ private extension CartCell {
     }
 }
 
+// MARK: - Private methods
+
 private extension CartCell {
     
+    func setRating(from rating: Int) -> UIImage {
+        switch rating {
+        case 0: return UIImage.NFTIcon.zeroStars
+        case 1: return UIImage.NFTIcon.oneStar
+        case 2: return UIImage.NFTIcon.twoStars
+        case 3: return UIImage.NFTIcon.threeStars
+        case 4: return UIImage.NFTIcon.fourStars
+        case 5: return UIImage.NFTIcon.fiveStars
+        default: return UIImage()
+        }
+    }
+    
+    func formatPrice(_ price: Float) -> String {
+        let valueString = NumberFormatter
+            .currencyFormatter
+            .string(from: price as NSNumber) ?? ""
+        return "\(valueString.replacingOccurrences(of: ".", with: ","))" + Constants.Cart.currency
+    }
+    
     @objc func removeNftFromCart() {
-        delegate?.cartCellDidTapRemoveButton()
+        guard let id = nft?.id else { return }
+        delegate?.cartCellDidTapRemoveButton(by: id)
     }
 }
 
+// MARK: - Methods
+
 extension CartCell {
     
-    func configure() {
+    func configure(from nft: NFT) {
         backgroundColor = .clear
         addSubviews()
         
-        nftImageView.image = UIImage(named: "AppIcon")
-        nftTitleLabel.text = "April"
-        nftRatingImageView.image = UIImage.NFTIcon.threeStars
-        nftPriceLabel.text = "1,78 ETH"
+        self.nft = nft
+        
+        nftImageView.kf.setImage(with: URL(string: nft.image))
+        nftTitleLabel.text = nft.name
+        nftRatingImageView.image = setRating(from: nft.rating)
+        nftPriceLabel.text = formatPrice(nft.price)
     }
 }

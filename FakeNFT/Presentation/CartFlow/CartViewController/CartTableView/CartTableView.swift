@@ -1,16 +1,24 @@
 import UIKit
 
+// MARK: - CartTableView class
+
 final class CartTableView: UITableView {
     
+    // MARK: - Properties
+    
+    private var viewModel: CartViewModelProtocol
     private weak var viewController: CartViewController?
     
-    init(viewController: CartViewController) {
+    // MARK: - Initializers
+    
+    init(viewModel: CartViewModelProtocol, viewController: CartViewController) {
+        self.viewModel = viewModel
         self.viewController = viewController
         super.init(frame: .zero, style: .plain)
         
         backgroundColor = .clear
         separatorStyle = .none
-        rowHeight = 140
+        rowHeight = Constants.Cart.rowHeight
         
         dataSource = self
         
@@ -26,10 +34,12 @@ final class CartTableView: UITableView {
     }
 }
 
+// MARK: - DataSource methods
+
 extension CartTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        viewModel.listNfts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -42,8 +52,10 @@ extension CartTableView: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        let nft = viewModel.listNfts[indexPath.row]
+        
         cartCell.delegate = viewController
-        cartCell.configure()
+        cartCell.configure(from: nft)
         
         return cartCell
     }
