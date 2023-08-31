@@ -168,14 +168,14 @@ private extension CartViewController {
     
     func updateNftAmountLabel() {
         let nftCount = viewModel.listNfts.count
-        nftAmountLabel.text = "\(nftCount)" + Constants.Cart.nftText
+        nftAmountLabel.text = "\(nftCount) " + Constants.Cart.nftText
     }
     
     func formatTotalValue(_ value: Float) -> String {
         let valueString = NumberFormatter
             .currencyFormatter
             .string(from: value as NSNumber) ?? ""
-        return "\(valueString.replacingOccurrences(of: ".", with: ","))" + Constants.Cart.currency
+        return "\(valueString.replacingOccurrences(of: ".", with: ",")) " + Constants.Cart.currency
     }
     
     func updateTotalValueLabel() {
@@ -273,8 +273,8 @@ private extension CartViewController {
 
 extension CartViewController: CartCellDelegate {
     
-    func cartCellDidTapRemoveButton(by nftId: String) {
-        let viewController = RemoveNftViewController(viewModel: viewModel, nftId: nftId)
+    func cartCellDidTapRemoveButton(by nft: NFT) {
+        let viewController = RemoveNftViewController(viewModel: viewModel, nft: nft)
         viewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(viewController, animated: true)
     }

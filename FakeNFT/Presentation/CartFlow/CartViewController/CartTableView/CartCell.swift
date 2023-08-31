@@ -4,7 +4,7 @@ import Kingfisher
 // MARK: - Protocols
 
 protocol CartCellDelegate: AnyObject {
-    func cartCellDidTapRemoveButton(by nftId: String)
+    func cartCellDidTapRemoveButton(by nft: NFT)
 }
 
 // MARK: - CartCell class
@@ -190,12 +190,12 @@ private extension CartCell {
         let valueString = NumberFormatter
             .currencyFormatter
             .string(from: price as NSNumber) ?? ""
-        return "\(valueString.replacingOccurrences(of: ".", with: ","))" + Constants.Cart.currency
+        return "\(valueString.replacingOccurrences(of: ".", with: ",")) " + Constants.Cart.currency
     }
     
     @objc func removeNftFromCart() {
-        guard let id = nft?.id else { return }
-        delegate?.cartCellDidTapRemoveButton(by: id)
+        guard let nft else { return }
+        delegate?.cartCellDidTapRemoveButton(by: nft)
     }
 }
 

@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 // MARK: - RemoveNftViewController class
 
@@ -24,18 +25,15 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
     
-    private lazy var detailStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fill
-        view.spacing = 12
+    private lazy var detailNftView: UIView = {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .center
+        view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = Constants.Cart.radius
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -89,13 +87,13 @@ final class RemoveNftViewController: UIViewController {
     }()
     
     private let viewModel: CartViewModelProtocol
-    private var nftId: String?
+    private var nft: NFT?
     
     // MARK: - Initializers
     
-    init(viewModel: CartViewModelProtocol, nftId: String) {
+    init(viewModel: CartViewModelProtocol, nft: NFT) {
         self.viewModel = viewModel
-        self.nftId = nftId
+        self.nft = nft
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -109,6 +107,7 @@ final class RemoveNftViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .clear
         addSubviews()
+        setNftImage()
     }
 }
 
@@ -119,7 +118,7 @@ private extension RemoveNftViewController {
     func addSubviews() {
         view.addSubview(blurEffectView)
         addNftContainerView()
-        addDetailStackView()
+        addDetailNftView()
         addButtonStackView()
     }
     
@@ -133,14 +132,24 @@ private extension RemoveNftViewController {
         ])
     }
     
-    func addDetailStackView() {
-        nftContainerView.addArrangedSubview(detailStackView)
-        detailStackView.addArrangedSubview(nftImageView)
-        detailStackView.addArrangedSubview(descriptionLabel)
+    func addDetailNftView() {
+        nftContainerView.addArrangedSubview(detailNftView)
+        detailNftView.addSubview(nftImageView)
+        detailNftView.addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
-            detailStackView.leadingAnchor.constraint(equalTo: nftContainerView.leadingAnchor, constant: 41),
-            detailStackView.trailingAnchor.constraint(equalTo: nftContainerView.trailingAnchor, constant: -41)
+            detailNftView.leadingAnchor.constraint(equalTo: nftContainerView.leadingAnchor, constant: 41),
+            detailNftView.trailingAnchor.constraint(equalTo: nftContainerView.trailingAnchor, constant: -41),
+            
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.Cart.nftImageHeight),
+            nftImageView.widthAnchor.constraint(equalToConstant: Constants.Cart.nftImageHeight),
+            nftImageView.topAnchor.constraint(equalTo: detailNftView.topAnchor),
+            nftImageView.centerXAnchor.constraint(equalTo: detailNftView.centerXAnchor),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 12),
+            descriptionLabel.leadingAnchor.constraint(equalTo: detailNftView.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: detailNftView.trailingAnchor),
+            descriptionLabel.bottomAnchor.constraint(equalTo: detailNftView.bottomAnchor)
         ])
     }
     
@@ -160,9 +169,14 @@ private extension RemoveNftViewController {
 
 private extension RemoveNftViewController {
     
+    func setNftImage() {
+        guard let nft else { return }
+        nftImageView.kf.setImage(with: URL(string: nft.image))
+    }
+    
     @objc func removeNftFromCart() {
-        guard let id = nftId else { return }
-        viewModel.removeNft(by: id)
+        guard let nft else { return }
+        viewModel.removeNft(by: nft.id)
         dismiss(animated: true)
     }
     
