@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//Структура для раскодирования данных с запроса списка юзеров https://{{host}}/api/v1/users
+//Структура для раскодирования данных юзера
 struct User: Codable {
     let name: String    //имя юзера
     let avatar: String  //адрес аватара юзера

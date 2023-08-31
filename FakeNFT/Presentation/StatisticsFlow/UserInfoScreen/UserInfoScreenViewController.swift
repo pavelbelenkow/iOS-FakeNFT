@@ -9,6 +9,8 @@ import UIKit
 
 final class UserInfoScreenViewController: UIViewController {
     var userId = ""
+    private let viewModel = UserInfoScreenViewModel()
+    private var website = ""
     private var navBar: UINavigationBar?
     private lazy var cardView: UIView = {
         let cardView = UIView()
@@ -101,13 +103,11 @@ final class UserInfoScreenViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         addSubviews()
         makeConstraints()
-        testCardInfo()
-    }
-    
-    private func testCardInfo() {
-        avatarImageView.image = UIImage(named: "TestImage")
-        nameLabel.text = "Вася"
-        descriptionLabel.text = "Потаацгагц йвуцвцв цвцвцвцв уашцацтатцацацацацаццаацца ццвц цвц цццц fquqiufqiqfiqiq qwiqhiqwhiuqfiuqfiqhiwf qwfiqwfwf wfwwf wfwfwffiqwf qpooioioqwqfqfqf f  e qqqqrq"
+        viewModel.$user.bind { [weak self] _ in
+            guard let self = self else { return }
+            self.setUserInfo(with: self.viewModel.setUserInfo())
+        }
+        viewModel.getInfoUser(userId: userId)
     }
     
     private func makeNavBarWithBackButton() {
@@ -229,13 +229,21 @@ final class UserInfoScreenViewController: UIViewController {
         ])
     }
     
+    private func setUserInfo(with model: UserInfoSetModel) {
+        avatarImageView.loadImage(url: model.avatar)
+        nameLabel.text = model.name
+        descriptionLabel.text = model.description
+        website = model.website
+        collectionNFTTableView.reloadData()
+    }
+    
     @objc private func didBackButton() {
         tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func didGoToSiteUserButton() {
-        print("didGoToSiteUserButton")
+        print(website)
     }
 }
 
@@ -246,7 +254,7 @@ extension UserInfoScreenViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as CollectionNFTTableViewCell
-        cell.configureCollectionNFTTableViewCell(countCollectionNFT: 112)
+        cell.configureCollectionNFTTableViewCell(countCollectionNFT: viewModel.setCountCollectionNFT())
 
         return cell
     }

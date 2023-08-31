@@ -35,7 +35,12 @@ final class RatingScreenViewModel {
                 name: listUsers[indexRow].name,
                 rating: listUsers[indexRow].rating)
         }
-        return RatingTableViewCellModel(indexRow: Int(), avatar: URL(fileURLWithPath: String()), name: String(), rating: String())
+        return RatingTableViewCellModel(
+            indexRow: Int(),
+            avatar: URL(fileURLWithPath: String()),
+            name: String(),
+            rating: String()
+        )
     }
     
     func sortedByRatingAlert() {

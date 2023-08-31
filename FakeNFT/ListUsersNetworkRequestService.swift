@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ListUsersNetworkRequestService {
+final class ListUsersNetworkRequestService {
     private let client = DefaultNetworkClient()
     private let request = ListUsersRequest()
     

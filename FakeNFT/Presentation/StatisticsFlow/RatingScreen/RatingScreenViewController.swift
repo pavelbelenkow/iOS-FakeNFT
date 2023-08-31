@@ -24,7 +24,7 @@ final class RatingScreenViewController: UIViewController {
         makeNavBarWithSortingButton()
         addSubviews()
         makeConstraints()
-        viewModel.$listUsers.bind { [weak self] listUsers in
+        viewModel.$listUsers.bind { [weak self] _ in
             guard let self = self else { return }
             self.ratingTableView.reloadData()
         }
