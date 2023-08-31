@@ -8,7 +8,7 @@
 import UIKit
 
 final class UserInfoScreenViewController: UIViewController {
-    var userId = ""
+    var userId: String?
     private let viewModel = UserInfoScreenViewModel()
     private var website = ""
     private var navBar: UINavigationBar?
@@ -107,7 +107,7 @@ final class UserInfoScreenViewController: UIViewController {
             guard let self = self else { return }
             self.setUserInfo(with: self.viewModel.setUserInfo())
         }
-        viewModel.getInfoUser(userId: userId)
+        viewModel.getInfoUser(userId: userId ?? "")
     }
     
     private func makeNavBarWithBackButton() {
@@ -243,7 +243,9 @@ final class UserInfoScreenViewController: UIViewController {
     }
     
     @objc private func didGoToSiteUserButton() {
-        print(website)
+        let webViewUserWebsiteVC = WebViewUserWebsiteViewController()
+        webViewUserWebsiteVC.website = website
+        navigationController?.pushViewController(webViewUserWebsiteVC, animated: true)
     }
 }
 
