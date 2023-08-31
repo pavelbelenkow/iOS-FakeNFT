@@ -10,6 +10,7 @@ import Foundation
 final class EditProfileViewModel {
 
     private var user: UserEditing?
+    private let userChangingService = UserEditingNetworkService()
 
     var newName: String?
     var newDesc: String?
@@ -32,6 +33,9 @@ final class EditProfileViewModel {
         user = UserEditing(name: newName,
                            description: newDesc,
                            website: newWebsite)
+        guard let user else { return }
+        userChangingService.getUserInfo(user: user) { _ in
+        }
     }
 
     private func subscribeForChanges() {

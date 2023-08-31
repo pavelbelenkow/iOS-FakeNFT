@@ -4,7 +4,7 @@ final class EditProfileViewController: UIViewController {
 
     var profileViewModel: ProfileViewModel?
 
-    private var viewModel = EditProfileViewModel()
+    private var editingViewModel = EditProfileViewModel()
 
     private let photoSize: CGFloat = 70
 
@@ -114,27 +114,28 @@ final class EditProfileViewController: UIViewController {
         self.descriptionTextField.text = user.description
         self.websiteTextField.text = user.website
         self.photoImageView.loadImage(url: user.avatar.toURL, cornerRadius: photoSize/2)
-        viewModel.newName = user.name
-        viewModel.newDesc = user.description
-        viewModel.newWebsite = user.website
+        editingViewModel.newName = user.name
+        editingViewModel.newDesc = user.description
+        editingViewModel.newWebsite = user.website
     }
 
     @objc
     private func exitButttonTapped() {
-        viewModel.screenClosed()
+        editingViewModel.screenClosed()
+        profileViewModel?.getUserInfo()
         self.dismiss(animated: true)
     }
 
     @objc private func nameTextFieldDidChange(_ textField: UITextField) {
-        viewModel.nameChanged?(textField.text)
+        editingViewModel.nameChanged?(textField.text)
     }
 
     @objc private func descriptionTextFieldDidChange(_ textField: UITextField) {
-        viewModel.descriptionChanged?(textField.text)
+        editingViewModel.descriptionChanged?(textField.text)
     }
 
     @objc private func websiteTextFieldDidChange(_ textField: UITextField) {
-        viewModel.websiteChanged?(textField.text)
+        editingViewModel.websiteChanged?(textField.text)
     }
 
     // MARK: - UI Functions

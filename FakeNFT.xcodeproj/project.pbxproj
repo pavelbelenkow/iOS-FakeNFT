@@ -39,6 +39,8 @@
 		5897B2242AA0985D006ADC33 /* TitleAndTextFieldStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B2232AA0985D006ADC33 /* TitleAndTextFieldStackView.swift */; };
 		5897B2262AA09EFC006ADC33 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B2252AA09EFC006ADC33 /* EditProfileViewModel.swift */; };
 		5897B2282AA0A6C7006ADC33 /* UserEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B2272AA0A6C7006ADC33 /* UserEditing.swift */; };
+		5897B22A2AA0B134006ADC33 /* UserEditingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B2292AA0B134006ADC33 /* UserEditingRequest.swift */; };
+		5897B22C2AA0B25E006ADC33 /* UserEditingNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B22B2AA0B25E006ADC33 /* UserEditingNetworkService.swift */; };
 		59CAB77C2A9AAA2900C4938D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */; };
 		59CAB77E2A9AAA7000C4938D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */; };
 		59CAB7802A9AAB8300C4938D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */; };
@@ -102,6 +104,8 @@
 		5897B2232AA0985D006ADC33 /* TitleAndTextFieldStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndTextFieldStackView.swift; sourceTree = "<group>"; };
 		5897B2252AA09EFC006ADC33 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		5897B2272AA0A6C7006ADC33 /* UserEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditing.swift; sourceTree = "<group>"; };
+		5897B2292AA0B134006ADC33 /* UserEditingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditingRequest.swift; sourceTree = "<group>"; };
+		5897B22B2AA0B25E006ADC33 /* UserEditingNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditingNetworkService.swift; sourceTree = "<group>"; };
 		59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			children = (
 				3FC8C38F29D245250081F015 /* Requests */,
 				5897B1F12A9E2BB2006ADC33 /* UserInfoNetworkService.swift */,
+				5897B22B2AA0B25E006ADC33 /* UserEditingNetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 			children = (
 				3FC8C39029D2453B0081F015 /* ExampleRequest.swift */,
 				5897B1EF2A9E2AAF006ADC33 /* UserInfoRequest.swift */,
+				5897B2292AA0B134006ADC33 /* UserEditingRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 				5897B2242AA0985D006ADC33 /* TitleAndTextFieldStackView.swift in Sources */,
 				5897B1EE2A9E292C006ADC33 /* UserInfo.swift in Sources */,
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
+				5897B22C2AA0B25E006ADC33 /* UserEditingNetworkService.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				5897B1EC2A9E1F35006ADC33 /* ProfileViewModel.swift in Sources */,
@@ -546,6 +553,7 @@
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				5897B2282AA0A6C7006ADC33 /* UserEditing.swift in Sources */,
+				5897B22A2AA0B134006ADC33 /* UserEditingRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
