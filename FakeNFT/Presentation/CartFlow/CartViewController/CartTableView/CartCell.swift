@@ -190,7 +190,7 @@ private extension CartCell {
         let valueString = NumberFormatter
             .currencyFormatter
             .string(from: price as NSNumber) ?? ""
-        return "\(valueString.replacingOccurrences(of: ".", with: ",")) " + Constants.Cart.currency
+        return valueString + " " + Constants.Cart.currency
     }
     
     @objc func removeNftFromCart() {

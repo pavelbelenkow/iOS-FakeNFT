@@ -186,7 +186,7 @@ private extension CartViewController {
         let valueString = NumberFormatter
             .currencyFormatter
             .string(from: value as NSNumber) ?? ""
-        return "\(valueString.replacingOccurrences(of: ".", with: ",")) " + Constants.Cart.currency
+        return valueString + " " + Constants.Cart.currency
     }
     
     func updateTotalValueLabel() {
