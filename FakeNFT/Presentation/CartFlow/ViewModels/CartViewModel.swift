@@ -11,16 +11,6 @@ protocol CartViewModelProtocol {
     func sortBy(option: SortOption)
 }
 
-// MARK: - Model
-
-struct NFT {
-    let name: String
-    let image: String
-    let rating: Int
-    let price: Float
-    let id: String
-}
-
 // MARK: - CartViewModel class
 
 final class CartViewModel {
