@@ -43,10 +43,6 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var cartButton: UIButton = {
         let cartButton = UIButton()
-        cartButton.setImage(
-            UIImage.NFTIcon.cartAdd,
-            for: .normal
-        )
         cartButton.translatesAutoresizingMaskIntoConstraints = false
         cartButton.addTarget(
             self,
@@ -82,6 +78,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private var id = String()
     private var isLiked = false
+    private var isAddCart = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,8 +93,8 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         self.nameLabel.text = model.name
         self.priceLabel.text = String(format: "%.2f", model.price) + " ETH"
         self.id = model.id
-        isLiked = true// допустим
-        setLikeImage()
+        setLikeButtonImage()
+        setCartButtonImage()
     }
     
     private func addSubviews() {
@@ -183,7 +180,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
-    private func setLikeImage() {
+    private func setLikeButtonImage() {
         let image = isLiked ? UIImage.NFTIcon.liked : UIImage.NFTIcon.notLiked
         likedButton.setImage(
             image,
@@ -191,15 +188,24 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         )
     }
     
+    private func setCartButtonImage() {
+        let image = isAddCart ? UIImage.NFTIcon.cartDelete : UIImage.NFTIcon.cartAdd
+        cartButton.setImage(
+            image,
+            for: .normal
+        )
+    }
+    
     @objc private func didCartButton() {
-        print(id)//id или name передать через delegate
+        isAddCart.toggle()
+        setCartButtonImage()
+        print("id \(id) - \(isAddCart ? "addCart" : "deleteCart")")// передать через delegate???
     }
     
     @objc private func didLikedButton() {
         isLiked.toggle()
-        setLikeImage()
-        print(id)//id или name передать через delegate
-        print(isLiked)//like передать через delegate
+        setLikeButtonImage()
+        print("id \(id) - \(isLiked ? "like" : "notLike")")// передать через delegate???
     }
     
     required init?(coder: NSCoder) {
