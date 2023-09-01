@@ -9,6 +9,7 @@ import Foundation
 
 final class RatingScreenViewModel {
     private let listUsersNetReqService = ListUsersNetworkRequestService()
+    private let sortingOrderStorage = SortingOrderStorage()
     
     @Observable
     private(set) var listUsers: [User] = []
@@ -24,7 +25,7 @@ final class RatingScreenViewModel {
                 self.isLoading = false
                 switch result {
                 case .success(let listUsers):
-                    self.listUsers = self.sortedByRating(list: listUsers)
+                    self.listUsers = self.sortedAccordingSortingOrder(list: listUsers)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -50,10 +51,16 @@ final class RatingScreenViewModel {
     
     func sortedByRatingAlert() {
         listUsers = sortedByRating(list: listUsers)
+        sortingOrderStorage.isRatingOrder = true
     }
     
     func sortedByNameAlert() {
         listUsers = sortedByName(list: listUsers)
+        sortingOrderStorage.isRatingOrder = false
+    }
+    
+    private func sortedAccordingSortingOrder(list: [User]) -> [User] {
+        return sortingOrderStorage.isRatingOrder ? sortedByRating(list: list) : sortedByName(list: list)
     }
     
     private func sortedByRating(list: [User]) -> [User] {
