@@ -68,7 +68,18 @@ final class CartViewController: UIViewController {
         return button
     }()
     
-    private let viewModel: CartViewModelProtocol = CartViewModel()
+    private let viewModel: CartViewModelProtocol
+    
+    // MARK: - Initializers
+    
+    init(viewModel: CartViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
