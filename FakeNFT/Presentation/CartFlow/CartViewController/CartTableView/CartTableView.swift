@@ -6,7 +6,7 @@ final class CartTableView: UITableView {
     
     // MARK: - Properties
     
-    private var viewModel: CartViewModelProtocol
+    private let viewModel: CartViewModelProtocol
     private weak var viewController: CartViewController?
     
     // MARK: - Initializers
