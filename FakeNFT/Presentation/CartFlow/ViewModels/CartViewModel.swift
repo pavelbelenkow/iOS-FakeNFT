@@ -4,10 +4,10 @@ import Foundation
 
 protocol CartViewModelProtocol {
     var listNfts: [NFT] { get }
-    func bindNfts(completion: @escaping ([NFT]) -> Void)
-    func getOrder()
+    func bindNfts(_ completion: @escaping ([NFT]) -> Void)
+    func getOrder(_ completion: @escaping (Error) -> Void)
     func getNftsTotalValue() -> Float
-    func removeNft(by id: String)
+    func removeNft(by id: String, _ completion: @escaping (Error?) -> Void)
     func sortBy(option: SortOption)
 }
 
@@ -37,24 +37,24 @@ extension CartViewModel: CartViewModelProtocol {
     
     var listNfts: [NFT] { nfts }
     
-    func bindNfts(completion: @escaping ([NFT]) -> Void) {
+    func bindNfts(_ completion: @escaping ([NFT]) -> Void) {
         $nfts.bind(action: completion)
     }
     
-    func getOrder() {
+    func getOrder(_ completion: @escaping (Error) -> Void) {
         UIBlockingProgressHUD.show()
         
         cartService.fetchOrder { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                
                 switch result {
                 case .success(let nfts):
-                    UIBlockingProgressHUD.dismiss()
                     self.nfts = nfts
                 case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
-                    print(error.localizedDescription)
+                    completion(error)
                 }
             }
         }
@@ -71,11 +71,13 @@ extension CartViewModel: CartViewModelProtocol {
         return totalValue
     }
     
-    func removeNft(by id: String) {
+    func removeNft(by id: String, _ completion: @escaping (Error?) -> Void) {
         if let index = nfts.firstIndex(where: { $0.id == id }) {
             nfts.remove(at: index)
             let nfts = nfts.map { $0.id }
-            cartService.putOrder(with: nfts)
+            cartService.putOrder(with: nfts) { error in
+                completion(error)
+            }
         }
     }
     

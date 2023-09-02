@@ -174,10 +174,29 @@ private extension RemoveNftViewController {
         nftImageView.kf.setImage(with: URL(string: nft.image))
     }
     
+    func showErrorAlert(_ error: Error) {
+        showAlert(
+            title: Constants.Cart.errorAlertTitle,
+            message: error.localizedDescription
+        ) { [weak self] in
+            self?.removeNftFromCart()
+        }
+    }
+    
     @objc func removeNftFromCart() {
         guard let nft else { return }
-        viewModel.removeNft(by: nft.id)
-        dismiss(animated: true)
+        
+        viewModel.removeNft(by: nft.id) { [weak self] error in
+            guard let self else { return }
+            
+            if let error {
+                self.showErrorAlert(error)
+            } else {
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
+            }
+        }
     }
     
     @objc func dismissViewController() {

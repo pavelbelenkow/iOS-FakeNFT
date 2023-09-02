@@ -93,7 +93,7 @@ final class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getOrder()
+        updateCart()
     }
 }
 
@@ -176,6 +176,21 @@ private extension CartViewController {
 // MARK: - Private methods
 
 private extension CartViewController {
+    
+    func showErrorAlert(_ error: Error) {
+        showAlert(
+            title: Constants.Cart.errorAlertTitle,
+            message: error.localizedDescription
+        ) { [weak self] in
+            self?.updateCart()
+        }
+    }
+    
+    func updateCart() {
+        viewModel.getOrder { [weak self] error in
+            self?.showErrorAlert(error)
+        }
+    }
     
     func updateNftAmountLabel() {
         let nftCount = viewModel.listNfts.count

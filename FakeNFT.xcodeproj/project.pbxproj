@@ -34,6 +34,7 @@
 		5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */; };
 		5923ACF42A9C072000E31FA5 /* RemoveNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */; };
 		592C9F312AA2798900FAF74F /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C9F302AA2798900FAF74F /* NFT.swift */; };
+		592C9F332AA286B900FAF74F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C9F322AA286B900FAF74F /* UIViewController+Extensions.swift */; };
 		596D411B2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */; };
 		596D411D2AA110F1007F2669 /* SortHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411C2AA110F1007F2669 /* SortHelper.swift */; };
 		596D411F2AA11293007F2669 /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411E2AA11293007F2669 /* NumberFormatter+Extensions.swift */; };
@@ -100,6 +101,7 @@
 		5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNftViewController.swift; sourceTree = "<group>"; };
 		592C9F302AA2798900FAF74F /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
+		592C9F322AA286B900FAF74F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		596D411C2AA110F1007F2669 /* SortHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHelper.swift; sourceTree = "<group>"; };
 		596D411E2AA11293007F2669 /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */,
 				5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */,
 				596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */,
+				592C9F322AA286B900FAF74F /* UIViewController+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592C9F332AA286B900FAF74F /* UIViewController+Extensions.swift in Sources */,
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
 				5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */,
 				5989722E2A9BA85A00F8811E /* CartTableView.swift in Sources */,

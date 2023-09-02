@@ -5,7 +5,7 @@ import Foundation
 protocol CartServiceProtocol {
     var nfts: [NFT] { get }
     func fetchOrder(_ completion: @escaping (Result<[NFT], Error>) -> Void)
-    func putOrder(with nfts: [String])
+    func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void)
 }
 
 // MARK: - CartService class
@@ -110,7 +110,7 @@ extension CartService: CartServiceProtocol {
         }
     }
     
-    func putOrder(with nfts: [String]) {
+    func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void) {
         var request = PutOrderRequest()
         request.dto = OrderNetworkModel(nfts: nfts)
         
@@ -122,8 +122,10 @@ extension CartService: CartServiceProtocol {
                 DispatchQueue.main.async {
                     self.nfts.removeAll()
                 }
+                
+                completion(nil)
             case .failure(let error):
-                assertionFailure("Failed to put order with error: \(error)")
+                completion(error)
             }
         }
     }
