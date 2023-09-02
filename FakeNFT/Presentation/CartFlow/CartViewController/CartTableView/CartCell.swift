@@ -37,8 +37,11 @@ final class CartCell: UITableViewCell {
         return label
     }()
     
-    private lazy var nftRatingImageView: UIImageView = {
-        let view = UIImageView()
+    private lazy var ratingStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.distribution = .fill
+        view.spacing = 2
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -82,7 +85,6 @@ final class CartCell: UITableViewCell {
         super.prepareForReuse()
         nftImageView.image = nil
         nftTitleLabel.text = nil
-        nftRatingImageView.image = nil
         nftPriceLabel.text = nil
     }
 }
@@ -95,7 +97,7 @@ private extension CartCell {
         addNftImageView()
         addDetailNftView()
         addNftTitleLabel()
-        addNftRatingImageView()
+        addRatingStackView()
         addPriceTitleLabel()
         addNftPriceLabel()
         addRemoveNftButton()
@@ -131,14 +133,12 @@ private extension CartCell {
         ])
     }
     
-    func addNftRatingImageView() {
-        detailNftView.addSubview(nftRatingImageView)
-        
+    func addRatingStackView() {
+        detailNftView.addSubview(ratingStackView)
+
         NSLayoutConstraint.activate([
-            nftRatingImageView.heightAnchor.constraint(equalToConstant: Constants.Cart.radius),
-            nftRatingImageView.widthAnchor.constraint(equalToConstant: Constants.Cart.ratingImageWidth),
-            nftRatingImageView.topAnchor.constraint(equalTo: nftTitleLabel.bottomAnchor, constant: 4),
-            nftRatingImageView.leadingAnchor.constraint(equalTo: nftTitleLabel.leadingAnchor)
+            ratingStackView.topAnchor.constraint(equalTo: nftTitleLabel.bottomAnchor, constant: 4),
+            ratingStackView.leadingAnchor.constraint(equalTo: nftTitleLabel.leadingAnchor)
         ])
     }
     
@@ -146,7 +146,7 @@ private extension CartCell {
         detailNftView.addSubview(priceTitleLabel)
         
         NSLayoutConstraint.activate([
-            priceTitleLabel.topAnchor.constraint(equalTo: nftRatingImageView.bottomAnchor, constant: Constants.Cart.radius),
+            priceTitleLabel.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: Constants.Cart.radius),
             priceTitleLabel.leadingAnchor.constraint(equalTo: nftTitleLabel.leadingAnchor)
         ])
     }
@@ -174,23 +174,22 @@ private extension CartCell {
 
 private extension CartCell {
     
-    func setRating(from rating: Int) -> UIImage {
-        switch rating {
-        case 0: return UIImage.NFTIcon.zeroStars
-        case 1: return UIImage.NFTIcon.oneStar
-        case 2: return UIImage.NFTIcon.twoStars
-        case 3: return UIImage.NFTIcon.threeStars
-        case 4: return UIImage.NFTIcon.fourStars
-        case 5: return UIImage.NFTIcon.fiveStars
-        default: return UIImage()
+    func setRating(from rating: Int) {
+        ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+        for i in 0 ..< 5 {
+            let starImageView = UIImageView()
+            starImageView.image = (i < rating) ? UIImage.NFTIcon.starActive : UIImage.NFTIcon.starNoActive
+            starImageView.translatesAutoresizingMaskIntoConstraints = false
+            ratingStackView.addArrangedSubview(starImageView)
         }
     }
     
     func formatPrice(_ price: Float) -> String {
-        let valueString = NumberFormatter
+        let priceString = NumberFormatter
             .currencyFormatter
             .string(from: price as NSNumber) ?? ""
-        return valueString + " " + Constants.Cart.currency
+        return priceString + " " + Constants.Cart.currency
     }
     
     @objc func removeNftFromCart() {
@@ -211,7 +210,8 @@ extension CartCell {
         
         nftImageView.kf.setImage(with: URL(string: nft.image))
         nftTitleLabel.text = nft.name
-        nftRatingImageView.image = setRating(from: nft.rating)
         nftPriceLabel.text = formatPrice(nft.price)
+        
+        setRating(from: nft.rating)
     }
 }
