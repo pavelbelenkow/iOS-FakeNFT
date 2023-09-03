@@ -59,4 +59,14 @@ extension CartTableView: UITableViewDataSource {
         
         return cartCell
     }
+    
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        let deletedNftId = viewModel.listNfts[indexPath.row].id
+        viewModel.removeNft(by: deletedNftId) { _ in }
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
 }
