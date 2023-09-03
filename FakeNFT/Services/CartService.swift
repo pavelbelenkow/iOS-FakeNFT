@@ -3,7 +3,6 @@ import Foundation
 // MARK: - Protocols
 
 protocol CartServiceProtocol {
-    var nfts: [NFT] { get }
     func fetchOrder(_ completion: @escaping (Result<[NFT], Error>) -> Void)
     func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void)
 }
@@ -15,7 +14,7 @@ final class CartService {
     // MARK: - Properties
     
     private let decoder = JSONDecoder()
-    private(set) var nfts: [NFT] = []
+    private var nfts: [NFT] = []
     
     private let networkClient: NetworkClient
     
@@ -42,21 +41,20 @@ private extension CartService {
     
     func fetchNfts(by ids: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
-        var nfts: [NFT] = []
         
         for id in ids {
             dispatchGroup.enter()
             let request = NFTRequest(id: id)
             
             networkClient.send(request: request) { [weak self] result in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 switch result {
                 case .success(let data):
                     do {
                         let model = try self.decoder.decode(NFTNetworkModel.self, from: data)
                         let nft = self.convert(from: model)
-                        nfts.append(nft)
+                        self.nfts.append(nft)
                     } catch {
                         completion(.failure(error))
                     }
@@ -69,7 +67,7 @@ private extension CartService {
         }
         
         dispatchGroup.notify(queue: .main) {
-            completion(.success(nfts))
+            completion(.success(self.nfts))
             self.nfts.removeAll()
         }
     }
@@ -83,7 +81,7 @@ extension CartService: CartServiceProtocol {
         let request = GetOrderRequest()
         
         networkClient.send(request: request) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch result {
             case .success(let data):
@@ -94,8 +92,7 @@ extension CartService: CartServiceProtocol {
                     self.fetchNfts(by: ids) { result in
                         switch result {
                         case .success(let fetchedNfts):
-                            self.nfts.append(contentsOf: fetchedNfts)
-                            completion(.success(self.nfts))
+                            completion(.success(fetchedNfts))
                         case .failure(let error):
                             completion(.failure(error))
                         }

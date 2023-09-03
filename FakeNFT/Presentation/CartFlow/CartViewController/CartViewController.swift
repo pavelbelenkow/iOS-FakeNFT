@@ -182,7 +182,12 @@ private extension CartViewController {
             title: Constants.Cart.errorAlertTitle,
             message: error.localizedDescription
         ) { [weak self] in
-            self?.updateCart()
+            UIBlockingProgressHUD.show()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                self?.updateCart()
+                UIBlockingProgressHUD.dismiss()
+            }
         }
     }
     
