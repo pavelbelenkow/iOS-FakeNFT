@@ -55,6 +55,8 @@
 		E4DB12EC2AA65CF9004097EA /* NFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12EB2AA65CF9004097EA /* NFTModel.swift */; };
 		E4DB12EE2AA65E5F004097EA /* NFTRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */; };
 		E4DB12F12AA669E9004097EA /* ImagesPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F02AA669E9004097EA /* ImagesPlaceholder.swift */; };
+		E4DB12F52AA67EF1004097EA /* NFTOrderedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */; };
+		E4DB12F72AA680CF004097EA /* NFTLikedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		E4DB12EB2AA65CF9004097EA /* NFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTModel.swift; sourceTree = "<group>"; };
 		E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTRequestModel.swift; sourceTree = "<group>"; };
 		E4DB12F02AA669E9004097EA /* ImagesPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesPlaceholder.swift; sourceTree = "<group>"; };
+		E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTOrderedModel.swift; sourceTree = "<group>"; };
+		E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLikedModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +426,8 @@
 			children = (
 				E4DB12EB2AA65CF9004097EA /* NFTModel.swift */,
 				E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */,
+				E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */,
+				E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */,
 			);
 			path = NFTModel;
 			sourceTree = "<group>";
@@ -633,7 +639,9 @@
 				E45C4C6D2A9E4D7A002A1B41 /* CatalogueView.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				E45C4C882A9E755E002A1B41 /* NFTScreenVC+UICollectionViewDelegate.swift in Sources */,
+				E4DB12F72AA680CF004097EA /* NFTLikedModel.swift in Sources */,
 				E45C4C782A9E5CE7002A1B41 /* CatalogueViewController+UITableViewDelegate.swift in Sources */,
+				E4DB12F52AA67EF1004097EA /* NFTOrderedModel.swift in Sources */,
 				59CAB78B2A9AC1B300C4938D /* CatalogueViewController.swift in Sources */,
 				59CAB7802A9AAB8300C4938D /* UIImage+Extensions.swift in Sources */,
 			);

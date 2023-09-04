@@ -14,4 +14,6 @@ struct NFTModel: Decodable {
     let price: Float
     let author: String
     let id: String
+    var isLiked: Bool? = nil
+    var isOrdered: Bool? = nil
 }

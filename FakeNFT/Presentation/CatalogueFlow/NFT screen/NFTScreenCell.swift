@@ -22,20 +22,10 @@ final class NFTScreenCell: UICollectionViewCell {
         return view
     }()
 
-    private let likeButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "Liked")
-
-        button.setImage(image, for: .normal)
-
-        return button
-    }()
-
-    private var ratingImage: UIImageView = {
-        let view = UIImageView()
-
-        return view
-    }()
+    private var likeButton = UIButton()
+    private var cartButton = UIButton()
+    private var ratingImage = UIImageView()
+    private let placeholder = ImagesPlaceholder()
 
     private var nameLabel: UILabel = {
         let label = UILabel()
@@ -61,17 +51,6 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    private let cartButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "CartAdd")
-
-        button.setImage(image, for: .normal)
-
-        return button
-    }()
-
-    private let placeholder = ImagesPlaceholder()
-
     //MARK: Internal Properties
     var model: NFTModel? {
         didSet {
@@ -80,6 +59,8 @@ final class NFTScreenCell: UICollectionViewCell {
             setRatingImage(rating: model.rating)
             nameLabel.text = model.name
             priceLabel.text = "\(model.price) ETH"
+            setLikeImage(isLiked: model.isLiked)
+            setOrderImage(isOrdered: model.isOrdered)
 
             guard let encodedUrlString = model
                 .images[0]
@@ -118,7 +99,6 @@ final class NFTScreenCell: UICollectionViewCell {
         priceLabel.text = nil
     }
 
-
     //MARK: Private Methods
     private func makeCell() {
         addSubviews()
@@ -152,7 +132,7 @@ final class NFTScreenCell: UICollectionViewCell {
             cartButton.heightAnchor.constraint(
                 equalToConstant: 40
             ),
-            cartButton.heightAnchor.constraint(
+            cartButton.widthAnchor.constraint(
                 equalToConstant: 40
             ),
             priceLabel.bottomAnchor.constraint(
@@ -167,6 +147,9 @@ final class NFTScreenCell: UICollectionViewCell {
             ),
             nameLabel.leadingAnchor.constraint(
                 equalTo: priceLabel.leadingAnchor
+            ),
+            nameLabel.trailingAnchor.constraint(
+                equalTo: cartButton.leadingAnchor
             ),
             ratingImage.bottomAnchor.constraint(
                 equalTo: nameLabel.topAnchor,
@@ -222,5 +205,29 @@ final class NFTScreenCell: UICollectionViewCell {
         }
 
         ratingImage.image = UIImage(named: imageName)
+    }
+
+    private func setLikeImage(isLiked: Bool?) {
+        var likeImageName = String()
+
+        if let isLiked, isLiked {
+            likeImageName = "Liked"
+        } else {
+            likeImageName = "NotLiked"
+        }
+
+        likeButton.setImage(UIImage(named: likeImageName), for: .normal)
+    }
+
+    private func setOrderImage(isOrdered: Bool?) {
+        var orderImageName = String()
+
+        if let isOrdered, isOrdered {
+            orderImageName = "CartDelete"
+        } else {
+            orderImageName = "CartAdd"
+        }
+
+        cartButton.setImage(UIImage(named: orderImageName), for: .normal)
     }
 }
