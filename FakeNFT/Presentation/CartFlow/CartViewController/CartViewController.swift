@@ -11,6 +11,17 @@ final class CartViewController: UIViewController {
         return view
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(
+            self,
+            action: #selector(refreshOrder),
+            for: .valueChanged
+        ) 
+        cartTableView.refreshControl = control
+        return control
+    }()
+    
     private lazy var emptyCartLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.Cart.emptyCartText
@@ -192,6 +203,8 @@ private extension CartViewController {
     }
     
     func updateCart() {
+        refreshControl.endRefreshing()
+        
         viewModel.getOrder { [weak self] error in
             self?.showErrorAlert(error)
         }
@@ -288,6 +301,13 @@ private extension CartViewController {
             actionSheet.addAction(action)
         }
         present(actionSheet, animated: true)
+    }
+    
+    @objc func refreshOrder() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            self?.updateCart()
+        }
     }
     
     @objc func sortingButtonTapped() {
