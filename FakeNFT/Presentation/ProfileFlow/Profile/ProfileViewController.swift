@@ -124,6 +124,12 @@ final class ProfileViewController: UIViewController {
         present(nvc, animated: true)
     }
 
+    private func showMyNFTs() {
+        let viewController = NFTCollectionViewController()
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func setupView() {
         setupNavBar()
         view.addSubview(avatarAndNameStackView)
@@ -197,5 +203,16 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ProfileConstants.cellHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            showMyNFTs()
+        case 1:
+            break
+        default:
+            break
+        }
     }
 }

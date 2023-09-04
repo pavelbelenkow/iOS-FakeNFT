@@ -3,14 +3,14 @@ import UIKit
 final class NFTCollectionViewController: UIViewController {
 
     private enum Constants {
-        static let sortButtonSize: CGFloat = 42
+        static let navBarButtonSize: CGFloat = 42
     }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        self.navigationItem.rightBarButtonItem = .init(customView: sortButton)
+        setupNavBar()
     }
 
     // MARK: - UI Objects
@@ -22,6 +22,7 @@ final class NFTCollectionViewController: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.separatorStyle = .none
+        tableview.allowsSelection = false
         return tableview
     }()
 
@@ -30,20 +31,37 @@ final class NFTCollectionViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "NFTSort"), for: .normal)
         button.tintColor = UIColor.NFTColor.black
-        let width = Constants.sortButtonSize
+        let width = Constants.navBarButtonSize
+        button.frame.size = CGSize(width: width, height: width)
+        return button
+    }()
+
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "ChevronLeft"), for: .normal)
+        button.tintColor = UIColor.NFTColor.black
+        let width = Constants.navBarButtonSize
         button.frame.size = CGSize(width: width, height: width)
         return button
     }()
 
     // MARK: - Private functions
     private func setupView() {
+        view.backgroundColor = .white
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+
+    private func setupNavBar() {
+        navigationItem.rightBarButtonItem = .init(customView: sortButton)
+        navigationItem.leftBarButtonItem = .init(customView: backButton)
+        title = "Мои NFT"
     }
 }
 
