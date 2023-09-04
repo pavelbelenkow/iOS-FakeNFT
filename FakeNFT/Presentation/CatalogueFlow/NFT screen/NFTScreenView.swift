@@ -9,10 +9,9 @@ import UIKit
 
 final class NFTScreenView: UIView {
     //MARK: Private Properties
-    private let coverImage: UIImageView = {
+    private var coverImage: UIImageView = {
         let view = UIImageView()
 
-        view.backgroundColor = .blue
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -21,10 +20,9 @@ final class NFTScreenView: UIView {
         return view
     }()
 
-    private let headerLabel: UILabel = {
+    private var headerLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Peach"
         label.font = UIFont(
             name: "SF Pro Text Bold",
             size: 22
@@ -49,10 +47,9 @@ final class NFTScreenView: UIView {
         return label
     }()
 
-    private let descriptionLabel: UILabel = {
+    private var descriptionLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Персиковый — как облака над закатным солнцем в океане. В этой коллекции совмещены трогательная нежность и живая игривость сказочных зефирных зверей."
         label.font = UIFont(
             name: "SF Pro Text Regular",
             size: 13
@@ -80,20 +77,6 @@ final class NFTScreenView: UIView {
         textView.isScrollEnabled = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
-        let attributedString = NSMutableAttributedString(string: "")
-        let linkAttributes: [NSAttributedString.Key: Any] = [
-            .link: URL(string: "https://example.com")!,
-            .foregroundColor: UIColor.red,
-            .font: UIFont(
-                name: "SF Pro Text Regular",
-                size: 15
-            )
-        ]
-        let linkString = NSAttributedString(string: "John Doe", attributes: linkAttributes)
-        attributedString.append(linkString)
-
-        textView.attributedText = attributedString
-
         return textView
     }()
 
@@ -108,6 +91,43 @@ final class NFTScreenView: UIView {
 
         return view
     }()
+
+    //MARK: Properties
+    var model: CatalogueCellModel? {
+        didSet {
+            guard let model else { return }
+
+            guard let encodedUrlString = model
+                .url
+                .addingPercentEncoding(
+                    withAllowedCharacters: .urlQueryAllowed
+                ),
+                  let url = URL(
+                    string: encodedUrlString
+            ) else {
+                print("Invalid URL:", model.url)
+                return
+            }
+            coverImage.kf.setImage(with: url)
+
+            headerLabel.text = model.name
+            descriptionLabel.text = model.description
+
+            let attributedString = NSMutableAttributedString(string: "")
+            let linkAttributes: [NSAttributedString.Key: Any] = [
+                .link: URL(string: "https://example.com")!,
+                .foregroundColor: UIColor.red,
+                .font: UIFont(
+                    name: "SF Pro Text Regular",
+                    size: 15
+                )
+            ]
+            let linkString = NSAttributedString(string: model.author, attributes: linkAttributes)
+            attributedString.append(linkString)
+            authorLink.attributedText = attributedString
+
+        }
+    }
 
     //MARK: Initialisers
     override init(frame: CGRect) {
@@ -223,5 +243,10 @@ final class NFTScreenView: UIView {
                 constant: -16
             )
         ])
+    }
+
+    //MARK: Internal Methods
+    func updateCollectionView() {
+        collectionView.reloadData()
     }
 }

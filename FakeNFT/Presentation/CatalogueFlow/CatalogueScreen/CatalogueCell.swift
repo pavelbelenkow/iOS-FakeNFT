@@ -39,12 +39,14 @@ final class CatalogueCell: UITableViewCell {
         return label
     }()
 
+    private let placeholder = ImagesPlaceholder()
+
     //MARK: Internal Properties
     var model: CatalogueCellModel? {
         didSet {
             guard let model else { return }
 
-            nameLabel.text = "\(model.name) (\(model.count))"
+            nameLabel.text = "\(model.name) (\(model.nfts.count))"
 
             guard let encodedUrlString = model
                 .url
@@ -57,7 +59,7 @@ final class CatalogueCell: UITableViewCell {
                 print("Invalid URL:", model.url)
                 return
             }
-            collectionImageView.kf.setImage(with: url)
+            collectionImageView.kf.setImage(with: url, placeholder: placeholder)
         }
     }
 
@@ -123,17 +125,5 @@ final class CatalogueCell: UITableViewCell {
                 constant: -13
             )
         ])
-    }
-
-    //MARK: Internal Methods
-    func configCell() {
-        //TODO: Тянуть изображения из сети
-        let red = CGFloat(arc4random_uniform(256)) / 255.0
-        let green = CGFloat(arc4random_uniform(256)) / 255.0
-        let blue = CGFloat(arc4random_uniform(256)) / 255.0
-
-        collectionImageView.backgroundColor = UIColor(
-            red: red, green: green, blue: blue, alpha: 1.0
-        )
     }
 }

@@ -13,7 +13,7 @@ extension CatalogueViewController: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath
     ) {
-        let NFTScreenVC = NFTScreenVC()
+        let NFTScreenVC = NFTScreenVC(catalogueCell: catalogueViewModel.catalogue[indexPath.row])
         let backItem = UIBarButtonItem()
         backItem.title = String()
         NFTScreenVC.navigationItem.backBarButtonItem = backItem

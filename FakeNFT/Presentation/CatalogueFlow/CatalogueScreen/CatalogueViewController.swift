@@ -40,7 +40,7 @@ final class CatalogueViewController: UIViewController {
     }
 
     private func bind() {
-        catalogueViewModel.$catalogue.bind { [weak self] catalogue in
+        catalogueViewModel.$catalogue.bind { [weak self] _ in
             self?.catalogueView.reloadTableView()
         }
     }

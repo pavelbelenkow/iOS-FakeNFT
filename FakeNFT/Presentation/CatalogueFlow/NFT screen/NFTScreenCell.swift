@@ -6,16 +6,16 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class NFTScreenCell: UICollectionViewCell {
     //MARK: Static Properties
     static let identifier = "NFTScreenCell"
 
     //MARK: Private Properties
-    private let NFTImageView: UIImageView = {
+    private var NFTImageView: UIImageView = {
         let view = UIImageView()
 
-        view.backgroundColor = .gray
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
 
@@ -31,19 +31,15 @@ final class NFTScreenCell: UICollectionViewCell {
         return button
     }()
 
-    private let ratingImage: UIImageView = {
+    private var ratingImage: UIImageView = {
         let view = UIImageView()
-        let image = UIImage(named: "ThreeStars")
-
-        view.image = image
 
         return view
     }()
 
-    private let nameLabel: UILabel = {
+    private var nameLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Archie"
         label.font = UIFont(
             name: "SF Pro Text Bold",
             size: 17
@@ -53,10 +49,9 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    private let priceLabel: UILabel = {
+    private var priceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "1 ETH"
         label.font = UIFont(
             name: "SF Pro Text Regular",
             size: 10
@@ -75,6 +70,33 @@ final class NFTScreenCell: UICollectionViewCell {
         return button
     }()
 
+    private let placeholder = ImagesPlaceholder()
+
+    //MARK: Internal Properties
+    var model: NFTModel? {
+        didSet {
+            guard let model else { return }
+
+            setRatingImage(rating: model.rating)
+            nameLabel.text = model.name
+            priceLabel.text = "\(model.price) ETH"
+
+            guard let encodedUrlString = model
+                .images[0]
+                .addingPercentEncoding(
+                    withAllowedCharacters: .urlQueryAllowed
+                ),
+                  let url = URL(
+                    string: encodedUrlString
+            ) else {
+                print("Invalid URL:", model.images[0])
+                return
+            }
+
+            NFTImageView.kf.setImage(with: url, placeholder: placeholder)
+        }
+    }
+
     //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,6 +106,18 @@ final class NFTScreenCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError()
     }
+
+    //MARK: Overriden Methods
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        NFTImageView.kf.cancelDownloadTask()
+        NFTImageView.image = nil
+        ratingImage.image = nil
+        nameLabel.text = nil
+        priceLabel.text = nil
+    }
+
 
     //MARK: Private Methods
     private func makeCell() {
@@ -108,19 +142,6 @@ final class NFTScreenCell: UICollectionViewCell {
 
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            NFTImageView.topAnchor.constraint(
-                equalTo: contentView.topAnchor
-            ),
-            NFTImageView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor
-            ),
-            NFTImageView.bottomAnchor.constraint(
-                equalTo: ratingImage.topAnchor,
-                constant: -8
-            ),
-            NFTImageView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor
-            ),
             cartButton.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor
             ),
@@ -165,7 +186,41 @@ final class NFTScreenCell: UICollectionViewCell {
             ),
             likeButton.widthAnchor.constraint(
                 equalToConstant: 42
+            ),
+            NFTImageView.topAnchor.constraint(
+                equalTo: contentView.topAnchor
+            ),
+            NFTImageView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            ),
+            NFTImageView.bottomAnchor.constraint(
+                equalTo: ratingImage.topAnchor,
+                constant: -8
+            ),
+            NFTImageView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor
             )
         ])
+    }
+
+    private func setRatingImage(rating: Int) {
+        var imageName = String()
+
+        switch rating {
+        case 0:
+            imageName = "ZeroStars"
+        case 1:
+            imageName = "OneStar"
+        case 2:
+            imageName = "TwoStars"
+        case 3:
+            imageName = "ThreeStars"
+        case 4:
+            imageName = "FourStars"
+        default:
+            imageName = "FiveStars"
+        }
+
+        ratingImage.image = UIImage(named: imageName)
     }
 }

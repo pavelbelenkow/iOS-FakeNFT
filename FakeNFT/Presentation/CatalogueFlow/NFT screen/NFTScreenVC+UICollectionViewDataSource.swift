@@ -13,7 +13,7 @@ extension NFTScreenVC: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        10
+        nftScreenViewModel.nftCollection.count
     }
 
     func collectionView(
@@ -25,6 +25,8 @@ extension NFTScreenVC: UICollectionViewDataSource {
         ) as? NFTScreenCell else {
             return UICollectionViewCell()
         }
+
+        cell.model = nftScreenViewModel.nftCollection[indexPath.row]
 
         return cell
     }

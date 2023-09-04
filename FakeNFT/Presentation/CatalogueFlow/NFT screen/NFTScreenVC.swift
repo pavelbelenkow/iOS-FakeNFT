@@ -19,9 +19,28 @@ final class NFTScreenVC: UIViewController {
         cellCount: 3, leftInset: 16, rightInset: 16, cellSpacing: 10
     )
 
+    let nftScreenViewModel: NFTScreenViewModel
+
+    //MARK: Initialisers
+    init(catalogueCell: CatalogueCellModel) {
+        nftScreenViewModel = NFTScreenViewModel(author: catalogueCell.author)
+        super.init(nibName: nil, bundle: nil)
+        self.NFTView.model = catalogueCell
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
     //MARK: View Controller Life Cycle
     override func loadView() {
         view = NFTView
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bind()
+        nftScreenViewModel.getNFTCollection()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +79,12 @@ final class NFTScreenVC: UIViewController {
                     height: tabBarController.tabBar.frame.height
                 )
             }
+        }
+    }
+
+    private func bind() {
+        nftScreenViewModel.$nftCollection.bind { [weak self] _ in
+            self?.NFTView.updateCollectionView()
         }
     }
 }
