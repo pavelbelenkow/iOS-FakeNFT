@@ -264,6 +264,15 @@ private extension CartViewController {
         }
     }
     
+    func scrollToTopIfNeeded() {
+        let topIndexPath = IndexPath(row: 0, section: 0)
+        if cartTableView.contentOffset.y > 0 {
+            cartTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+        } else {
+            cartTableView.scrollToRow(at: topIndexPath, at: .top, animated: false)
+        }
+    }
+
     func presentSheetOfSortTypes() {
         let sheetTitle = Constants.Cart.sortText
         let priceSortTitle = Constants.Cart.byPrice
@@ -276,18 +285,21 @@ private extension CartViewController {
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .price)
+            self?.scrollToTopIfNeeded()
         }
         let rateSortAction = UIAlertAction(
             title: rateSortTitle,
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .rating)
+            self?.scrollToTopIfNeeded()
         }
         let nameSortAction = UIAlertAction(
             title: nameSortTitle,
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .name)
+            self?.scrollToTopIfNeeded()
         }
         let closeSheetAction = UIAlertAction(
             title: closeSheetTitle,
