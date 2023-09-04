@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 // MARK: - Protocols
 
@@ -174,6 +173,11 @@ private extension CartCell {
 
 private extension CartCell {
     
+    func setImage(from image: String) {
+        let imageURL = URL(string: image)
+        NFTImageCache.loadAndCacheImage(for: nftImageView, with: imageURL)
+    }
+    
     func setRating(from rating: Int) {
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -208,10 +212,10 @@ extension CartCell {
         
         self.nft = nft
         
-        nftImageView.kf.setImage(with: URL(string: nft.image))
         nftTitleLabel.text = nft.name
         nftPriceLabel.text = formatPrice(nft.price)
         
+        setImage(from: nft.image)
         setRating(from: nft.rating)
     }
 }

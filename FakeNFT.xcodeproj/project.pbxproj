@@ -35,6 +35,7 @@
 		5923ACF42A9C072000E31FA5 /* RemoveNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */; };
 		592C9F312AA2798900FAF74F /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C9F302AA2798900FAF74F /* NFT.swift */; };
 		592C9F332AA286B900FAF74F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592C9F322AA286B900FAF74F /* UIViewController+Extensions.swift */; };
+		594F50B72AA6551600856829 /* ImageCacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F50B62AA6551600856829 /* ImageCacheHelper.swift */; };
 		596D411B2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */; };
 		596D411D2AA110F1007F2669 /* SortHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411C2AA110F1007F2669 /* SortHelper.swift */; };
 		596D411F2AA11293007F2669 /* NumberFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411E2AA11293007F2669 /* NumberFormatter+Extensions.swift */; };
@@ -102,6 +103,7 @@
 		5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNftViewController.swift; sourceTree = "<group>"; };
 		592C9F302AA2798900FAF74F /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
 		592C9F322AA286B900FAF74F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		594F50B62AA6551600856829 /* ImageCacheHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheHelper.swift; sourceTree = "<group>"; };
 		596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		596D411C2AA110F1007F2669 /* SortHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHelper.swift; sourceTree = "<group>"; };
 		596D411E2AA11293007F2669 /* NumberFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				596D411C2AA110F1007F2669 /* SortHelper.swift */,
+				594F50B62AA6551600856829 /* ImageCacheHelper.swift */,
 				596D411E2AA11293007F2669 /* NumberFormatter+Extensions.swift */,
 				59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */,
 				59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */,
@@ -569,6 +572,7 @@
 				596D411D2AA110F1007F2669 /* SortHelper.swift in Sources */,
 				59D8CBD22A9EACAA0075038E /* OrderNetworkModel.swift in Sources */,
 				59CAB78F2A9AC20900C4938D /* StatisticsViewController.swift in Sources */,
+				594F50B72AA6551600856829 /* ImageCacheHelper.swift in Sources */,
 				5923ACF42A9C072000E31FA5 /* RemoveNftViewController.swift in Sources */,
 				590629D52A9D44AC0047A0B6 /* NFTNetworkModel.swift in Sources */,
 				59CAB7892A9AC16A00C4938D /* ProfileViewController.swift in Sources */,
