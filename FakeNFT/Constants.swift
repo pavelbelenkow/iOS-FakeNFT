@@ -24,6 +24,7 @@ enum Constants {
         static let removeFromCart = "Вы уверены, что хотите удалить объект из корзины?"
         static let retryText = "Повторить"
         static let reuseIdentifier = "cart"
+        static let selectTypeOfPayment = "Выберите способ оплаты"
         static let sortText = "Сортировка"
     }
 }
