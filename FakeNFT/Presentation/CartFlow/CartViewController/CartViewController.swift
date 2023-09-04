@@ -6,6 +6,18 @@ final class CartViewController: UIViewController {
     
     // MARK: - Properties
     
+    private lazy var sortingButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage.NFTIcon.sorting, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(sortingButtonTapped),
+            for: .touchUpInside
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var cartTableView: UITableView = {
         let view = CartTableView(viewModel: viewModel, viewController: self)
         return view
@@ -122,13 +134,7 @@ private extension CartViewController {
     }
     
     func addSortingButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage.NFTIcon.sorting,
-            style: .done,
-            target: self,
-            action: #selector(sortingButtonTapped)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.NFTColor.black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
     }
     
     func addCartTableView() {
@@ -232,6 +238,7 @@ private extension CartViewController {
         let isCartEmpty = viewModel.listNfts.isEmpty
         
         emptyCartLabel.isHidden = !isCartEmpty
+        sortingButton.isHidden = isCartEmpty
         cartTableView.isHidden = isCartEmpty
         paymentContainerView.isHidden = isCartEmpty
         updateNftAmountLabel()
