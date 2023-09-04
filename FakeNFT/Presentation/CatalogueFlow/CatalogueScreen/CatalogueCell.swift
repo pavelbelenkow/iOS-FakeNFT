@@ -6,23 +6,26 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CatalogueCell: UITableViewCell {
     //MARK: Static Properties
     static let identifier = "CatalogueCell"
 
     //MARK: Private Properties
-    private let collectionImageView: UIImageView = {
+    private var collectionImageView: UIImageView = {
         let view = UIImageView()
 
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
 
         return view
     }()
 
-    private let nameLabel: UILabel = {
+    private var nameLabel: UILabel = {
         let label = UILabel()
 
         label.textColor = .black
@@ -35,6 +38,28 @@ final class CatalogueCell: UITableViewCell {
 
         return label
     }()
+
+    //MARK: Internal Properties
+    var model: CatalogueCellModel? {
+        didSet {
+            guard let model else { return }
+
+            nameLabel.text = "\(model.name) (\(model.count))"
+
+            guard let encodedUrlString = model
+                .url
+                .addingPercentEncoding(
+                    withAllowedCharacters: .urlQueryAllowed
+                ),
+                  let url = URL(
+                    string: encodedUrlString
+            ) else {
+                print("Invalid URL:", model.url)
+                return
+            }
+            collectionImageView.kf.setImage(with: url)
+        }
+    }
 
     //MARK: Initialisers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

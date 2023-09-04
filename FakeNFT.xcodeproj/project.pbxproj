@@ -48,6 +48,9 @@
 		E45C4C862A9E7522002A1B41 /* GridGeometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C852A9E7522002A1B41 /* GridGeometric.swift */; };
 		E45C4C882A9E755E002A1B41 /* NFTScreenVC+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C872A9E755E002A1B41 /* NFTScreenVC+UICollectionViewDelegate.swift */; };
 		E45C4C8C2A9E8EC4002A1B41 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C8B2A9E8EC4002A1B41 /* WebViewVC.swift */; };
+		E45C4C8F2AA0D3A8002A1B41 /* CatalogueCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C8E2AA0D3A8002A1B41 /* CatalogueCellModel.swift */; };
+		E45C4C922AA0D5DE002A1B41 /* CatalogueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C912AA0D5DE002A1B41 /* CatalogueViewModel.swift */; };
+		E45C4C942AA643F6002A1B41 /* CatalogueRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C932AA643F6002A1B41 /* CatalogueRequestModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +114,9 @@
 		E45C4C852A9E7522002A1B41 /* GridGeometric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGeometric.swift; sourceTree = "<group>"; };
 		E45C4C872A9E755E002A1B41 /* NFTScreenVC+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTScreenVC+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		E45C4C8B2A9E8EC4002A1B41 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewVC.swift; sourceTree = "<group>"; };
+		E45C4C8E2AA0D3A8002A1B41 /* CatalogueCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueCellModel.swift; sourceTree = "<group>"; };
+		E45C4C912AA0D5DE002A1B41 /* CatalogueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueViewModel.swift; sourceTree = "<group>"; };
+		E45C4C932AA643F6002A1B41 /* CatalogueRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueRequestModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +362,8 @@
 		E45C4C7A2A9E5D15002A1B41 /* CatalogueScreen */ = {
 			isa = PBXGroup;
 			children = (
+				E45C4C902AA0D5CE002A1B41 /* ViewModel */,
+				E45C4C8D2AA0D396002A1B41 /* Model */,
 				59CAB78A2A9AC1B300C4938D /* CatalogueViewController.swift */,
 				E45C4C6C2A9E4D7A002A1B41 /* CatalogueView.swift */,
 				E45C4C6E2A9E4DB3002A1B41 /* CatalogueCell.swift */,
@@ -371,6 +379,23 @@
 				E45C4C8B2A9E8EC4002A1B41 /* WebViewVC.swift */,
 			);
 			path = WebViewScreen;
+			sourceTree = "<group>";
+		};
+		E45C4C8D2AA0D396002A1B41 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E45C4C8E2AA0D3A8002A1B41 /* CatalogueCellModel.swift */,
+				E45C4C932AA643F6002A1B41 /* CatalogueRequestModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E45C4C902AA0D5CE002A1B41 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E45C4C912AA0D5DE002A1B41 /* CatalogueViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -536,6 +561,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
+				E45C4C942AA643F6002A1B41 /* CatalogueRequestModel.swift in Sources */,
+				E45C4C8F2AA0D3A8002A1B41 /* CatalogueCellModel.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				E45C4C7C2A9E5D2E002A1B41 /* NFTScreenVC.swift in Sources */,
@@ -558,6 +585,7 @@
 				E45C4C862A9E7522002A1B41 /* GridGeometric.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
+				E45C4C922AA0D5DE002A1B41 /* CatalogueViewModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				59CAB77C2A9AAA2900C4938D /* UIColor+Extensions.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
