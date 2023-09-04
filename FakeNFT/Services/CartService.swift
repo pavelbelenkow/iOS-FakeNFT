@@ -15,6 +15,7 @@ final class CartService {
     
     private let decoder = JSONDecoder()
     private var nfts: [NFT] = []
+    private var nftsCache: [String : NFT] = [:]
     
     private let networkClient: NetworkClient
     
@@ -40,13 +41,19 @@ private extension CartService {
     }
     
     func fetchNfts(by ids: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
+        nfts.removeAll()
+        
         let dispatchGroup = DispatchGroup()
         
-        for id in ids {
+        // Filter out already fetched NFT from the ids array
+        let missingIds = Set(ids).subtracting(nftsCache.keys)
+        
+        for id in missingIds {
             dispatchGroup.enter()
             let request = NFTRequest(id: id)
             
             networkClient.send(request: request) { [weak self] result in
+                defer { dispatchGroup.leave() }
                 guard let self else { return }
                 
                 switch result {
@@ -54,21 +61,25 @@ private extension CartService {
                     do {
                         let model = try self.decoder.decode(NFTNetworkModel.self, from: data)
                         let nft = self.convert(from: model)
-                        self.nfts.append(nft)
+                        self.nfts.append(nft) // Append the fetched NFT to the nfts array
+                        self.nftsCache[id] = nft // Store the fetched NFT in the cache
                     } catch {
                         completion(.failure(error))
                     }
                 case .failure(let error):
                     completion(.failure(error))
                 }
-                
-                dispatchGroup.leave()
             }
         }
         
-        dispatchGroup.notify(queue: .main) {
+        // Filter out already fetched NFT from the cache
+        let cachedNfts = ids.compactMap { nftsCache[$0] }
+        
+        // Append the fetched NFT from cache to the nfts array
+        nfts.append(contentsOf: cachedNfts)
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
             completion(.success(self.nfts))
-            self.nfts.removeAll()
         }
     }
 }
@@ -97,7 +108,6 @@ extension CartService: CartServiceProtocol {
                             completion(.failure(error))
                         }
                     }
-                    
                 } catch {
                     completion(.failure(error))
                 }
