@@ -18,20 +18,20 @@ final class CartViewController: UIViewController {
         return button
     }()
     
-    private lazy var cartTableView: UITableView = {
-        let view = CartTableView(viewModel: viewModel, viewController: self)
-        return view
-    }()
-    
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(
             self,
             action: #selector(refreshOrder),
             for: .valueChanged
-        ) 
-        cartTableView.refreshControl = control
+        )
         return control
+    }()
+    
+    private lazy var cartTableView: UITableView = {
+        let view = CartTableView(viewModel: viewModel, viewController: self)
+        view.refreshControl = refreshControl
+        return view
     }()
     
     private lazy var emptyCartLabel: UILabel = {
