@@ -64,7 +64,7 @@ final class CartViewController: UIViewController {
     
     private lazy var nftAmountLabel: UILabel = {
         let label = UILabel()
-        label.text = "0" + Constants.Cart.nftText
+        label.text = "0 " + Constants.Cart.nftText
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular15
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,7 @@ final class CartViewController: UIViewController {
     
     private lazy var totalValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "00,00" + Constants.Cart.currency
+        label.text = "00,00 " + Constants.Cart.currency
         label.textColor = UIColor.NFTColor.green
         label.font = UIFont.NFTFont.bold17
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -335,6 +335,7 @@ private extension CartViewController {
     
     @objc func paymentButtonTapped() {
         let paymentViewController = PaymentViewController()
+        paymentViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentViewController, animated: true)
     }
 }

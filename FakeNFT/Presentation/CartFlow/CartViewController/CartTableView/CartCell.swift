@@ -12,7 +12,7 @@ final class CartCell: UITableViewCell {
     
     // MARK: - Properties
     
-    static let reuseIdentifier = Constants.Cart.reuseIdentifier
+    static let reuseIdentifier = Constants.Cart.cartReuseIdentifier
     
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()

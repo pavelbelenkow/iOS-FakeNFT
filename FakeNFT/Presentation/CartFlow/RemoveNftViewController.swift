@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 // MARK: - RemoveNftViewController class
 
@@ -171,7 +170,8 @@ private extension RemoveNftViewController {
     
     func setNftImage() {
         guard let nft else { return }
-        nftImageView.kf.setImage(with: URL(string: nft.image))
+        let imageURL = URL(string: nft.image)
+        NFTImageCache.loadAndCacheImage(for: nftImageView, with: imageURL)
     }
     
     func showErrorAlert(_ error: Error) {
