@@ -23,8 +23,29 @@ enum Constants {
         static let remove = "Удалить"
         static let removeFromCart = "Вы уверены, что хотите удалить объект из корзины?"
         static let retryText = "Повторить"
-        static let reuseIdentifier = "cart"
+        static let cartReuseIdentifier = "cart"
+        static let currencyReuseIdentifier = "currency"
         static let selectTypeOfPayment = "Выберите способ оплаты"
         static let sortText = "Сортировка"
+    }
+    
+    struct GeometricParams {
+        let cellCount: Int
+        let leftInset: CGFloat
+        let rightInset: CGFloat
+        let cellSpacing: CGFloat
+        let paddingWidth: CGFloat
+        
+        init(cellCount: Int,
+             leftInset: CGFloat,
+             rightInset: CGFloat,
+             cellSpacing: CGFloat
+        ) {
+            self.cellCount = cellCount
+            self.leftInset = leftInset
+            self.rightInset = rightInset
+            self.cellSpacing = cellSpacing
+            self.paddingWidth = leftInset + rightInset + CGFloat(cellCount - 1) * cellSpacing
+        }
     }
 }
