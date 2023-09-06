@@ -1,6 +1,6 @@
 import Foundation
 
-struct UserInfoRequest: NetworkRequest {
+struct ProfileRequest: NetworkRequest {
 
     let id: Int
 
@@ -10,7 +10,7 @@ struct UserInfoRequest: NetworkRequest {
 
     var endpoint: URL? {
         get {
-            URL(string: self.baseEndpoint + "users/\(id)")
+            URL(string: self.baseEndpoint + "profile/\(id)")
         }
     }
 

@@ -7,6 +7,9 @@ final class ProfileViewController: UIViewController {
     private var myNFTs = 0
     private var favoriteNFTs = 0
 
+    private var idCollectionNFT = [Int]()
+    private var idLikesNFT = [Int]()
+
     private struct ProfileConstants {
         static let editButtonSize: CGFloat = 42
         static let avatarSize: CGFloat = 70
@@ -127,6 +130,11 @@ final class ProfileViewController: UIViewController {
     private func showMyNFTs() {
         let viewController = NFTCollectionViewController()
         viewController.hidesBottomBarWhenPushed = true
+        guard let user = profileViewModel.user else { return }
+        idCollectionNFT = user.nfts.compactMap {Int($0)}
+        idLikesNFT = user.likes.compactMap {Int($0)}
+        viewController.idCollection = idCollectionNFT
+        viewController.idLikesCollection = idLikesNFT
         navigationController?.pushViewController(viewController, animated: true)
     }
 

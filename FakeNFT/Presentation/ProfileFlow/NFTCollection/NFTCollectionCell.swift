@@ -39,7 +39,6 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.text = "priv"
         label.textColor = UIColor.NFTColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,7 +47,6 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var starsImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "ZeroStars")
         return imageView
     }()
 
@@ -63,7 +61,7 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var byWordLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.text = "от"
+        label.text = "от "
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.NFTColor.black
         return label
@@ -72,7 +70,6 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.text = "athsds"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.NFTColor.black
         return label
@@ -98,10 +95,10 @@ final class NFTCollectionCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .bodyBold
-        label.text = "1232191"
         return label
     }()
 
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -112,6 +109,34 @@ final class NFTCollectionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Functions
+    func configCell(name: String, rating: Int, author: String, price: String, image: String, isLiked: Bool) {
+        nameLabel.text = name
+        authorLabel.text = author
+        priceCashLabel.text = "\(price) ETH"
+        nftImageView.loadImage(url: image.toURL, cornerRadius: 12)
+        setupRating(rating)
+        let likedImage = isLiked ? UIImage(named: "Liked") : UIImage(named: "NotLiked")
+        likeButton.setImage(likedImage, for: .normal)
+    }
+
+    private func setupRating(_ rating: Int) {
+        switch rating {
+        case 5:
+            starsImageView.image = UIImage(named: "FiveStars")
+        case 4:
+            starsImageView.image = UIImage(named: "FourStars")
+        case 3:
+            starsImageView.image = UIImage(named: "ThreeStars")
+        case 2:
+            starsImageView.image = UIImage(named: "TwoStars")
+        case 1:
+            starsImageView.image = UIImage(named: "OneStar")
+        default:
+            starsImageView.image = UIImage(named: "ZeroStars")
+        }
+    }
+    // MARK: - SetupView
     private func setupView() {
         contentView.addSubview(nftImageView)
         contentView.addSubview(infoStackView)
