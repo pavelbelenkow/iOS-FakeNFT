@@ -6,6 +6,7 @@ protocol OrderPaymentViewModelProtocol {
     var listCurrencies: [Currency] { get }
     func bindCurrencies(_ completion: @escaping ([Currency]) -> Void)
     func getCurrencies(_ completion: @escaping (Error) -> Void)
+    func getOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 // MARK: - OrderPaymentViewModel class
@@ -50,6 +51,25 @@ extension OrderPaymentViewModel: OrderPaymentViewModelProtocol {
                     self.currencies = currencies
                 case .failure(let error):
                     completion(error)
+                }
+            }
+        }
+    }
+    
+    func getOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void) {
+        UIBlockingProgressHUD.show()
+        
+        orderPaymentService.fetchOrderPaymentResult(by: currencyId) { [weak self] result in
+            guard let self else { return }
+            
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                
+                switch result {
+                case .success(let isSuccess):
+                    completion(.success(isSuccess))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
         }

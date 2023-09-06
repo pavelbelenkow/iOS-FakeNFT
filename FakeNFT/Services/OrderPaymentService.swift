@@ -4,6 +4,7 @@ import Foundation
 
 protocol OrderPaymentServiceProtocol {
     func fetchCurrencies(_ completion: @escaping (Result<[Currency], Error>) -> Void)
+    func fetchOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 // MARK: - OrderPaymentService class
@@ -52,6 +53,27 @@ extension OrderPaymentService: OrderPaymentServiceProtocol {
                     let currencyModels = try self.decoder.decode([CurrencyNetworkModel].self, from: data)
                     let currencies = currencyModels.map { self.convert(from: $0) }
                     completion(.success(currencies))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func fetchOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void) {
+        let request = OrderPaymentResultRequest(id: currencyId)
+        
+        networkClient.send(request: request) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let data):
+                do {
+                    let resultModel = try self.decoder.decode(PaymentResultNetworkModel.self, from: data)
+                    let isSuccessResult = resultModel.success
+                    completion(.success(isSuccessResult))
                 } catch {
                     completion(.failure(error))
                 }
