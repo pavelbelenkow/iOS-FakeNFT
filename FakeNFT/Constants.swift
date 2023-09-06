@@ -30,6 +30,7 @@ enum Constants {
         static let sortText = "Сортировка"
         static let userAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
         static let userAgreementLinkText = "Пользовательского соглашения"
+        static let userAgreementURL = "https://yandex.ru/legal/practicum_termsofuse/"
     }
     
     struct GeometricParams {

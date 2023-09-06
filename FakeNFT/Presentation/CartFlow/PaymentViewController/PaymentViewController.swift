@@ -1,4 +1,5 @@
 import UIKit
+import SafariServices
 
 // MARK: - PaymentViewController class
 
@@ -210,7 +211,12 @@ private extension PaymentViewController {
     }
     
     @objc func userAgreementButtonTapped() {
-        // TODO: impl segue to agreement in web view/ SFSafariVC
+        guard let url = URL(string: Constants.Cart.userAgreementURL) else {
+            return
+        }
+        
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true)
     }
     
     @objc func paymentButtonTapped() {
