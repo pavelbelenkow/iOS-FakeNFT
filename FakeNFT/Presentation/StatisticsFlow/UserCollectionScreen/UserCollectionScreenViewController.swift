@@ -146,7 +146,7 @@ extension UserCollectionScreenViewController: UICollectionViewDelegateFlowLayout
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 8
+        return params.cellSpacing
     }
     
     func collectionView(
@@ -184,8 +184,9 @@ extension UserCollectionScreenViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(indexPath: indexPath) as UserNFTsCollectionViewCell
-        cell.configureUserNFTsCollectionViewCell(with: viewModel.setUserNFTsCollectionViewCell(indexRow: indexPath.row))
-        
+        cell.configureUserNFTsCollectionViewCell(
+            with: viewModel.setUserNFTsCollectionViewCell(indexRow: indexPath.row)
+        )
         return cell
     }
 }

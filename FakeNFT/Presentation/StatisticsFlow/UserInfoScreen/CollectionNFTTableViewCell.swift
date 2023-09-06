@@ -48,6 +48,10 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         makeConstraints()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configureCollectionNFTTableViewCell(countCollectionNFT: Int) {
         countLabel.text = "(\(countCollectionNFT))"
     }
@@ -90,10 +94,6 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             chevronForwardImageView.trailingAnchor.constraint(equalTo: itemsView.trailingAnchor),
             chevronForwardImageView.centerYAnchor.constraint(equalTo: itemsView.centerYAnchor)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

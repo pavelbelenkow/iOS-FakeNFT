@@ -66,10 +66,10 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
-        self.numberLabel.text = String(model.indexRow + 1)
-        self.avatarImageView.loadImage(url: model.avatar)
-        self.nameLabel.text = model.name
-        self.numberRatingLabel.text = model.rating
+        numberLabel.text = String(model.indexRow + 1)
+        avatarImageView.loadImage(url: model.avatar)
+        nameLabel.text = model.name
+        numberRatingLabel.text = model.rating
     }
     
     private func addSubviews() {

@@ -84,15 +84,18 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func configureUserNFTsCollectionViewCell(with model: UserNFTsCollectionViewCellModel) {
-        self.imageNFTImageView.loadImage(url: model.image)
-        self.ratingImageView.image = setRatingStars(rating: model.rating)
-        self.nameLabel.text = model.name
-        self.priceLabel.text = String(format: "%.2f", model.price) + " ETH"
-        self.id = model.id
+        imageNFTImageView.loadImage(url: model.image)
+        ratingImageView.image = setRatingStars(rating: model.rating)
+        nameLabel.text = model.name
+        priceLabel.text = String(format: "%.2f", model.price) + " ETH"
+        id = model.id
         setLikeButtonImage()
         setCartButtonImage()
     }
@@ -206,10 +209,6 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         isLiked.toggle()
         setLikeButtonImage()
         print("id \(id) - \(isLiked ? "like" : "notLike")")// передать через delegate???
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
