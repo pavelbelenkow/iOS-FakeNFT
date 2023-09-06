@@ -126,10 +126,7 @@ extension CartService: CartServiceProtocol {
             
             switch result {
             case .success:
-                DispatchQueue.main.async {
-                    self.nfts.removeAll()
-                }
-                
+                self.nfts.removeAll()
                 completion(nil)
             case .failure(let error):
                 completion(error)

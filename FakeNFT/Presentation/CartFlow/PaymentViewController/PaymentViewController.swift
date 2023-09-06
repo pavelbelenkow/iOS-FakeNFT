@@ -8,7 +8,7 @@ final class PaymentViewController: UIViewController {
     
     private lazy var currencyCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let view = CurrencyCollectionView(viewController: self, layout: layout)
+        let view = CurrencyCollectionView(viewModel: viewModel, layout: layout)
         return view
     }()
     
@@ -74,12 +74,31 @@ final class PaymentViewController: UIViewController {
         return button
     }()
     
+    private let viewModel: OrderPaymentViewModelProtocol
+    
+    // MARK: - Initializers
+    
+    init(viewModel: OrderPaymentViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         addSubviews()
+        bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateCurrencies()
     }
 }
 
@@ -155,6 +174,36 @@ private extension PaymentViewController {
 // MARK: - Private methods
 
 private extension PaymentViewController {
+    
+    func showErrorAlert(_ error: Error) {
+        showAlert(
+            title: Constants.Cart.errorAlertTitle,
+            message: error.localizedDescription
+        ) { [weak self] in
+            UIBlockingProgressHUD.show()
+            
+            DispatchQueue.main.async {
+                self?.updateCurrencies()
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+    
+    func updateCurrencies() {
+        viewModel.getCurrencies { [weak self] error in
+            self?.showErrorAlert(error)
+        }
+    }
+    
+    func bindViewModel() {
+        UIBlockingProgressHUD.show()
+        
+        viewModel.bindCurrencies { [weak self] _ in
+            guard let self else { return }
+            self.currencyCollectionView.reloadData()
+            UIBlockingProgressHUD.dismiss()
+        }
+    }
     
     @objc func backToCart() {
         navigationController?.popViewController(animated: true)

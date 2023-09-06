@@ -99,7 +99,8 @@ private extension CurrencyCell {
 private extension CurrencyCell {
     
     func setCurrencyImage(from image: String) {
-        // TODO: impl load and cache image for currency image view
+        let imageURL = URL(string: image)
+        NFTImageCache.loadAndCacheImage(for: currencyImageView, with: imageURL)
     }
 }
 
@@ -107,17 +108,15 @@ private extension CurrencyCell {
 
 extension CurrencyCell {
     
-    func configure(from currency: String) {
+    func configure(from currency: Currency) {
         backgroundColor = UIColor.NFTColor.lightGray
         layer.cornerRadius = Constants.Cart.radius
         clipsToBounds = true
         
-        currencyTitleLabel.text = currency
-        currencyAbbreviationLabel.text = String(currency.prefix(4)).uppercased()
+        currencyTitleLabel.text = currency.title
+        currencyAbbreviationLabel.text = currency.name
         
         addSubviews()
-        let image = "https://code.s3.yandex.net/Mobile/iOS/Currencies/Dogecoin_(DOGE).png"
-        NFTImageCache.loadAndCacheImage(for: currencyImageView, with: URL(string: image))
-        
+        setCurrencyImage(from: currency.image)
     }
 }

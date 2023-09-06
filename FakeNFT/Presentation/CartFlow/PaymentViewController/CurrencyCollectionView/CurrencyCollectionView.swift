@@ -13,13 +13,13 @@ final class CurrencyCollectionView: UICollectionView {
         cellSpacing: 7
     )
     
-    private weak var viewController: PaymentViewController?
+    private let viewModel: OrderPaymentViewModelProtocol
     var selectedIndexPath: IndexPath?
     
     // MARK: - Initializers
     
-    init(viewController: PaymentViewController, layout: UICollectionViewFlowLayout) {
-        self.viewController = viewController
+    init(viewModel: OrderPaymentViewModelProtocol, layout: UICollectionViewFlowLayout) {
+        self.viewModel = viewModel
         super.init(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = .clear
@@ -44,7 +44,7 @@ final class CurrencyCollectionView: UICollectionView {
 extension CurrencyCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+        viewModel.listCurrencies.count
     }
     
     func collectionView(
@@ -60,7 +60,9 @@ extension CurrencyCollectionView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        currencyCell.configure(from: "Dogecoin")
+        let currency = viewModel.listCurrencies[indexPath.row]
+        
+        currencyCell.configure(from: currency)
         
         return currencyCell
     }
@@ -104,7 +106,7 @@ extension CurrencyCollectionView: UICollectionViewDelegateFlowLayout {
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
         UIEdgeInsets(
-            top: params.cellSpacing,
+            top: 0,
             left: params.leftInset,
             bottom: params.cellSpacing,
             right: params.rightInset

@@ -334,7 +334,8 @@ private extension CartViewController {
     }
     
     @objc func paymentButtonTapped() {
-        let paymentViewController = PaymentViewController()
+        let viewModel = OrderPaymentViewModel()
+        let paymentViewController = PaymentViewController(viewModel: viewModel)
         paymentViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentViewController, animated: true)
     }
