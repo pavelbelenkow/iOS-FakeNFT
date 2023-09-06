@@ -26,7 +26,7 @@ extension UIViewController {
             style: .cancel
         )
         
-        alertController.addAction(cancelAlertAction)
+        retryAction == nil ? () : alertController.addAction(cancelAlertAction)
         alertController.addAction(retryAlertAction)
         present(alertController, animated: true, completion: nil)
     }

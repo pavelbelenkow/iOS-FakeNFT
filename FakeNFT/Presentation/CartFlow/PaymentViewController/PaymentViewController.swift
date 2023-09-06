@@ -7,7 +7,7 @@ final class PaymentViewController: UIViewController {
     
     // MARK: - Properties
     
-    private lazy var currencyCollectionView: UICollectionView = {
+    private lazy var currencyCollectionView: CurrencyCollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = CurrencyCollectionView(viewModel: viewModel, layout: layout)
         return view
@@ -206,6 +206,34 @@ private extension PaymentViewController {
         }
     }
     
+    func showUnselectedCurrencyAlert() {
+        showAlert(
+            title: Constants.Cart.unselectedPaymentMethod,
+            message: Constants.Cart.selectCurrencyForPayment,
+            retryTitle: Constants.Cart.ok
+        )
+    }
+    
+    func showViewController(_ isSuccess: Bool) {
+        let viewController = PaymentResultViewController(isSuccess)
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController?.present(viewController, animated: true)
+    }
+    
+    func showPaymentErrorAlert(_ error: Error) {
+        showAlert(
+            title: Constants.Cart.errorAlertTitle,
+            message: error.localizedDescription
+        ) { [weak self] in
+            UIBlockingProgressHUD.show()
+            
+            DispatchQueue.main.async {
+                self?.paymentButtonTapped()
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+    
     @objc func backToCart() {
         navigationController?.popViewController(animated: true)
     }
@@ -216,10 +244,26 @@ private extension PaymentViewController {
         }
         
         let safariViewController = SFSafariViewController(url: url)
-        present(safariViewController, animated: true)
+        navigationController?.present(safariViewController, animated: true)
     }
     
     @objc func paymentButtonTapped() {
-        // TODO: impl segue to success or failure paymentVC
+        guard let selectedIndexPath = currencyCollectionView.selectedIndexPath else {
+            showUnselectedCurrencyAlert()
+            return
+        }
+        
+        let selectedCurrency = viewModel.listCurrencies[selectedIndexPath.row]
+        
+        viewModel.getOrderPaymentResult(by: selectedCurrency.id) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let isSuccess):
+                self.showViewController(isSuccess)
+            case .failure(let error):
+                self.showPaymentErrorAlert(error)
+            }
+        }
     }
 }
