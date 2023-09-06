@@ -45,6 +45,7 @@ final class PaymentViewController: UIViewController {
         label.text = Constants.Cart.userAgreementText
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular13
+        label.numberOfLines = 0
         return label
     }()
     
