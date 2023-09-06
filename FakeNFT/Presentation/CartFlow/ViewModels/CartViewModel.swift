@@ -20,14 +20,26 @@ final class CartViewModel {
     @Observable var nfts: [NFT]
     
     private let cartService: CartServiceProtocol
-    private var sortOption: SortOption?
-    private var sortDirection: SortDirection = .descending
+    private let sortStorageManager: SortStorageManager
     
     // MARK: - Initializers
     
     init(cartService: CartServiceProtocol = CartService()) {
         self.nfts = []
         self.cartService = cartService
+        self.sortStorageManager = .shared
+    }
+}
+
+// MARK: - Private methods
+
+private extension CartViewModel {
+    
+    func sortNfts(_ nfts: [NFT]) -> [NFT] {
+        let sortOption = sortStorageManager.sortOption
+        let sortDirection = sortStorageManager.sortDirection
+        
+        return nfts.sorted(by: sortOption.compareFunction(sortDirection: sortDirection))
     }
 }
 
@@ -52,7 +64,8 @@ extension CartViewModel: CartViewModelProtocol {
                 
                 switch result {
                 case .success(let nfts):
-                    self.nfts = nfts
+                    let sortedNfts = self.sortNfts(nfts)
+                    self.nfts = sortedNfts
                 case .failure(let error):
                     completion(error)
                 }
@@ -82,13 +95,13 @@ extension CartViewModel: CartViewModelProtocol {
     }
     
     func sortBy(option: SortOption) {
-        if sortOption == option {
-            sortDirection = (sortDirection == .descending) ? .ascending : .descending
+        if sortStorageManager.sortOption == option {
+            sortStorageManager.sortDirection = (sortStorageManager.sortDirection == .ascending) ? .descending : .ascending
         } else {
-            sortDirection = .descending
+            sortStorageManager.sortDirection = .ascending
         }
         
-        nfts.sort(by: option.compareFunction(sortDirection: sortDirection))
-        sortOption = option
+        nfts.sort(by: option.compareFunction(sortDirection: sortStorageManager.sortDirection))
+        sortStorageManager.sortOption = option
     }
 }

@@ -49,6 +49,7 @@
 		599CF8552AA7C459003CFA24 /* OrderPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599CF8542AA7C459003CFA24 /* OrderPaymentViewModel.swift */; };
 		59A522482AA67F9F00B69047 /* CurrencyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A522472AA67F9F00B69047 /* CurrencyCollectionView.swift */; };
 		59A5224A2AA67FB900B69047 /* CurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A522492AA67FB900B69047 /* CurrencyCell.swift */; };
+		59AE50D02AA92EDA0088408B /* SortStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AE50CF2AA92EDA0088408B /* SortStorageManager.swift */; };
 		59CAB77C2A9AAA2900C4938D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */; };
 		59CAB77E2A9AAA7000C4938D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */; };
 		59CAB7802A9AAB8300C4938D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */; };
@@ -127,6 +128,7 @@
 		599CF8542AA7C459003CFA24 /* OrderPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentViewModel.swift; sourceTree = "<group>"; };
 		59A522472AA67F9F00B69047 /* CurrencyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCollectionView.swift; sourceTree = "<group>"; };
 		59A522492AA67FB900B69047 /* CurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCell.swift; sourceTree = "<group>"; };
+		59AE50CF2AA92EDA0088408B /* SortStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStorageManager.swift; sourceTree = "<group>"; };
 		59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				3F6806CF29CBBDB100B4F915 /* NetworkClient */,
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
+				59AE50CF2AA92EDA0088408B /* SortStorageManager.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				596D411D2AA110F1007F2669 /* SortHelper.swift in Sources */,
 				59D8CBD22A9EACAA0075038E /* OrderNetworkModel.swift in Sources */,
+				59AE50D02AA92EDA0088408B /* SortStorageManager.swift in Sources */,
 				59CAB78F2A9AC20900C4938D /* StatisticsViewController.swift in Sources */,
 				594F50B72AA6551600856829 /* ImageCacheHelper.swift in Sources */,
 				59A5224A2AA67FB900B69047 /* CurrencyCell.swift in Sources */,

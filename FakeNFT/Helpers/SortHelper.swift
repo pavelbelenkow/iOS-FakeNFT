@@ -1,6 +1,6 @@
 import Foundation
 
-enum SortOption {
+enum SortOption: String {
     case price
     case rating
     case name
@@ -23,7 +23,7 @@ enum SortOption {
     }
 }
 
-enum SortDirection {
+enum SortDirection: String {
     case ascending
     case descending
 }
