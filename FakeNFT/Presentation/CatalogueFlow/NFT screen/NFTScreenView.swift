@@ -92,43 +92,6 @@ final class NFTScreenView: UIView {
         return view
     }()
 
-    //MARK: Properties
-    var model: CatalogueCellModel? {
-        didSet {
-            guard let model else { return }
-
-            guard let encodedUrlString = model
-                .url
-                .addingPercentEncoding(
-                    withAllowedCharacters: .urlQueryAllowed
-                ),
-                  let url = URL(
-                    string: encodedUrlString
-            ) else {
-                print("Invalid URL:", model.url)
-                return
-            }
-            coverImage.kf.setImage(with: url)
-
-            headerLabel.text = model.name
-            descriptionLabel.text = model.description
-
-            let attributedString = NSMutableAttributedString(string: "")
-            let linkAttributes: [NSAttributedString.Key: Any] = [
-                .link: URL(string: "https://example.com")!,
-                .foregroundColor: UIColor.red,
-                .font: UIFont(
-                    name: "SF Pro Text Regular",
-                    size: 15
-                )
-            ]
-            let linkString = NSAttributedString(string: model.author, attributes: linkAttributes)
-            attributedString.append(linkString)
-            authorLink.attributedText = attributedString
-
-        }
-    }
-
     //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -245,8 +208,47 @@ final class NFTScreenView: UIView {
         ])
     }
 
+    private func setAuthorLinkName(with name: String) {
+        let attributedString = NSMutableAttributedString(string: "")
+        let linkAttributes: [NSAttributedString.Key: Any] = [
+            .link: URL(string: "https://example.com")!,
+            .foregroundColor: UIColor.red,
+            .font: UIFont(
+                name: "SF Pro Text Regular",
+                size: 15
+            )
+        ]
+        let linkString = NSAttributedString(string: name, attributes: linkAttributes)
+        attributedString.append(linkString)
+        authorLink.attributedText = attributedString
+    }
+
+    private func setCoverImage(with url: String) {
+        guard let encodedUrlString = url
+            .addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+              let url = URL(
+                string: encodedUrlString
+        ) else {
+            print("Invalid URL:", url)
+            return
+        }
+        coverImage.kf.setImage(with: url)
+    }
+
     //MARK: Internal Methods
     func updateCollectionView() {
         collectionView.reloadData()
+    }
+
+    func configView(with model: CatalogueCellModel?) {
+        guard let model else { return }
+
+        setCoverImage(with: model.url)
+        headerLabel.text = model.name
+        descriptionLabel.text = model.description
+        setAuthorLinkName(with: model.author)
+
     }
 }

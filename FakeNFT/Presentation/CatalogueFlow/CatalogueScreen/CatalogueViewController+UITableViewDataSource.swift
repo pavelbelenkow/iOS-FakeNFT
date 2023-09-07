@@ -24,7 +24,7 @@ extension CatalogueViewController: UITableViewDataSource {
             withIdentifier: CatalogueCell.identifier
         ) as? CatalogueCell else { return UITableViewCell() }
 
-        cell.model = catalogueViewModel.catalogue[indexPath.row]
+        cell.configCell(with: catalogueViewModel.catalogue[indexPath.row])
 
         return cell
     }

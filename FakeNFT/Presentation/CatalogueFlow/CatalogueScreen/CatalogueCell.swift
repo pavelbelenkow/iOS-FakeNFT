@@ -41,28 +41,6 @@ final class CatalogueCell: UITableViewCell {
 
     private let placeholder = ImagesPlaceholder()
 
-    //MARK: Internal Properties
-    var model: CatalogueCellModel? {
-        didSet {
-            guard let model else { return }
-
-            nameLabel.text = "\(model.name) (\(model.nfts.count))"
-
-            guard let encodedUrlString = model
-                .url
-                .addingPercentEncoding(
-                    withAllowedCharacters: .urlQueryAllowed
-                ),
-                  let url = URL(
-                    string: encodedUrlString
-            ) else {
-                print("Invalid URL:", model.url)
-                return
-            }
-            collectionImageView.kf.setImage(with: url, placeholder: placeholder)
-        }
-    }
-
     //MARK: Initialisers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -125,5 +103,25 @@ final class CatalogueCell: UITableViewCell {
                 constant: -13
             )
         ])
+    }
+
+    //MARK: Internal Methods
+    func configCell(with model: CatalogueCellModel?) {
+        guard let model else { return }
+
+        nameLabel.text = "\(model.name) (\(model.nfts.count))"
+
+        guard let encodedUrlString = model
+            .url
+            .addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+              let url = URL(
+                string: encodedUrlString
+        ) else {
+            print("Invalid URL:", model.url)
+            return
+        }
+        collectionImageView.kf.setImage(with: url, placeholder: placeholder)
     }
 }

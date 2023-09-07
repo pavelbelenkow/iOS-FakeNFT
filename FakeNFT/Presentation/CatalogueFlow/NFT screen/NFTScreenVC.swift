@@ -25,7 +25,7 @@ final class NFTScreenVC: UIViewController {
     init(catalogueCell: CatalogueCellModel) {
         nftScreenViewModel = NFTScreenViewModel(author: catalogueCell.author)
         super.init(nibName: nil, bundle: nil)
-        self.NFTView.model = catalogueCell
+        NFTView.configView(with: catalogueCell)
     }
 
     required init?(coder: NSCoder) {
@@ -84,7 +84,8 @@ final class NFTScreenVC: UIViewController {
 
     private func bind() {
         nftScreenViewModel.$nftCollection.bind { [weak self] _ in
-            self?.NFTView.updateCollectionView()
+            guard let self else { return }
+            self.NFTView.updateCollectionView()
         }
     }
 }

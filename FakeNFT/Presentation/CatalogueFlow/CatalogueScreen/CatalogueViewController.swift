@@ -41,7 +41,8 @@ final class CatalogueViewController: UIViewController {
 
     private func bind() {
         catalogueViewModel.$catalogue.bind { [weak self] _ in
-            self?.catalogueView.reloadTableView()
+            guard let self else { return }
+            self.catalogueView.reloadTableView()
         }
     }
 }

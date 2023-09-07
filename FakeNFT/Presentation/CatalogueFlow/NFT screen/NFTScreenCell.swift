@@ -98,14 +98,16 @@ final class NFTScreenCell: UICollectionViewCell {
         nameLabel.text = nil
         priceLabel.text = nil
     }
+}
 
-    //MARK: Private Methods
-    private func makeCell() {
+//MARK: Private Extension
+private extension NFTScreenCell {
+    func makeCell() {
         addSubviews()
         applyConstraints()
     }
 
-    private func addSubviews() {
+    func addSubviews() {
         [
             NFTImageView,
             ratingImage,
@@ -120,7 +122,7 @@ final class NFTScreenCell: UICollectionViewCell {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    private func applyConstraints() {
+    func applyConstraints() {
         NSLayoutConstraint.activate([
             cartButton.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor
@@ -186,7 +188,7 @@ final class NFTScreenCell: UICollectionViewCell {
         ])
     }
 
-    private func setRatingImage(rating: Int) {
+    func setRatingImage(rating: Int) {
         var imageName = String()
 
         switch rating {
@@ -207,7 +209,7 @@ final class NFTScreenCell: UICollectionViewCell {
         ratingImage.image = UIImage(named: imageName)
     }
 
-    private func setLikeImage(isLiked: Bool?) {
+    func setLikeImage(isLiked: Bool?) {
         var likeImageName = String()
 
         if let isLiked, isLiked {
@@ -219,7 +221,7 @@ final class NFTScreenCell: UICollectionViewCell {
         likeButton.setImage(UIImage(named: likeImageName), for: .normal)
     }
 
-    private func setOrderImage(isOrdered: Bool?) {
+    func setOrderImage(isOrdered: Bool?) {
         var orderImageName = String()
 
         if let isOrdered, isOrdered {
