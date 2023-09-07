@@ -6,11 +6,16 @@
 //
 
 import UIKit
-//Структура для заполнения ячеек коллекции юзера
+
 struct UserNFTsCollectionViewCellModel {
-    let name: String    //имя NFT
-    let image: URL //url адрес изображения NFT
-    let rating: Int  //рейтинг NFT
-    let price: Double  //цена NFT
-    let id: String  //id NFT
+    //Имя NFT
+    let name: String
+    //URL адрес изображения NFT
+    let image: URL
+    //Рейтинг NFT
+    let rating: Int
+    //Цена NFT
+    let price: Double
+    //Id NFT
+    let id: String
 }

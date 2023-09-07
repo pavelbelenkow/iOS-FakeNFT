@@ -30,15 +30,18 @@ final class UserCollectionScreenViewController: UIViewController {
         cellCount: 3,
         leftInset: 16,
         rightInset: 16,
-        topInset: 0,
-        bottomInset: 0,
+        topInset: .zero,
+        bottomInset: .zero,
         cellSpacing: 9
     )
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
-        makeNavBarWithBackButtonAndTitle()
+        self.makeNavBarWithBackButtonAndTitle(
+            title: "Коллекция NFT",
+            navigationBar: &navBar
+        )
         addSubviews()
         makeConstraints()
         bind()
@@ -70,25 +73,6 @@ final class UserCollectionScreenViewController: UIViewController {
         }
     }
     
-    private func makeNavBarWithBackButtonAndTitle() {
-        let navBar = self.navigationController?.navigationBar
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(
-            UIImage.NFTIcon.chevronLeft,
-            for: .normal
-        )
-        backButton.addTarget(
-            self,
-            action: #selector(didBackButton),
-            for: .touchUpInside
-        )
-        let leftNavBarItem = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = leftNavBarItem
-        self.navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
-        self.title = "Коллекция NFT"
-        self.navBar = navBar
-    }
-    
     private func addSubviews() {
         view.addSubview(userNFTsCollectionView)
     }
@@ -108,10 +92,6 @@ final class UserCollectionScreenViewController: UIViewController {
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor
             )
         ])
-    }
-    
-    @objc private func didBackButton() {
-        navigationController?.popViewController(animated: true)
     }
 }
 

@@ -8,7 +8,8 @@
 import Foundation
 
 final class RatingScreenViewModel {
-    private let listUsersNetReqService = ListUsersNetworkRequestService()
+    private let client = DefaultNetworkClient()
+    private let request = ListUsersRequest()
     private let sortingOrderStorage = SortingOrderStorage()
     
     @Observable
@@ -19,7 +20,7 @@ final class RatingScreenViewModel {
     
     func getListUsers() {
         isLoading = true
-        listUsersNetReqService.getListUsers { [weak self] result in
+        client.send(request: request, type: [User].self) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.isLoading = false

@@ -6,14 +6,22 @@
 //
 
 import Foundation
-//Структура для раскодирования данных NFT
+
 struct NFT: Codable {
-    let createdAt: String   //время создания NFT
-    let name: String    //имя NFT
-    let images: [String]  //адреса изображения NFT
-    let rating: Int  //рейтинг NFT
-    let description: String //описание NFT
-    let price: Double   //цена NFT
-    let author: String  //id автора NFT
-    let id: String  //id NFT
+    //Время создания NFT
+    let createdAt: String
+    //Имя NFT
+    let name: String
+    //Адреса изображения NFT
+    let images: [String]
+    //Рейтинг NFT
+    let rating: Int
+    //Описание NFT
+    let description: String
+    //Цена NFT
+    let price: Double
+    //Id автора NFT
+    let author: String
+    //Id NFT
+    let id: String
 }

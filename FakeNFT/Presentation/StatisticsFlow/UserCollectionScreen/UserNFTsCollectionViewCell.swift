@@ -171,7 +171,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         ])
     }
     
-    private func setRatingStars(rating: Int) -> UIImage {
+    private func setRatingStars(rating: Int) -> UIImage? {
         switch rating {
         case 0: return UIImage.NFTIcon.zeroStars
         case 1: return UIImage.NFTIcon.oneStar
@@ -179,7 +179,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         case 3: return UIImage.NFTIcon.threeStars
         case 4: return UIImage.NFTIcon.fourStars
         case 5: return UIImage.NFTIcon.fiveStars
-        default: return UIImage()
+        default: return nil
         }
     }
     

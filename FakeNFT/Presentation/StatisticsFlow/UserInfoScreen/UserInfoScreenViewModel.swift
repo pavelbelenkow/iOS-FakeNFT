@@ -8,7 +8,7 @@
 import Foundation
 
 final class UserInfoScreenViewModel {
-    private let infoUserNetReqService = InfoUserNetworkRequestService()
+    private let client = DefaultNetworkClient()
     
     @Observable
     private(set) var user: User? = nil
@@ -18,7 +18,8 @@ final class UserInfoScreenViewModel {
     
     func getInfoUser(userId: String) {
         isLoading = true
-        infoUserNetReqService.getInfoUser(userId: userId) { [weak self] result in
+        let request = InfoUserRequest(userId: userId)
+        client.send(request: request, type: User.self) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
             DispatchQueue.main.async {
@@ -57,7 +58,7 @@ final class UserInfoScreenViewModel {
     
     func getNFTs() -> [String]? {
         if let user = user {
-            if user.nfts.count == 0 {
+            if user.nfts.count == .zero {
                 return nil
             } else {
                 return user.nfts

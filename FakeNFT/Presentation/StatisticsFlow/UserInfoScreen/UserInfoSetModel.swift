@@ -6,10 +6,14 @@
 //
 
 import UIKit
-//Структура для заполнения экрана информации о пользователе
+
 struct UserInfoSetModel {
-    let avatar: URL //url адрес аватара юзера
-    let name: String    //имя юзера
-    let description: String //описание юзера
-    let website: String //адрес веб-сайта юзера
+    //URL адрес аватара юзера
+    let avatar: URL
+    //Имя юзера
+    let name: String
+    //Описание юзера
+    let description: String
+    //Адрес веб-сайта юзера
+    let website: String
 }

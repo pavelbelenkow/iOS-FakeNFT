@@ -56,7 +56,7 @@ final class UserInfoScreenViewController: UIViewController {
         descriptionLabel.font = UIFont.NFTFont.regular13
         descriptionLabel.textColor = UIColor.NFTColor.black
         descriptionLabel.textAlignment = .left
-        descriptionLabel.numberOfLines = 0
+        descriptionLabel.numberOfLines = .zero
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         return descriptionLabel
     }()
@@ -100,7 +100,10 @@ final class UserInfoScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
-        makeNavBarWithBackButton()
+        self.makeNavBarWithBackButtonAndTitle(
+            title: "",
+            navigationBar: &navBar
+        )
         addSubviews()
         makeConstraints()
         bind()
@@ -110,6 +113,11 @@ final class UserInfoScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -135,24 +143,6 @@ final class UserInfoScreenViewController: UIViewController {
         } else {
             ProgressHUD.dismiss()
         }
-    }
-    
-    private func makeNavBarWithBackButton() {
-        let navBar = self.navigationController?.navigationBar
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(
-            UIImage.NFTIcon.chevronLeft,
-            for: .normal
-        )
-        backButton.addTarget(
-            self,
-            action: #selector(didBackButton),
-            for: .touchUpInside
-        )
-        let leftNavBarItem = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = leftNavBarItem
-        self.navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
-        self.navBar = navBar
     }
     
     private func addSubviews() {
@@ -262,11 +252,6 @@ final class UserInfoScreenViewController: UIViewController {
         descriptionLabel.text = model.description
         website = model.website
         collectionNFTTableView.reloadData()
-    }
-    
-    @objc private func didBackButton() {
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.popViewController(animated: true)
     }
     
     @objc private func didGoToSiteUserButton() {

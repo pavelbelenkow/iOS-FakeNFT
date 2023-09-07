@@ -6,13 +6,20 @@
 //
 
 import Foundation
-//Структура для раскодирования данных юзера
+
 struct User: Codable {
-    let name: String    //имя юзера
-    let avatar: String  //адрес аватара юзера
-    let description: String //описание юзера
-    let website: String //адрес веб-сайта юзера
-    let nfts: [String] //список NFT юзера
-    let rating: String  //рейтинг юзера
-    let id: String  //id юзера
+    //Имя юзера
+    let name: String
+    //Адрес аватара юзера
+    let avatar: String
+    //Описание юзера
+    let description: String
+    //Адрес веб-сайта юзера
+    let website: String
+    //Список NFT юзера
+    let nfts: [String]
+    //Рейтинг юзера
+    let rating: String
+    //Id юзера
+    let id: String
 }

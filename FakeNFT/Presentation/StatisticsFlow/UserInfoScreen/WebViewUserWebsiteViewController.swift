@@ -22,7 +22,10 @@ final class WebViewUserWebsiteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
-        makeNavBarWithBackButton()
+        self.makeNavBarWithBackButtonAndTitle(
+            title: "",
+            navigationBar: &navBar
+        )
         addSubviews()
         makeConstraints()
         loadUserWebsite()
@@ -31,24 +34,7 @@ final class WebViewUserWebsiteViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
-    }
-    
-    private func makeNavBarWithBackButton() {
-        let navBar = self.navigationController?.navigationBar
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(
-            UIImage.NFTIcon.chevronLeft,
-            for: .normal
-        )
-        backButton.addTarget(
-            self,
-            action: #selector(didBackButton),
-            for: .touchUpInside
-        )
-        let leftNavBarItem = UIBarButtonItem(customView: backButton)
-        self.navigationItem.leftBarButtonItem = leftNavBarItem
-        self.navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
-        self.navBar = navBar
+        webView.stopLoading()
     }
     
     private func addSubviews() {
@@ -75,10 +61,6 @@ final class WebViewUserWebsiteViewController: UIViewController {
                 self.webView.load(request)
             }
         }
-    }
-    
-    @objc private func didBackButton() {
-        navigationController?.popViewController(animated: true)
     }
 }
 

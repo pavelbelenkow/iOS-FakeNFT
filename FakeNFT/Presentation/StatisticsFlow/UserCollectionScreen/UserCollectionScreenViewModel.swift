@@ -8,7 +8,7 @@
 import Foundation
 
 final class UserCollectionScreenViewModel {
-    private let listUserNFTNetReqService = ListUserNFTNetworkRequestService()
+    private let client = DefaultNetworkClient()
     
     @Observable
     private(set) var nfts: [NFT] = []
@@ -18,7 +18,7 @@ final class UserCollectionScreenViewModel {
     
     func getNFTsUser(nfts: [String]) {
         isLoading = true
-        listUserNFTNetReqService.getNFTsUser(idNFTs: nfts) { [weak self] result in
+        getNFTsUser(idNFTs: nfts) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
             DispatchQueue.main.async {
@@ -33,7 +33,8 @@ final class UserCollectionScreenViewModel {
     }
     
     func setUserNFTsCollectionViewCell(indexRow: Int) -> UserNFTsCollectionViewCellModel {
-        if let url = URL(string: nfts[indexRow].images[0]) {
+        if  let imageAddress = nfts[indexRow].images.first,
+            let url = URL(string: imageAddress) {
             return UserNFTsCollectionViewCellModel(
                 name: nfts[indexRow].name,
                 image: url,
@@ -50,6 +51,28 @@ final class UserCollectionScreenViewModel {
             price: Double(),
             id: String()
         )
+    }
+    
+    private func getNFTsUser(idNFTs: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
+        var nfts: [NFT] = []
+        let group = DispatchGroup()
+        
+        idNFTs.forEach { idNFT in
+            group.enter()
+            let request = ListUserNFTRequest(idNFT: idNFT)
+            client.send(request: request, type: NFT.self) { result in
+                switch result {
+                case .success(let nft):
+                    nfts.append(nft)
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion(.success(nfts))
+        }
     }
 }
 
