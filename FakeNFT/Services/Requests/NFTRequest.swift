@@ -15,7 +15,7 @@ struct NFTRequest: NetworkRequest {
     }
     var endpoint: URL? {
         get {
-            URL(string: self.baseEndpoint + "nft/\(id)")
+            URL(string: ("\(baseEndpoint)nft/\(id)"))
         }
     }
 

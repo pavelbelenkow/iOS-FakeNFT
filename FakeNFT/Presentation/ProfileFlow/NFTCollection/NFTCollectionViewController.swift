@@ -5,7 +5,7 @@ final class NFTCollectionViewController: UIViewController {
     private enum Constants {
         static let navBarButtonSize: CGFloat = 42
         static let actionSheetTitle = "Сортировка"
-        static let cancelAction = "Отмена"
+        static let cancelAction = "Закрыть"
     }
 
     private var viewModel = NFTCollectionViewModel()
@@ -133,14 +133,11 @@ extension NFTCollectionViewController: UITableViewDataSource {
         let nft = viewModel.nfts[indexPath.row]
         let authorName = viewModel.authorsNames[indexPath.row]
 
-        let name = nft.name
-        let rating = nft.rating
         let author = authorName
-        let price = String(nft.price)
         let id = nft.id
         let isLiked = idLikesCollection.contains(Int(id) ?? 0)
         guard let image = nft.images.first else { return NFTCollectionCell() }
-        cell.configCell(name: name, rating: rating, author: author, price: price, image: image, isLiked: isLiked)
+        cell.configCell(nft: nft, author: author, isLiked: isLiked)
         return cell
     }
 }

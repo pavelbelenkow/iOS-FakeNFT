@@ -9,6 +9,9 @@ final class NFTCollectionCell: UITableViewCell {
         static let likeButtonSize: CGFloat = 42
         static let vInset: CGFloat = 8                  // vertical content inset
         static let hInset: CGFloat = 16                 // horizontal content inset
+
+        static let priceWord = "Цена"
+        static let byBord = "от "
     }
 
     private lazy var nftImageView: UIImageView = {
@@ -23,7 +26,7 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "NotLiked"), for: .normal)
+        button.setImage(UIImage.NFTIcon.notLiked, for: .normal)
         return button
     }()
 
@@ -61,7 +64,7 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var byWordLabel: UILabel = {
         let label = UILabel()
         label.font = .caption1
-        label.text = "от "
+        label.text = Constants.byBord
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.NFTColor.black
         return label
@@ -86,7 +89,7 @@ final class NFTCollectionCell: UITableViewCell {
     private lazy var priceWordLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.text = "Цена"
+        label.text = Constants.priceWord
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -110,13 +113,14 @@ final class NFTCollectionCell: UITableViewCell {
     }
 
     // MARK: - Functions
-    func configCell(name: String, rating: Int, author: String, price: String, image: String, isLiked: Bool) {
-        nameLabel.text = name
+    func configCell(nft: NFTModel, author: String, isLiked: Bool) {
+        nameLabel.text = nft.name
         authorLabel.text = author
-        priceCashLabel.text = "\(price) ETH"
+        priceCashLabel.text = "\(nft.price) ETH".replacingOccurrences(of: ".", with: ",")
+        guard let image = nft.images.first else { return }
         nftImageView.loadImage(url: image.toURL, cornerRadius: 12)
-        setupRating(rating)
-        let likedImage = isLiked ? UIImage(named: "Liked") : UIImage(named: "NotLiked")
+        setupRating(nft.rating)
+        let likedImage = isLiked ? UIImage.NFTIcon.liked : UIImage.NFTIcon.notLiked
         likeButton.setImage(likedImage, for: .normal)
     }
 

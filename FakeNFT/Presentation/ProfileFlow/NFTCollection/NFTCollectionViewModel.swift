@@ -4,7 +4,7 @@ import ProgressHUD
 enum SortingType: String {
     case byPrice = "По цене"
     case byRating = "По рейтингу"
-    case byName = "По имени"
+    case byName = "По названию"
     case none
 }
 
@@ -43,7 +43,7 @@ final class NFTCollectionViewModel {
         case .byRating:
             sortByRating()
         case .byName:
-            sortByRating()
+            sortByName()
         case .none:
             break
         }
