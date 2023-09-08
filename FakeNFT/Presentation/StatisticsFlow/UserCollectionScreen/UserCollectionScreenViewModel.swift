@@ -44,7 +44,7 @@ final class UserCollectionScreenViewModel {
                 rating: nfts[indexRow].rating,
                 price: nfts[indexRow].price,
                 id: nfts[indexRow].id,
-                isLiked: checkLikedNFT(id: nfts[indexRow].id)
+                isLiked: likedNFTs.contains(nfts[indexRow].id)
             )
         }
         
@@ -56,13 +56,6 @@ final class UserCollectionScreenViewModel {
             id: String(),
             isLiked: Bool()
         )
-    }
-    
-    private func checkLikedNFT(id: String) -> Bool {
-        if likedNFTs.contains(id) {
-            return true
-        }
-        return false
     }
     
     private func getLikedNFTs() {
