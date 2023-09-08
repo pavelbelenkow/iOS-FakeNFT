@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import ProgressHUD
 
 final class WebViewUserWebsiteViewController: UIViewController {
     var website: String?
@@ -33,7 +32,7 @@ final class WebViewUserWebsiteViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        ProgressHUD.dismiss()
+        self.dismissProgressHUD()
         webView.stopLoading()
     }
     
@@ -54,7 +53,7 @@ final class WebViewUserWebsiteViewController: UIViewController {
         if
             let website = website,
             let url = URL(string: website) {
-            ProgressHUD.show()
+            self.showProgressHUD()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 let request = URLRequest(url: url)
@@ -69,6 +68,6 @@ extension WebViewUserWebsiteViewController: WKNavigationDelegate {
         _ webView: WKWebView,
         didFinish navigation: WKNavigation!
     ) {
-        ProgressHUD.dismiss()
+        self.dismissProgressHUD()
     }
 }

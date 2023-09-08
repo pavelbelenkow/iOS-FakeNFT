@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgressHUD
 
 final class UserCollectionScreenViewController: UIViewController {
     var nfts: [String]?
@@ -50,7 +49,7 @@ final class UserCollectionScreenViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        ProgressHUD.dismiss()
+        self.dismissProgressHUD()
     }
     
     private func bind() {
@@ -62,14 +61,6 @@ final class UserCollectionScreenViewController: UIViewController {
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
-        }
-    }
-    
-    private func progressStatus(_ isLoadind: Bool) {
-        if isLoadind {
-            ProgressHUD.show()
-        } else {
-            ProgressHUD.dismiss()
         }
     }
     

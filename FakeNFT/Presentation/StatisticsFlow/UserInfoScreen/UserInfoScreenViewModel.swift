@@ -19,7 +19,10 @@ final class UserInfoScreenViewModel {
     func getInfoUser(userId: String) {
         isLoading = true
         let request = InfoUserRequest(userId: userId)
-        client.send(request: request, type: User.self) { [weak self] result in
+        client.send(
+            request: request,
+            type: User.self
+        ) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
             DispatchQueue.main.async {

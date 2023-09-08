@@ -1,5 +1,4 @@
 import UIKit
-import ProgressHUD
 
 final class RatingScreenViewController: UIViewController {
     private let viewModel = RatingScreenViewModel()
@@ -31,7 +30,7 @@ final class RatingScreenViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        ProgressHUD.dismiss()
+        self.dismissProgressHUD()
     }
     
     private func bind() {
@@ -43,14 +42,6 @@ final class RatingScreenViewController: UIViewController {
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
-        }
-    }
-    
-    private func progressStatus(_ isLoadind: Bool) {
-        if isLoadind {
-            ProgressHUD.show()
-        } else {
-            ProgressHUD.dismiss()
         }
     }
     
@@ -119,7 +110,11 @@ extension RatingScreenViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as RatingTableViewCell
-        cell.configureRatingTableViewCell(with: viewModel.setInfoRatingTableViewCell(indexRow: indexPath.row))
+        cell.configureRatingTableViewCell(
+            with: viewModel.setInfoRatingTableViewCell(
+                indexRow: indexPath.row
+            )
+        )
         
         return cell
     }
@@ -132,6 +127,9 @@ extension RatingScreenViewController: UITableViewDelegate {
     ) {
         let userInfoScreenVC = UserInfoScreenViewController()
         userInfoScreenVC.userId = viewModel.listUsers[indexPath.row].id
-        navigationController?.pushViewController(userInfoScreenVC, animated: true)
+        navigationController?.pushViewController(
+            userInfoScreenVC,
+            animated: true
+        )
     }
 }

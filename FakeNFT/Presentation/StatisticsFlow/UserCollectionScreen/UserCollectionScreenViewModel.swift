@@ -53,14 +53,20 @@ final class UserCollectionScreenViewModel {
         )
     }
     
-    private func getNFTsUser(idNFTs: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
+    private func getNFTsUser(
+        idNFTs: [String],
+        completion: @escaping (Result<[NFT], Error>) -> Void
+    ) {
         var nfts: [NFT] = []
         let group = DispatchGroup()
         
         idNFTs.forEach { idNFT in
             group.enter()
             let request = ListUserNFTRequest(idNFT: idNFT)
-            client.send(request: request, type: NFT.self) { result in
+            client.send(
+                request: request,
+                type: NFT.self
+            ) { result in
                 switch result {
                 case .success(let nft):
                     nfts.append(nft)

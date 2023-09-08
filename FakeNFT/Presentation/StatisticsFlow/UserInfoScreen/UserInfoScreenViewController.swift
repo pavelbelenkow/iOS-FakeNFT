@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgressHUD
 
 final class UserInfoScreenViewController: UIViewController {
     var userId: String?
@@ -122,7 +121,7 @@ final class UserInfoScreenViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        ProgressHUD.dismiss()
+        self.dismissProgressHUD()
     }
     
     private func bind() {
@@ -134,14 +133,6 @@ final class UserInfoScreenViewController: UIViewController {
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
-        }
-    }
-    
-    private func progressStatus(_ isLoadind: Bool) {
-        if isLoadind {
-            ProgressHUD.show()
-        } else {
-            ProgressHUD.dismiss()
         }
     }
     
@@ -257,7 +248,10 @@ final class UserInfoScreenViewController: UIViewController {
     @objc private func didGoToSiteUserButton() {
         let webViewUserWebsiteVC = WebViewUserWebsiteViewController()
         webViewUserWebsiteVC.website = website
-        navigationController?.pushViewController(webViewUserWebsiteVC, animated: true)
+        navigationController?.pushViewController(
+            webViewUserWebsiteVC,
+            animated: true
+        )
     }
 }
 
@@ -288,7 +282,10 @@ extension UserInfoScreenViewController: UITableViewDelegate {
         guard let nfts = viewModel.getNFTs() else { return }
         let userCollectionScreenVC = UserCollectionScreenViewController()
         userCollectionScreenVC.nfts = nfts
-        navigationController?.pushViewController(userCollectionScreenVC, animated: true)
+        navigationController?.pushViewController(
+            userCollectionScreenVC,
+            animated: true
+        )
     }
 }
 

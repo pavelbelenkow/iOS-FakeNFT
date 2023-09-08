@@ -58,11 +58,21 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         return numberRatingLabel
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(
+        style: UITableViewCell.CellStyle,
+        reuseIdentifier: String?
+    ) {
+        super.init(
+            style: style,
+            reuseIdentifier: reuseIdentifier
+        )
         selectionStyle = .none
         addSubviews()
         makeConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
@@ -132,9 +142,5 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
                 equalTo: cardView.trailingAnchor,
                 constant: -16)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

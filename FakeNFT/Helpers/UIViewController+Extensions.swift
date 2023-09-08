@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 extension UIViewController {
     func makeNavBarWithBackButtonAndTitle(
@@ -32,5 +33,21 @@ extension UIViewController {
     
     @objc private func didBackButton() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func progressStatus(_ isLoadind: Bool) {
+        if isLoadind {
+            ProgressHUD.show()
+        } else {
+            ProgressHUD.dismiss()
+        }
+    }
+    
+    func dismissProgressHUD() {
+        ProgressHUD.dismiss()
+    }
+    
+    func showProgressHUD() {
+        ProgressHUD.show()
     }
 }

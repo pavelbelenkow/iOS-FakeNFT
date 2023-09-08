@@ -20,7 +20,10 @@ final class RatingScreenViewModel {
     
     func getListUsers() {
         isLoading = true
-        client.send(request: request, type: [User].self) { [weak self] result in
+        client.send(
+            request: request,
+            type: [User].self
+        ) { [weak self] result in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.isLoading = false
