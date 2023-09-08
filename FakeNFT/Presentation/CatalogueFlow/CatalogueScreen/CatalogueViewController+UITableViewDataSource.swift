@@ -13,7 +13,7 @@ extension CatalogueViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        30
+        catalogueViewModel.catalogue.count
     }
 
     func tableView(
@@ -24,7 +24,7 @@ extension CatalogueViewController: UITableViewDataSource {
             withIdentifier: CatalogueCell.identifier
         ) as? CatalogueCell else { return UITableViewCell() }
 
-        cell.configCell()
+        cell.configCell(with: catalogueViewModel.catalogue[indexPath.row])
 
         return cell
     }

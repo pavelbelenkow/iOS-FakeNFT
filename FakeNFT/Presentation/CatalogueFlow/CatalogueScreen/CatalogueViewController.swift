@@ -3,6 +3,7 @@ import UIKit
 final class CatalogueViewController: UIViewController {
     //MARK: Internal Properties
     lazy var catalogueView = CatalogueView(dataSource: self, delegate: self)
+    var catalogueViewModel = CatalogueViewModel()
 
     //MARK: View Controller Life Cycle
     override func loadView() {
@@ -14,6 +15,8 @@ final class CatalogueViewController: UIViewController {
 
         setNavigationBar()
         view.backgroundColor = UIColor.NFTColor.white
+        bind()
+        catalogueViewModel.getCatalogue()
     }
 
     //MARK: Private Methods
@@ -34,5 +37,12 @@ final class CatalogueViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = .black
 
         navigationController?.navigationBar.barTintColor = .white
-    }    
+    }
+
+    private func bind() {
+        catalogueViewModel.$catalogue.bind { [weak self] _ in
+            guard let self else { return }
+            self.catalogueView.reloadTableView()
+        }
+    }
 }

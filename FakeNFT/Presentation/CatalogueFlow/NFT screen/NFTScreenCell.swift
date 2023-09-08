@@ -6,44 +6,30 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class NFTScreenCell: UICollectionViewCell {
     //MARK: Static Properties
     static let identifier = "NFTScreenCell"
 
     //MARK: Private Properties
-    private let NFTImageView: UIImageView = {
+    private var NFTImageView: UIImageView = {
         let view = UIImageView()
 
-        view.backgroundColor = .gray
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
 
         return view
     }()
 
-    private let likeButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "Liked")
+    private var likeButton = UIButton()
+    private var cartButton = UIButton()
+    private var ratingImage = UIImageView()
+    private let placeholder = ImagesPlaceholder()
 
-        button.setImage(image, for: .normal)
-
-        return button
-    }()
-
-    private let ratingImage: UIImageView = {
-        let view = UIImageView()
-        let image = UIImage(named: "ThreeStars")
-
-        view.image = image
-
-        return view
-    }()
-
-    private let nameLabel: UILabel = {
+    private var nameLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Archie"
         label.font = UIFont(
             name: "SF Pro Text Bold",
             size: 17
@@ -53,10 +39,9 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    private let priceLabel: UILabel = {
+    private var priceLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "1 ETH"
         label.font = UIFont(
             name: "SF Pro Text Regular",
             size: 10
@@ -66,14 +51,32 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    private let cartButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "CartAdd")
+    //MARK: Internal Properties
+    var model: NFTModel? {
+        didSet {
+            guard let model else { return }
 
-        button.setImage(image, for: .normal)
+            setRatingImage(rating: model.rating)
+            nameLabel.text = model.name
+            priceLabel.text = "\(model.price) ETH"
+            setLikeImage(isLiked: model.isLiked)
+            setOrderImage(isOrdered: model.isOrdered)
 
-        return button
-    }()
+            guard let encodedUrlString = model
+                .images[0]
+                .addingPercentEncoding(
+                    withAllowedCharacters: .urlQueryAllowed
+                ),
+                  let url = URL(
+                    string: encodedUrlString
+            ) else {
+                print("Invalid URL:", model.images[0])
+                return
+            }
+
+            NFTImageView.kf.setImage(with: url, placeholder: placeholder)
+        }
+    }
 
     //MARK: Initialisers
     override init(frame: CGRect) {
@@ -85,13 +88,26 @@ final class NFTScreenCell: UICollectionViewCell {
         fatalError()
     }
 
-    //MARK: Private Methods
-    private func makeCell() {
+    //MARK: Overriden Methods
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        NFTImageView.kf.cancelDownloadTask()
+        NFTImageView.image = nil
+        ratingImage.image = nil
+        nameLabel.text = nil
+        priceLabel.text = nil
+    }
+}
+
+//MARK: Private Extension
+private extension NFTScreenCell {
+    func makeCell() {
         addSubviews()
         applyConstraints()
     }
 
-    private func addSubviews() {
+    func addSubviews() {
         [
             NFTImageView,
             ratingImage,
@@ -106,21 +122,8 @@ final class NFTScreenCell: UICollectionViewCell {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    private func applyConstraints() {
+    func applyConstraints() {
         NSLayoutConstraint.activate([
-            NFTImageView.topAnchor.constraint(
-                equalTo: contentView.topAnchor
-            ),
-            NFTImageView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor
-            ),
-            NFTImageView.bottomAnchor.constraint(
-                equalTo: ratingImage.topAnchor,
-                constant: -8
-            ),
-            NFTImageView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor
-            ),
             cartButton.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor
             ),
@@ -131,7 +134,7 @@ final class NFTScreenCell: UICollectionViewCell {
             cartButton.heightAnchor.constraint(
                 equalToConstant: 40
             ),
-            cartButton.heightAnchor.constraint(
+            cartButton.widthAnchor.constraint(
                 equalToConstant: 40
             ),
             priceLabel.bottomAnchor.constraint(
@@ -146,6 +149,9 @@ final class NFTScreenCell: UICollectionViewCell {
             ),
             nameLabel.leadingAnchor.constraint(
                 equalTo: priceLabel.leadingAnchor
+            ),
+            nameLabel.trailingAnchor.constraint(
+                equalTo: cartButton.leadingAnchor
             ),
             ratingImage.bottomAnchor.constraint(
                 equalTo: nameLabel.topAnchor,
@@ -165,7 +171,65 @@ final class NFTScreenCell: UICollectionViewCell {
             ),
             likeButton.widthAnchor.constraint(
                 equalToConstant: 42
+            ),
+            NFTImageView.topAnchor.constraint(
+                equalTo: contentView.topAnchor
+            ),
+            NFTImageView.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor
+            ),
+            NFTImageView.bottomAnchor.constraint(
+                equalTo: ratingImage.topAnchor,
+                constant: -8
+            ),
+            NFTImageView.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor
             )
         ])
+    }
+
+    func setRatingImage(rating: Int) {
+        var imageName = String()
+
+        switch rating {
+        case 0:
+            imageName = "ZeroStars"
+        case 1:
+            imageName = "OneStar"
+        case 2:
+            imageName = "TwoStars"
+        case 3:
+            imageName = "ThreeStars"
+        case 4:
+            imageName = "FourStars"
+        default:
+            imageName = "FiveStars"
+        }
+
+        ratingImage.image = UIImage(named: imageName)
+    }
+
+    func setLikeImage(isLiked: Bool?) {
+        var likeImageName = String()
+
+        if let isLiked, isLiked {
+            likeImageName = "Liked"
+        } else {
+            likeImageName = "NotLiked"
+        }
+
+        likeButton.setImage(UIImage(named: likeImageName), for: .normal)
+    }
+
+    func setOrderImage(isOrdered: Bool?) {
+        var orderImageName = String()
+
+        if let isOrdered, isOrdered {
+            orderImageName = "CartDelete"
+        } else {
+            orderImageName = "CartAdd"
+        }
+
+        cartButton.setImage(UIImage(named: orderImageName), for: .normal)
     }
 }

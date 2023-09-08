@@ -65,4 +65,9 @@ final class CatalogueView: UIView {
             )
         ])
     }
+
+    //MARK: Internal Methods
+    func reloadTableView() {
+        tableView.reloadData()
+    }
 }
