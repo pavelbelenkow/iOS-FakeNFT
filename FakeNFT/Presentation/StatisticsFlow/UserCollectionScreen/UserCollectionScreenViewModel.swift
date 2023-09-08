@@ -9,6 +9,7 @@ import Foundation
 
 final class UserCollectionScreenViewModel {
     private let client = DefaultNetworkClient()
+    private var likedNFTs: [String] = []
     
     @Observable
     private(set) var nfts: [NFT] = []
@@ -18,6 +19,8 @@ final class UserCollectionScreenViewModel {
     
     func getNFTsUser(nfts: [String]) {
         isLoading = true
+        let group = DispatchGroup()
+        
         getNFTsUser(idNFTs: nfts) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
@@ -40,7 +43,8 @@ final class UserCollectionScreenViewModel {
                 image: url,
                 rating: nfts[indexRow].rating,
                 price: nfts[indexRow].price,
-                id: nfts[indexRow].id
+                id: nfts[indexRow].id,
+                isLiked: checkLikedNFT(id: nfts[indexRow].id)
             )
         }
         
@@ -49,8 +53,34 @@ final class UserCollectionScreenViewModel {
             image: URL(fileURLWithPath: String()),
             rating: Int(),
             price: Double(),
-            id: String()
+            id: String(),
+            isLiked: Bool()
         )
+    }
+    
+    private func checkLikedNFT(id: String) -> Bool {
+        if likedNFTs.contains(id) {
+            return true
+        }
+        return false
+    }
+    
+    private func getLikedNFTs() {
+        let request = ListLikedNFTRequest()
+        client.send(
+            request: request,
+            type: Profile.self
+        ) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self.likedNFTs = profile.likes
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     private func getNFTsUser(
@@ -59,6 +89,24 @@ final class UserCollectionScreenViewModel {
     ) {
         var nfts: [NFT] = []
         let group = DispatchGroup()
+        
+        group.enter()
+        let request = ListLikedNFTRequest()
+        client.send(
+            request: request,
+            type: Profile.self
+        ) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self.likedNFTs = profile.likes
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                group.leave()
+            }
+        }
         
         idNFTs.forEach { idNFT in
             group.enter()

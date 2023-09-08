@@ -96,6 +96,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         nameLabel.text = model.name
         priceLabel.text = String(format: "%.2f", model.price) + " ETH"
         id = model.id
+        isLiked = model.isLiked
         setLikeButtonImage()
         setCartButtonImage()
     }

@@ -18,4 +18,6 @@ struct UserNFTsCollectionViewCellModel {
     let price: Double
     //Id NFT
     let id: String
+    //Лайкнут ли NFT профилем
+    let isLiked: Bool
 }
