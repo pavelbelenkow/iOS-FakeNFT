@@ -197,7 +197,7 @@ private extension CartViewController {
     func showErrorAlert(_ error: Error) {
         showAlert(
             title: Constants.Cart.errorAlertTitle,
-            message: error.localizedDescription
+            message: "\(error as NSError)"
         ) { [weak self] in
             UIBlockingProgressHUD.show()
             

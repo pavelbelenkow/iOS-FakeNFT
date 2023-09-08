@@ -177,10 +177,10 @@ private extension PaymentViewController {
 
 private extension PaymentViewController {
     
-    func showErrorAlert(_ error: Error) {
+    func showCurrenciesErrorAlert(_ error: Error) {
         showAlert(
             title: Constants.Cart.errorAlertTitle,
-            message: error.localizedDescription
+            message: "\(error as NSError)"
         ) { [weak self] in
             UIBlockingProgressHUD.show()
             
@@ -193,7 +193,7 @@ private extension PaymentViewController {
     
     func updateCurrencies() {
         viewModel.getCurrencies { [weak self] error in
-            self?.showErrorAlert(error)
+            self?.showCurrenciesErrorAlert(error)
         }
     }
     
@@ -224,7 +224,7 @@ private extension PaymentViewController {
     func showPaymentErrorAlert(_ error: Error) {
         showAlert(
             title: Constants.Cart.errorAlertTitle,
-            message: error.localizedDescription
+            message: "\(error as NSError)"
         ) { [weak self] in
             UIBlockingProgressHUD.show()
             
