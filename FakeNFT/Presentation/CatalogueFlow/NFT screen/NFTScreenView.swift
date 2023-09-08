@@ -249,6 +249,5 @@ final class NFTScreenView: UIView {
         headerLabel.text = model.name
         descriptionLabel.text = model.description
         setAuthorLinkName(with: model.author)
-
     }
 }
