@@ -175,9 +175,11 @@ private extension RemoveNftViewController {
     }
     
     func showErrorAlert(_ error: Error) {
+        let errorData = NetworkErrorHandler.handleError(error)
+        
         showAlert(
-            title: Constants.Cart.errorAlertTitle,
-            message: error.localizedDescription
+            title: errorData.title,
+            message: errorData.message
         ) { [weak self] in
             self?.removeNftFromCart()
         }

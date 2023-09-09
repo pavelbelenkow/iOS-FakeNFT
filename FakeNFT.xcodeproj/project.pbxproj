@@ -41,6 +41,7 @@
 		596D41212AA12198007F2669 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D41202AA12198007F2669 /* Constants.swift */; };
 		5989722E2A9BA85A00F8811E /* CartTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989722D2A9BA85A00F8811E /* CartTableView.swift */; };
 		598972302A9BAAF000F8811E /* CartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5989722F2A9BAAF000F8811E /* CartCell.swift */; };
+		598F36B72AACB8680039DCEC /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598F36B62AACB8680039DCEC /* NetworkErrorHandler.swift */; };
 		5999DC182AA9BCFB0004D05B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F68069F29CBBAF200B4F915 /* Assets.xcassets */; };
 		599CF84D2AA7BBA2003CFA24 /* OrderPaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599CF84C2AA7BBA2003CFA24 /* OrderPaymentService.swift */; };
 		599CF84F2AA7BD2A003CFA24 /* CurrencyNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599CF84E2AA7BD2A003CFA24 /* CurrencyNetworkModel.swift */; };
@@ -121,6 +122,7 @@
 		596D41202AA12198007F2669 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5989722D2A9BA85A00F8811E /* CartTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableView.swift; sourceTree = "<group>"; };
 		5989722F2A9BAAF000F8811E /* CartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCell.swift; sourceTree = "<group>"; };
+		598F36B62AACB8680039DCEC /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		599CF84C2AA7BBA2003CFA24 /* OrderPaymentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentService.swift; sourceTree = "<group>"; };
 		599CF84E2AA7BD2A003CFA24 /* CurrencyNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyNetworkModel.swift; sourceTree = "<group>"; };
 		599CF8502AA7BDA2003CFA24 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */,
 				3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */,
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
+				598F36B62AACB8680039DCEC /* NetworkErrorHandler.swift */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				59CAB77E2A9AAA7000C4938D /* UIFont+Extensions.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				59CAB78B2A9AC1B300C4938D /* CatalogueViewController.swift in Sources */,
+				598F36B72AACB8680039DCEC /* NetworkErrorHandler.swift in Sources */,
 				590629D72A9D4BC50047A0B6 /* NFTRequest.swift in Sources */,
 				59CAB7802A9AAB8300C4938D /* UIImage+Extensions.swift in Sources */,
 				596D41212AA12198007F2669 /* Constants.swift in Sources */,

@@ -195,9 +195,11 @@ private extension CartViewController {
 private extension CartViewController {
     
     func showErrorAlert(_ error: Error) {
+        let errorData = NetworkErrorHandler.handleError(error)
+        
         showAlert(
-            title: Constants.Cart.errorAlertTitle,
-            message: "\(error as NSError)"
+            title: errorData.title,
+            message: errorData.message
         ) { [weak self] in
             UIBlockingProgressHUD.show()
             

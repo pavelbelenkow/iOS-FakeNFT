@@ -18,7 +18,6 @@ enum Constants {
         static let currency = "ETH"
         static let currencyReuseIdentifier = "currency"
         static let emptyCartText = "Корзина пуста"
-        static let errorAlertTitle = "Ошибка"
         static let nftText = "NFT"
         static let ok = "OK"
         static let pay = "Оплатить"
@@ -54,5 +53,14 @@ enum Constants {
             self.cellSpacing = cellSpacing
             self.paddingWidth = leftInset + rightInset + CGFloat(cellCount - 1) * cellSpacing
         }
+    }
+    
+    struct ErrorMessage {
+        static let networkErrorTitle = "Ошибка сети"
+        static let networkErrorMessage = "Проверьте подключение к сети и попробуйте еще раз"
+        static let serverErrorTitle = "Ошибка сервера"
+        static let serverErrorMessage = "Пожалуйста, попробуйте позже"
+        static let unknownErrorTitle = "Неизвестная ошибка"
+        static let unknownErrorMessage = "Произошла неизвестная ошибка. Пожалуйста, попробуйте еще раз"
     }
 }
