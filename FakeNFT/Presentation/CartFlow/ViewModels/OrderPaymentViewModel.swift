@@ -59,8 +59,7 @@ extension OrderPaymentViewModel: OrderPaymentViewModelProtocol {
     func getOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         UIBlockingProgressHUD.show()
         
-        orderPaymentService.fetchOrderPaymentResult(by: currencyId) { [weak self] result in
-            guard let self else { return }
+        orderPaymentService.fetchOrderPaymentResult(by: currencyId) { result in
             
             DispatchQueue.main.async {
                 UIBlockingProgressHUD.dismiss()
