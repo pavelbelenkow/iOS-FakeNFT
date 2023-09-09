@@ -201,7 +201,7 @@ private extension CartViewController {
         ) { [weak self] in
             UIBlockingProgressHUD.show()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
                 self?.updateCart()
                 UIBlockingProgressHUD.dismiss()
             }
@@ -209,8 +209,6 @@ private extension CartViewController {
     }
     
     func updateCart() {
-        refreshControl.endRefreshing()
-        
         viewModel.getOrder { [weak self] error in
             self?.showErrorAlert(error)
         }
@@ -325,7 +323,9 @@ private extension CartViewController {
     @objc func refreshOrder() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-            self?.updateCart()
+            guard let self else { return }
+            self.refreshControl.endRefreshing()
+            self.updateCart()
         }
     }
     
