@@ -6,9 +6,11 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         tabBar.unselectedItemTintColor = UIColor.NFTColor.black
         
+        let cartViewModel = CartViewModel()
+        
         let profileViewController = ProfileViewController()
         let catalogueViewController = CatalogueViewController()
-        let cartViewController = CartViewController()
+        let cartViewController = CartViewController(viewModel: cartViewModel)
         let statisticsViewController = StatisticsViewController()
         
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)

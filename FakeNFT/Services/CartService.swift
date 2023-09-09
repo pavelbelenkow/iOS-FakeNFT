@@ -3,9 +3,8 @@ import Foundation
 // MARK: - Protocols
 
 protocol CartServiceProtocol {
-    var nfts: [NFT] { get }
     func fetchOrder(_ completion: @escaping (Result<[NFT], Error>) -> Void)
-    func putOrder(with nfts: [String])
+    func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void)
 }
 
 // MARK: - CartService class
@@ -15,7 +14,8 @@ final class CartService {
     // MARK: - Properties
     
     private let decoder = JSONDecoder()
-    private(set) var nfts: [NFT] = []
+    private var nfts: [NFT] = []
+    private var nftsCache: [String : NFT] = [:]
     
     private let networkClient: NetworkClient
     
@@ -41,36 +41,45 @@ private extension CartService {
     }
     
     func fetchNfts(by ids: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        var nfts: [NFT] = []
+        nfts.removeAll()
         
-        for id in ids {
+        let dispatchGroup = DispatchGroup()
+        
+        // Filter out already fetched NFT from the ids array
+        let missingIds = Set(ids).subtracting(nftsCache.keys)
+        
+        for id in missingIds {
             dispatchGroup.enter()
             let request = NFTRequest(id: id)
             
             networkClient.send(request: request) { [weak self] result in
-                guard let self = self else { return }
+                defer { dispatchGroup.leave() }
+                guard let self else { return }
                 
                 switch result {
                 case .success(let data):
                     do {
                         let model = try self.decoder.decode(NFTNetworkModel.self, from: data)
                         let nft = self.convert(from: model)
-                        nfts.append(nft)
+                        self.nfts.append(nft) // Append the fetched NFT to the nfts array
+                        self.nftsCache[id] = nft // Store the fetched NFT in the cache
                     } catch {
                         completion(.failure(error))
                     }
                 case .failure(let error):
                     completion(.failure(error))
                 }
-                
-                dispatchGroup.leave()
             }
         }
         
-        dispatchGroup.notify(queue: .main) {
-            completion(.success(nfts))
-            self.nfts.removeAll()
+        // Filter out already fetched NFT from the cache
+        let cachedNfts = ids.compactMap { nftsCache[$0] }
+        
+        // Append the fetched NFT from cache to the nfts array
+        nfts.append(contentsOf: cachedNfts)
+        
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            completion(.success(self.nfts))
         }
     }
 }
@@ -83,7 +92,7 @@ extension CartService: CartServiceProtocol {
         let request = GetOrderRequest()
         
         networkClient.send(request: request) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch result {
             case .success(let data):
@@ -94,13 +103,11 @@ extension CartService: CartServiceProtocol {
                     self.fetchNfts(by: ids) { result in
                         switch result {
                         case .success(let fetchedNfts):
-                            self.nfts.append(contentsOf: fetchedNfts)
-                            completion(.success(self.nfts))
+                            completion(.success(fetchedNfts))
                         case .failure(let error):
                             completion(.failure(error))
                         }
                     }
-                    
                 } catch {
                     completion(.failure(error))
                 }
@@ -110,7 +117,7 @@ extension CartService: CartServiceProtocol {
         }
     }
     
-    func putOrder(with nfts: [String]) {
+    func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void) {
         var request = PutOrderRequest()
         request.dto = OrderNetworkModel(nfts: nfts)
         
@@ -119,11 +126,10 @@ extension CartService: CartServiceProtocol {
             
             switch result {
             case .success:
-                DispatchQueue.main.async {
-                    self.nfts.removeAll()
-                }
+                self.nfts.removeAll()
+                completion(nil)
             case .failure(let error):
-                assertionFailure("Failed to put order with error: \(error)")
+                completion(error)
             }
         }
     }

@@ -6,7 +6,7 @@ final class CartTableView: UITableView {
     
     // MARK: - Properties
     
-    private var viewModel: CartViewModelProtocol
+    private let viewModel: CartViewModelProtocol
     private weak var viewController: CartViewController?
     
     // MARK: - Initializers
@@ -58,5 +58,15 @@ extension CartTableView: UITableViewDataSource {
         cartCell.configure(from: nft)
         
         return cartCell
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        let deletedNftId = viewModel.listNfts[indexPath.row].id
+        viewModel.removeNft(by: deletedNftId) { _ in }
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }

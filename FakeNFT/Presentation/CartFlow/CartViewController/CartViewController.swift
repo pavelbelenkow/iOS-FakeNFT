@@ -6,8 +6,31 @@ final class CartViewController: UIViewController {
     
     // MARK: - Properties
     
+    private lazy var sortingButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage.NFTIcon.sorting, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(sortingButtonTapped),
+            for: .touchUpInside
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(
+            self,
+            action: #selector(refreshOrder),
+            for: .valueChanged
+        )
+        return control
+    }()
+    
     private lazy var cartTableView: UITableView = {
         let view = CartTableView(viewModel: viewModel, viewController: self)
+        view.refreshControl = refreshControl
         return view
     }()
     
@@ -41,7 +64,7 @@ final class CartViewController: UIViewController {
     
     private lazy var nftAmountLabel: UILabel = {
         let label = UILabel()
-        label.text = "0" + Constants.Cart.nftText
+        label.text = "0 " + Constants.Cart.nftText
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.regular15
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +73,7 @@ final class CartViewController: UIViewController {
     
     private lazy var totalValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "00,00" + Constants.Cart.currency
+        label.text = "00,00 " + Constants.Cart.currency
         label.textColor = UIColor.NFTColor.green
         label.font = UIFont.NFTFont.bold17
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +91,18 @@ final class CartViewController: UIViewController {
         return button
     }()
     
-    private let viewModel: CartViewModelProtocol = CartViewModel()
+    private let viewModel: CartViewModelProtocol
+    
+    // MARK: - Initializers
+    
+    init(viewModel: CartViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -82,7 +116,7 @@ final class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getOrder()
+        updateCart()
     }
 }
 
@@ -100,13 +134,7 @@ private extension CartViewController {
     }
     
     func addSortingButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage.NFTIcon.sorting,
-            style: .done,
-            target: self,
-            action: #selector(sortingButtonTapped)
-        )
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.NFTColor.black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
     }
     
     func addCartTableView() {
@@ -166,6 +194,28 @@ private extension CartViewController {
 
 private extension CartViewController {
     
+    func showErrorAlert(_ error: Error) {
+        let errorData = NetworkErrorHandler.handleError(error)
+        
+        showAlert(
+            title: errorData.title,
+            message: errorData.message
+        ) { [weak self] in
+            UIBlockingProgressHUD.show()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+                self?.updateCart()
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+    
+    func updateCart() {
+        viewModel.getOrder { [weak self] error in
+            self?.showErrorAlert(error)
+        }
+    }
+    
     func updateNftAmountLabel() {
         let nftCount = viewModel.listNfts.count
         nftAmountLabel.text = "\(nftCount) " + Constants.Cart.nftText
@@ -175,7 +225,7 @@ private extension CartViewController {
         let valueString = NumberFormatter
             .currencyFormatter
             .string(from: value as NSNumber) ?? ""
-        return "\(valueString.replacingOccurrences(of: ".", with: ",")) " + Constants.Cart.currency
+        return valueString + " " + Constants.Cart.currency
     }
     
     func updateTotalValueLabel() {
@@ -188,6 +238,7 @@ private extension CartViewController {
         let isCartEmpty = viewModel.listNfts.isEmpty
         
         emptyCartLabel.isHidden = !isCartEmpty
+        sortingButton.isHidden = isCartEmpty
         cartTableView.isHidden = isCartEmpty
         paymentContainerView.isHidden = isCartEmpty
         updateNftAmountLabel()
@@ -213,6 +264,15 @@ private extension CartViewController {
         }
     }
     
+    func scrollToTopIfNeeded() {
+        let topIndexPath = IndexPath(row: 0, section: 0)
+        if cartTableView.contentOffset.y > 0 {
+            cartTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+        } else {
+            cartTableView.scrollToRow(at: topIndexPath, at: .top, animated: false)
+        }
+    }
+
     func presentSheetOfSortTypes() {
         let sheetTitle = Constants.Cart.sortText
         let priceSortTitle = Constants.Cart.byPrice
@@ -225,18 +285,21 @@ private extension CartViewController {
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .price)
+            self?.scrollToTopIfNeeded()
         }
         let rateSortAction = UIAlertAction(
             title: rateSortTitle,
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .rating)
+            self?.scrollToTopIfNeeded()
         }
         let nameSortAction = UIAlertAction(
             title: nameSortTitle,
             style: .default
         ) { [weak self] _ in
             self?.viewModel.sortBy(option: .name)
+            self?.scrollToTopIfNeeded()
         }
         let closeSheetAction = UIAlertAction(
             title: closeSheetTitle,
@@ -259,12 +322,23 @@ private extension CartViewController {
         present(actionSheet, animated: true)
     }
     
+    @objc func refreshOrder() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            guard let self else { return }
+            self.refreshControl.endRefreshing()
+            self.updateCart()
+        }
+    }
+    
     @objc func sortingButtonTapped() {
         presentSheetOfSortTypes()
     }
     
     @objc func paymentButtonTapped() {
-        let paymentViewController = PaymentViewController()
+        let viewModel = OrderPaymentViewModel()
+        let paymentViewController = PaymentViewController(viewModel: viewModel)
+        paymentViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentViewController, animated: true)
     }
 }

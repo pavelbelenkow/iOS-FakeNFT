@@ -4,21 +4,11 @@ import Foundation
 
 protocol CartViewModelProtocol {
     var listNfts: [NFT] { get }
-    func bindNfts(completion: @escaping ([NFT]) -> Void)
-    func getOrder()
+    func bindNfts(_ completion: @escaping ([NFT]) -> Void)
+    func getOrder(_ completion: @escaping (Error) -> Void)
     func getNftsTotalValue() -> Float
-    func removeNft(by id: String)
+    func removeNft(by id: String, _ completion: @escaping (Error?) -> Void)
     func sortBy(option: SortOption)
-}
-
-// MARK: - Model
-
-struct NFT {
-    let name: String
-    let image: String
-    let rating: Int
-    let price: Float
-    let id: String
 }
 
 // MARK: - CartViewModel class
@@ -30,14 +20,26 @@ final class CartViewModel {
     @Observable var nfts: [NFT]
     
     private let cartService: CartServiceProtocol
-    private var sortOption: SortOption?
-    private var sortDirection: SortDirection = .descending
+    private let sortStorageManager: SortStorageManager
     
     // MARK: - Initializers
     
     init(cartService: CartServiceProtocol = CartService()) {
         self.nfts = []
         self.cartService = cartService
+        self.sortStorageManager = .shared
+    }
+}
+
+// MARK: - Private methods
+
+private extension CartViewModel {
+    
+    func sortNfts(_ nfts: [NFT]) -> [NFT] {
+        let sortOption = sortStorageManager.sortOption
+        let sortDirection = sortStorageManager.sortDirection
+        
+        return nfts.sorted(by: sortOption.compareFunction(sortDirection: sortDirection))
     }
 }
 
@@ -47,24 +49,25 @@ extension CartViewModel: CartViewModelProtocol {
     
     var listNfts: [NFT] { nfts }
     
-    func bindNfts(completion: @escaping ([NFT]) -> Void) {
+    func bindNfts(_ completion: @escaping ([NFT]) -> Void) {
         $nfts.bind(action: completion)
     }
     
-    func getOrder() {
+    func getOrder(_ completion: @escaping (Error) -> Void) {
         UIBlockingProgressHUD.show()
         
         cartService.fetchOrder { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                
                 switch result {
                 case .success(let nfts):
-                    UIBlockingProgressHUD.dismiss()
-                    self.nfts = nfts
+                    let sortedNfts = self.sortNfts(nfts)
+                    self.nfts = sortedNfts
                 case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
-                    print(error.localizedDescription)
+                    completion(error)
                 }
             }
         }
@@ -81,22 +84,24 @@ extension CartViewModel: CartViewModelProtocol {
         return totalValue
     }
     
-    func removeNft(by id: String) {
+    func removeNft(by id: String, _ completion: @escaping (Error?) -> Void) {
         if let index = nfts.firstIndex(where: { $0.id == id }) {
             nfts.remove(at: index)
             let nfts = nfts.map { $0.id }
-            cartService.putOrder(with: nfts)
+            cartService.putOrder(with: nfts) { error in
+                completion(error)
+            }
         }
     }
     
     func sortBy(option: SortOption) {
-        if sortOption == option {
-            sortDirection = (sortDirection == .descending) ? .ascending : .descending
+        if sortStorageManager.sortOption == option {
+            sortStorageManager.sortDirection = (sortStorageManager.sortDirection == .ascending) ? .descending : .ascending
         } else {
-            sortDirection = .descending
+            sortStorageManager.sortDirection = .ascending
         }
         
-        nfts.sort(by: option.compareFunction(sortDirection: sortDirection))
-        sortOption = option
+        nfts.sort(by: option.compareFunction(sortDirection: sortStorageManager.sortDirection))
+        sortStorageManager.sortOption = option
     }
 }

@@ -1,5 +1,4 @@
 import UIKit
-import Kingfisher
 
 // MARK: - RemoveNftViewController class
 
@@ -171,13 +170,35 @@ private extension RemoveNftViewController {
     
     func setNftImage() {
         guard let nft else { return }
-        nftImageView.kf.setImage(with: URL(string: nft.image))
+        let imageURL = URL(string: nft.image)
+        NFTImageCache.loadAndCacheImage(for: nftImageView, with: imageURL)
+    }
+    
+    func showErrorAlert(_ error: Error) {
+        let errorData = NetworkErrorHandler.handleError(error)
+        
+        showAlert(
+            title: errorData.title,
+            message: errorData.message
+        ) { [weak self] in
+            self?.removeNftFromCart()
+        }
     }
     
     @objc func removeNftFromCart() {
         guard let nft else { return }
-        viewModel.removeNft(by: nft.id)
-        dismiss(animated: true)
+        
+        viewModel.removeNft(by: nft.id) { [weak self] error in
+            guard let self else { return }
+            
+            if let error {
+                self.showErrorAlert(error)
+            } else {
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true)
+                }
+            }
+        }
     }
     
     @objc func dismissViewController() {
