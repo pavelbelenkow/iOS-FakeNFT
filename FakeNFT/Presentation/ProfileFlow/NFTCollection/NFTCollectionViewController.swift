@@ -46,13 +46,8 @@ final class NFTCollectionViewController: UIViewController {
         return button
     }()
 
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "ChevronLeft"), for: .normal)
-        button.tintColor = UIColor.NFTColor.black
-        let width = Constants.navBarButtonSize
-        button.frame.size = CGSize(width: width, height: width)
+    private lazy var backButton: NavBarBackButton = {
+        let button = NavBarBackButton()
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
