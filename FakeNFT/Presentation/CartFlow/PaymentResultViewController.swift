@@ -48,11 +48,13 @@ final class PaymentResultViewController: UIViewController {
     }()
     
     private let isSuccess: Bool
+    private let viewModel: OrderPaymentViewModelProtocol
     
     // MARK: - Initializers
     
-    init(_ isSuccess: Bool) {
+    init(_ isSuccess: Bool, viewModel: OrderPaymentViewModelProtocol) {
         self.isSuccess = isSuccess
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -118,5 +120,7 @@ private extension PaymentResultViewController {
     }
     
     @objc func resultButtonTapped() {
+        viewModel.handlePaymentResult(isSuccess)
+        dismiss(animated: true)
     }
 }

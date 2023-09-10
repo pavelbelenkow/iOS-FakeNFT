@@ -7,6 +7,7 @@ protocol OrderPaymentViewModelProtocol {
     func bindCurrencies(_ completion: @escaping ([Currency]) -> Void)
     func getCurrencies(_ completion: @escaping (Error) -> Void)
     func getOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void)
+    func handlePaymentResult(_ isSuccess: Bool)
 }
 
 // MARK: - OrderPaymentViewModel class
@@ -18,6 +19,8 @@ final class OrderPaymentViewModel {
     @Observable var currencies: [Currency]
     
     private let orderPaymentService: OrderPaymentServiceProtocol
+    
+    var paymentResultHandler: ((Bool) -> Void)?
     
     // MARK: - Initializers
     
@@ -71,6 +74,14 @@ extension OrderPaymentViewModel: OrderPaymentViewModelProtocol {
                     completion(.failure(error))
                 }
             }
+        }
+    }
+    
+    func handlePaymentResult(_ isSuccess: Bool) {
+        if isSuccess {
+            paymentResultHandler?(isSuccess)
+        } else {
+            paymentResultHandler?(isSuccess)
         }
     }
 }

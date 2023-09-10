@@ -8,6 +8,7 @@ protocol CartViewModelProtocol {
     func getOrder(_ completion: @escaping (Error) -> Void)
     func getNftsTotalValue() -> Float
     func removeNft(by id: String, _ completion: @escaping (Error?) -> Void)
+    func clearCart()
     func sortBy(option: SortOption)
 }
 
@@ -92,6 +93,11 @@ extension CartViewModel: CartViewModelProtocol {
                 completion(error)
             }
         }
+    }
+    
+    func clearCart() {
+        nfts.removeAll()
+        cartService.putOrder(with: []) { _ in }
     }
     
     func sortBy(option: SortOption) {

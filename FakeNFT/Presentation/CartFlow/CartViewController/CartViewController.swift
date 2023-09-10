@@ -322,6 +322,19 @@ private extension CartViewController {
         present(actionSheet, animated: true)
     }
     
+    func handlePaymentResult(viewModel: OrderPaymentViewModel) {
+        viewModel.paymentResultHandler = { [weak self] (isSuccess) in
+            guard let self = self else { return }
+            if isSuccess {
+                self.tabBarController?.selectedIndex = 1
+                self.navigationController?.popToRootViewController(animated: false)
+                self.viewModel.clearCart()
+            } else {
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+        }
+    }
+    
     @objc func refreshOrder() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
@@ -336,10 +349,13 @@ private extension CartViewController {
     }
     
     @objc func paymentButtonTapped() {
-        let viewModel = OrderPaymentViewModel()
-        let paymentViewController = PaymentViewController(viewModel: viewModel)
+        let paymentViewModel = OrderPaymentViewModel()
+        let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
+        
         paymentViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentViewController, animated: true)
+        
+        handlePaymentResult(viewModel: paymentViewModel)
     }
 }
 

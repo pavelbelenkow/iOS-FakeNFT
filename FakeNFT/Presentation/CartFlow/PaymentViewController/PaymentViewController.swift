@@ -218,7 +218,7 @@ private extension PaymentViewController {
     }
     
     func showViewController(_ isSuccess: Bool) {
-        let viewController = PaymentResultViewController(isSuccess)
+        let viewController = PaymentResultViewController(isSuccess, viewModel: viewModel)
         viewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(viewController, animated: true)
     }
