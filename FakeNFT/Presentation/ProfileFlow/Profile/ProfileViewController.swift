@@ -138,6 +138,12 @@ final class ProfileViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func showFavorites() {
+        let viewController = FavoritesViewController()
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func setupView() {
         setupNavBar()
         view.addSubview(avatarAndNameStackView)
@@ -218,7 +224,7 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             showMyNFTs()
         case 1:
-            break
+            showFavorites()
         default:
             break
         }
