@@ -29,7 +29,6 @@ final class NFTCollectionViewController: UIViewController {
         tableview.translatesAutoresizingMaskIntoConstraints = false
         tableview.register(NFTCollectionCell.self,
                            forCellReuseIdentifier: NFTCollectionCell.reuseIdentifier)
-        tableview.delegate = self
         tableview.dataSource = self
         tableview.separatorStyle = .none
         tableview.allowsSelection = false
@@ -84,18 +83,30 @@ final class NFTCollectionViewController: UIViewController {
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
 
-        let sortByPrice = UIAlertAction(title: SortingType.byPrice.rawValue, style: .default) { [weak self] _ in
+        let sortByPrice = UIAlertAction(
+            title: SortingType.byPrice.rawValue,
+            style: .default
+        ) { [weak self] _ in
             self?.viewModel.sort(by: .byPrice)
         }
-        let sortByRating = UIAlertAction(title: SortingType.byRating.rawValue, style: .default) { [weak self] _ in
+        let sortByRating = UIAlertAction(
+            title: SortingType.byRating.rawValue,
+            style: .default
+        ) { [weak self] _ in
             self?.viewModel.sort(by: .byRating)
         }
 
-        let sortByName = UIAlertAction(title: SortingType.byName.rawValue, style: .default) { [weak self] _ in
+        let sortByName = UIAlertAction(
+            title: SortingType.byName.rawValue,
+            style: .default
+        ) { [weak self] _ in
             self?.viewModel.sort(by: .byName)
         }
 
-        let cancelAction = UIAlertAction(title: Constants.cancelAction, style: .cancel)
+        let cancelAction = UIAlertAction(
+            title: Constants.cancelAction,
+            style: .cancel
+        )
 
         let actions = [sortByPrice, sortByRating, sortByName, cancelAction]
         actions.forEach { alertController.addAction($0)}
@@ -140,8 +151,4 @@ extension NFTCollectionViewController: UITableViewDataSource {
         cell.configCell(nft: nft, author: author, isLiked: isLiked)
         return cell
     }
-}
-// MARK: - UITableViewDelegate
-extension NFTCollectionViewController: UITableViewDelegate {
-
 }

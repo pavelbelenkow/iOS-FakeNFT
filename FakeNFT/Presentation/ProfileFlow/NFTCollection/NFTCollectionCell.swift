@@ -7,8 +7,11 @@ final class NFTCollectionCell: UITableViewCell {
     private enum Constants {
         static let nftImageSize: CGFloat = 108
         static let likeButtonSize: CGFloat = 42
-        static let vInset: CGFloat = 8                  // vertical content inset
-        static let hInset: CGFloat = 16                 // horizontal content inset
+
+        // vertical content inset
+        // horizontal content inset
+        static let vInset: CGFloat = 8
+        static let hInset: CGFloat = 16
 
         static let priceWord = "Цена"
         static let byBord = "от "
