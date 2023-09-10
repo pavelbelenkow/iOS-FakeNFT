@@ -1,17 +1,17 @@
 import Foundation
 
 final class ProfileViewModel {
-    private let userInfoNetworkService = UserInfoNetworkService()
+    private let userInfoNetworkService = ProfileNetworkService()
 
     @Observable
-    private(set) var user: UserInfo?
+    private(set) var user: Profile?
 
     init() {
         getUserInfo()
     }
 
     func getUserInfo() {
-        userInfoNetworkService.getUserInfo { [weak self] result in
+        userInfoNetworkService.getProfile(by: 1) { [weak self] result in
             guard let self else { return }
             DispatchQueue.main.async {
                 switch result {
