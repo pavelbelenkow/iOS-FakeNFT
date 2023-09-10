@@ -114,6 +114,7 @@ private extension PaymentResultViewController {
     }
     
     func isSuccessButtonTitle() -> String {
+        isSuccess ? Constants.Cart.backToCatalogue : Constants.Cart.tryAgain
     }
     
     @objc func resultButtonTapped() {
