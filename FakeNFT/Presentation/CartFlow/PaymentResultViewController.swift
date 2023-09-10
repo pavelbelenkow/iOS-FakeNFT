@@ -17,12 +17,13 @@ final class PaymentResultViewController: UIViewController {
     
     private lazy var resultImageView: UIImageView = {
         let view = UIImageView()
+        view.image = isSuccessImage()
         return view
     }()
     
     private lazy var resultTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = isSuccessTitleLabel()
         label.textColor = UIColor.NFTColor.black
         label.font = UIFont.NFTFont.bold22
         label.textAlignment = .center
@@ -97,5 +98,24 @@ private extension PaymentResultViewController {
             resultButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             resultButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+    }
+}
+
+// MARK: - Private methods
+
+private extension PaymentResultViewController {
+    
+    func isSuccessImage() -> UIImage? {
+        isSuccess ? UIImage.NFTImage.successPaymentResult : UIImage.NFTImage.failurePaymentResult
+    }
+    
+    func isSuccessTitleLabel() -> String {
+        isSuccess ? Constants.Cart.successPaymentResultText : Constants.Cart.failurePaymentResultText
+    }
+    
+    func isSuccessButtonTitle() -> String {
+    }
+    
+    @objc func resultButtonTapped() {
     }
 }
