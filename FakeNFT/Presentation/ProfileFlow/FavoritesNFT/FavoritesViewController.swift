@@ -49,14 +49,25 @@ extension FavoritesViewController {
     }
 
     private func activateConstraints() {
-
+        let edge: CGFloat = 16
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edge),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edge),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }
 
 extension FavoritesViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int { .zero }
+    func numberOfSections(
+        in collectionView: UICollectionView
+    ) -> Int { 1 }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         5
     }
 
@@ -80,6 +91,11 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        CGSize(width: 10, height: 20)
+        let screenWidth = UIScreen.main.bounds.width
+        let height: CGFloat = 80
+        let width: CGFloat = screenWidth / 2 - 8
+
+        let size = CGSize(width: width / 2, height: height)
+        return size
     }
 }
