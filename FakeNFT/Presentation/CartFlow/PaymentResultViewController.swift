@@ -30,6 +30,22 @@ final class PaymentResultViewController: UIViewController {
         return label
     }()
     
+    private lazy var resultButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.configure(
+            with: .payment,
+            for: isSuccessButtonTitle(),
+            height: 60
+        )
+        button.addTarget(
+            self,
+            action: #selector(resultButtonTapped),
+            for: .touchUpInside
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let isSuccess: Bool
     
     // MARK: - Initializers
@@ -58,6 +74,7 @@ private extension PaymentResultViewController {
     
     func addSubviews() {
         addResultStackView()
+        addResultButton()
     }
     
     func addResultStackView() {
@@ -69,6 +86,16 @@ private extension PaymentResultViewController {
             resultStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             resultStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 26),
             resultStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -26)
+        ])
+    }
+    
+    func addResultButton() {
+        view.addSubview(resultButton)
+        
+        NSLayoutConstraint.activate([
+            resultButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            resultButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            resultButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
 }
