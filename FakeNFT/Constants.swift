@@ -9,6 +9,7 @@ enum Constants {
         static let rowHeight: CGFloat = 140
         
         static let back = "Вернуться"
+        static let backToCatalogue = "Вернуться в каталог"
         static let byPrice = "По цене"
         static let byRating = "По рейтингу"
         static let byTitle = "По названию"
@@ -18,6 +19,7 @@ enum Constants {
         static let currency = "ETH"
         static let currencyReuseIdentifier = "currency"
         static let emptyCartText = "Корзина пуста"
+        static let failurePaymentResultText = "Упс! Что-то пошло не так :( Попробуйте ещё раз!"
         static let nftText = "NFT"
         static let ok = "OK"
         static let pay = "Оплатить"
@@ -29,6 +31,8 @@ enum Constants {
         static let selectCurrencyForPayment = "Выберите валюту для оплаты, пожалуйста😇"
         static let selectTypeOfPayment = "Выберите способ оплаты"
         static let sortText = "Сортировка"
+        static let successPaymentResultText = "Успех! Оплата прошла, поздравляем с покупкой!"
+        static let tryAgain = "Попробовать еще раз"
         static let unselectedPaymentMethod = "Не выбран способ оплаты"
         static let userAgreementText = "Совершая покупку, вы соглашаетесь с условиями"
         static let userAgreementLinkText = "Пользовательского соглашения"
