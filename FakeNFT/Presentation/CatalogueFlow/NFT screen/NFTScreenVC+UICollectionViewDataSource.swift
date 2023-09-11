@@ -26,7 +26,7 @@ extension NFTScreenVC: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        cell.model = nftScreenViewModel.nftCollection[indexPath.row]
+        cell.configCell(with: nftScreenViewModel.nftCollection[indexPath.row], delegate: self)
 
         return cell
     }

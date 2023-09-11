@@ -22,10 +22,21 @@ final class NFTScreenCell: UICollectionViewCell {
         return view
     }()
 
-    private var likeButton = UIButton()
-    private var cartButton = UIButton()
+    private var likeButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(nil, action: #selector(likeButtonTap), for: .touchUpInside)
+        return button
+    }()
+
+    private var cartButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(nil, action: #selector(cartButtonTap), for: .touchUpInside)
+        return button
+    }()
+
     private var ratingImage = UIImageView()
     private let placeholder = ImagesPlaceholder()
+    private var nftID = String()
 
     private var nameLabel: UILabel = {
         let label = UILabel()
@@ -52,31 +63,7 @@ final class NFTScreenCell: UICollectionViewCell {
     }()
 
     //MARK: Internal Properties
-    var model: NFTModel? {
-        didSet {
-            guard let model else { return }
-
-            setRatingImage(rating: model.rating)
-            nameLabel.text = model.name
-            priceLabel.text = "\(model.price) ETH"
-            setLikeImage(isLiked: model.isLiked)
-            setOrderImage(isOrdered: model.isOrdered)
-
-            guard let encodedUrlString = model
-                .images[0]
-                .addingPercentEncoding(
-                    withAllowedCharacters: .urlQueryAllowed
-                ),
-                  let url = URL(
-                    string: encodedUrlString
-            ) else {
-                print("Invalid URL:", model.images[0])
-                return
-            }
-
-            NFTImageView.kf.setImage(with: url, placeholder: placeholder)
-        }
-    }
+    weak var delegate: NFTCellDelegate?
 
     //MARK: Initialisers
     override init(frame: CGRect) {
@@ -98,10 +85,49 @@ final class NFTScreenCell: UICollectionViewCell {
         nameLabel.text = nil
         priceLabel.text = nil
     }
+
+    //MARK: Internal Methods
+    func configCell(with model: NFTModel?, delegate: NFTCellDelegate) {
+        guard let model else { return }
+
+        setRatingImage(rating: model.rating)
+        nameLabel.text = model.name
+        priceLabel.text = "\(model.price) ETH"
+        print(model.isOrdered)
+        setLikeImage(isLiked: model.isLiked)
+        setOrderImage(isOrdered: model.isOrdered)
+        nftID = model.id
+
+        guard let encodedUrlString = model
+            .images[0]
+            .addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+              let url = URL(
+                string: encodedUrlString
+        ) else {
+            print("Invalid URL:", model.images[0])
+            return
+        }
+
+        NFTImageView.kf.setImage(with: url, placeholder: placeholder)
+
+        self.delegate = delegate
+    }
 }
 
 //MARK: Private Extension
 private extension NFTScreenCell {
+    @objc
+    func likeButtonTap() {
+        delegate?.addNFTToFavourites(id: nftID)
+    }
+
+    @objc
+    func cartButtonTap() {
+        delegate?.cartNFT(id: nftID)
+    }
+
     func makeCell() {
         addSubviews()
         applyConstraints()

@@ -57,6 +57,7 @@
 		E4DB12F12AA669E9004097EA /* ImagesPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F02AA669E9004097EA /* ImagesPlaceholder.swift */; };
 		E4DB12F52AA67EF1004097EA /* NFTOrderedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */; };
 		E4DB12F72AA680CF004097EA /* NFTLikedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */; };
+		E4DB12F92AAF902E004097EA /* NFTCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12F82AAF902E004097EA /* NFTCellDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		E4DB12F02AA669E9004097EA /* ImagesPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesPlaceholder.swift; sourceTree = "<group>"; };
 		E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTOrderedModel.swift; sourceTree = "<group>"; };
 		E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTLikedModel.swift; sourceTree = "<group>"; };
+		E4DB12F82AAF902E004097EA /* NFTCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCellDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				E45C4C812A9E6264002A1B41 /* NFTScreenVC+UICollectionViewDataSource.swift */,
 				E45C4C852A9E7522002A1B41 /* GridGeometric.swift */,
 				E45C4C872A9E755E002A1B41 /* NFTScreenVC+UICollectionViewDelegate.swift */,
+				E4DB12F82AAF902E004097EA /* NFTCellDelegate.swift */,
 			);
 			path = "NFT screen";
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				E4DB12E82AA65544004097EA /* NFTScreenViewModel.swift in Sources */,
 				E45C4C8F2AA0D3A8002A1B41 /* CatalogueCellModel.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
+				E4DB12F92AAF902E004097EA /* NFTCellDelegate.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				E45C4C7C2A9E5D2E002A1B41 /* NFTScreenVC.swift in Sources */,
 				E45C4C712A9E539A002A1B41 /* CatalogueViewController+UITableViewDataSource.swift in Sources */,

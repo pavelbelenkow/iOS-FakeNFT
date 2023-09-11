@@ -105,3 +105,14 @@ extension NFTScreenVC: UITextViewDelegate {
         return false
     }
 }
+
+//MARK: - NFTCellDelegate
+extension NFTScreenVC: NFTCellDelegate {
+    func addNFTToFavourites(id: String) {
+        nftScreenViewModel.addNFTToFavourites(id: id)
+    }
+
+    func cartNFT(id: String) {
+        nftScreenViewModel.cartNFT(id: id)
+    }
+}
