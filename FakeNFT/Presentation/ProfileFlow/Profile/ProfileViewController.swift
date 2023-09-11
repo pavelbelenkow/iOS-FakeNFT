@@ -120,6 +120,7 @@ final class ProfileViewController: UIViewController {
         showEditProfile()
     }
 
+    // MARK: - Transtitions to other VC
     private func showEditProfile() {
         let viewController = EditProfileViewController()
         viewController.profileViewModel = profileViewModel
@@ -141,9 +142,13 @@ final class ProfileViewController: UIViewController {
     private func showFavorites() {
         let viewController = FavoritesViewController()
         viewController.hidesBottomBarWhenPushed = true
+        guard let user = profileViewModel.user else { return }
+        idLikesNFT = user.likes.compactMap {Int($0)}
+        viewController.idLikesCollection = idLikesNFT
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    // MARK: - Setup view
     private func setupView() {
         setupNavBar()
         view.addSubview(avatarAndNameStackView)

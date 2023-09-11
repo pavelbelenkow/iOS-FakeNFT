@@ -2,6 +2,10 @@ import UIKit
 
 final class FavoritesViewController: UIViewController {
 
+    var idLikesCollection = [Int]()
+
+    private var viewModel = FavoritesViewModel()
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(
@@ -14,6 +18,7 @@ final class FavoritesViewController: UIViewController {
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
+        collectionView.isScrollEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -29,7 +34,9 @@ final class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         activateConstraints()
-
+        viewModel.nftIds = idLikesCollection
+        viewModel.loadUsersNFT()
+        bind()
     }
 
     @objc
@@ -37,10 +44,16 @@ final class FavoritesViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
-}
+    private func bind() {
+        viewModel.$nfts.bind { [weak self] _ in
+            self?.collectionView.reloadData()
+        }
+    }
 
-extension FavoritesViewController {
-    private func setupView() {
+}
+// MARK: - Setupview functions
+private extension FavoritesViewController {
+    func setupView() {
         title = "Избранные NFT"
 
         view.backgroundColor = UIColor.NFTColor.white
@@ -48,17 +61,17 @@ extension FavoritesViewController {
         navigationItem.leftBarButtonItem = .init(customView: backButton)
     }
 
-    private func activateConstraints() {
+    func activateConstraints() {
         let edge: CGFloat = 16
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edge),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edge),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
-
+// MARK: - UICollectionViewDataSource
 extension FavoritesViewController: UICollectionViewDataSource {
     func numberOfSections(
         in collectionView: UICollectionView
@@ -68,7 +81,7 @@ extension FavoritesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        5
+        viewModel.nfts.count
     }
 
     func collectionView(
@@ -79,12 +92,13 @@ extension FavoritesViewController: UICollectionViewDataSource {
             withReuseIdentifier: FavoritesCell.reuseIdentifier,
             for: indexPath
         ) as? FavoritesCell else { return FavoritesCell() }
-
+        let nft = viewModel.nfts[indexPath.row]
+        cell.configCell(nft: nft)
         return cell
     }
 
 }
-
+// MARK: - UICollectionViewDelegateFlowLayout
 extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -93,9 +107,9 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
         let height: CGFloat = 80
-        let width: CGFloat = screenWidth / 2 - 8
+        let width: CGFloat = screenWidth / 2 - 32
 
-        let size = CGSize(width: width / 2, height: height)
+        let size = CGSize(width: width, height: height)
         return size
     }
 }

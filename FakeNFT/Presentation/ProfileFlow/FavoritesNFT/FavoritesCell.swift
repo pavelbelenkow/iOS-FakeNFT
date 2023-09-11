@@ -13,7 +13,7 @@ final class FavoritesCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fill
         stack.axis = .vertical
-        stack.spacing = 2
+        stack.spacing = 4
         return stack
     }()
 
@@ -27,7 +27,12 @@ final class FavoritesCell: UICollectionViewCell {
     private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage.NFTIcon.notLiked, for: .normal)
+        button.setImage(UIImage.NFTIcon.liked, for: .normal)
+        button.addTarget(
+            self,
+            action: #selector(likeButtonTapped),
+            for: .touchUpInside
+        )
         return button
     }()
 
@@ -36,7 +41,6 @@ final class FavoritesCell: UICollectionViewCell {
         label.font = .bodyBold
         label.textAlignment = .left
         label.numberOfLines = .zero
-        label.text = "12312"
         return label
     }()
 
@@ -50,7 +54,6 @@ final class FavoritesCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = .caption1
-        label.text = "12312"
         return label
     }()
 
@@ -62,6 +65,35 @@ final class FavoritesCell: UICollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configCell(nft: NFTModel) {
+        nameLabel.text = nft.name
+        priceLabel.text = "\(nft.price) ETH".replacingOccurrences(of: ".", with: ",")
+        setupRating(nft.rating)
+        guard let image = nft.images.first else { return }
+        nftImageView.loadImage(url: image.toURL, cornerRadius: 12)
+    }
+
+    @objc
+    private func likeButtonTapped() {
+    }
+
+    private func setupRating(_ rating: Int) {
+        switch rating {
+        case 5:
+            starsImageView.image = UIImage(named: "FiveStars")
+        case 4:
+            starsImageView.image = UIImage(named: "FourStars")
+        case 3:
+            starsImageView.image = UIImage(named: "ThreeStars")
+        case 2:
+            starsImageView.image = UIImage(named: "TwoStars")
+        case 1:
+            starsImageView.image = UIImage(named: "OneStar")
+        default:
+            starsImageView.image = UIImage(named: "ZeroStars")
+        }
     }
 
     private func setupView() {
@@ -85,13 +117,14 @@ final class FavoritesCell: UICollectionViewCell {
             nftImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
             nftImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
 
-            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
-            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
+            likeButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 4),
+            likeButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: -4),
             likeButton.heightAnchor.constraint(equalToConstant: Constants.likeButtonSize),
             likeButton.widthAnchor.constraint(equalToConstant: Constants.likeButtonSize),
 
             infoStack.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
-            infoStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            infoStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            infoStack.widthAnchor.constraint(equalToConstant: 76)
         ])
     }
 }
