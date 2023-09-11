@@ -8,16 +8,16 @@
 import UIKit
 
 struct UserNFTsCollectionViewCellModel {
-    //Имя NFT
+    /// Имя NFT
     let name: String
-    //URL адрес изображения NFT
+    /// URL адрес изображения NFT
     let image: URL
-    //Рейтинг NFT
+    /// Рейтинг NFT
     let rating: Int
-    //Цена NFT
+    /// Цена NFT
     let price: Double
-    //Id NFT
+    /// Id NFT
     let id: String
-    //Лайкнут ли NFT профилем
+    /// Лайкнут ли NFT профилем
     let isLiked: Bool
 }

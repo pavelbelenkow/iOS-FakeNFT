@@ -21,6 +21,7 @@ final class UserCollectionScreenViewController: UIViewController {
         userNFTsCollectionView.register(UserNFTsCollectionViewCell.self)
         userNFTsCollectionView.backgroundColor = .clear
         userNFTsCollectionView.allowsMultipleSelection = false
+        userNFTsCollectionView.showsVerticalScrollIndicator = false
         userNFTsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         return userNFTsCollectionView
     }()
@@ -38,8 +39,7 @@ final class UserCollectionScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
-            title: "Коллекция NFT",
-            navigationBar: &navBar
+            title: "Коллекция NFT"
         )
         addSubviews()
         makeConstraints()

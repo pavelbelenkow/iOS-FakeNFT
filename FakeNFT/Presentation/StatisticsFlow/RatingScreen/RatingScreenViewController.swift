@@ -14,6 +14,7 @@ final class RatingScreenViewController: UIViewController {
         ratingTableView.bounces = false
         ratingTableView.allowsMultipleSelection = false
         ratingTableView.register(RatingTableViewCell.self)
+        ratingTableView.showsVerticalScrollIndicator = false
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
         return ratingTableView
     }()

@@ -8,18 +8,18 @@
 import Foundation
 
 struct Profile: Codable {
-    //Имя профиля
+    /// Имя профиля
     let name: String
-    //Адрес аватара профиля
+    /// Адрес аватара профиля
     let avatar: String
-    //Описание профиля
+    /// Описание профиля
     let description: String
-    //Адрес веб-сайта профиля
+    /// Адрес веб-сайта профиля
     let website: String
-    //Список NFT профиля
+    /// Список NFT профиля
     let nfts: [String]
-    //Список лайкнутых NFT профиля
+    /// Список лайкнутых NFT профиля
     let likes: [String]
-    //Id профиля
+    /// Id профиля
     let id: String
 }

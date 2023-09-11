@@ -8,20 +8,20 @@
 import Foundation
 
 struct NFT: Codable {
-    //Время создания NFT
+    /// Время создания NFT
     let createdAt: String
-    //Имя NFT
+    /// Имя NFT
     let name: String
-    //Адреса изображения NFT
+    /// Адреса изображения NFT
     let images: [String]
-    //Рейтинг NFT
+    /// Рейтинг NFT
     let rating: Int
-    //Описание NFT
+    /// Описание NFT
     let description: String
-    //Цена NFT
+    /// Цена NFT
     let price: Double
-    //Id автора NFT
+    /// Id автора NFT
     let author: String
-    //Id NFT
+    /// Id NFT
     let id: String
 }

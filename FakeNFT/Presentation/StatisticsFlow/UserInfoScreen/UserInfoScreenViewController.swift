@@ -100,8 +100,7 @@ final class UserInfoScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
-            title: "",
-            navigationBar: &navBar
+            title: ""
         )
         addSubviews()
         makeConstraints()

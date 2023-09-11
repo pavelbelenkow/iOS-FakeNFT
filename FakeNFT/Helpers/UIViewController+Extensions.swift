@@ -10,10 +10,8 @@ import ProgressHUD
 
 extension UIViewController {
     func makeNavBarWithBackButtonAndTitle(
-        title: String,
-        navigationBar: inout UINavigationBar?
+        title: String
     ) {
-        let navBar = self.navigationController?.navigationBar
         let backButton = UIButton(type: .custom)
         backButton.setImage(
             UIImage.NFTIcon.chevronLeft,
@@ -28,7 +26,6 @@ extension UIViewController {
         self.navigationItem.leftBarButtonItem = leftNavBarItem
         self.navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
         self.title = title
-        navigationBar = navBar
     }
     
     @objc private func didBackButton() {

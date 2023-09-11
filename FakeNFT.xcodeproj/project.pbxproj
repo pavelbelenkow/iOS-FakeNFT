@@ -43,6 +43,7 @@
 		6C2B92B02A9CE9E10091C7D9 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B92AF2A9CE9E10091C7D9 /* UIImageView+Extensions.swift */; };
 		6C2B92B22A9CF43A0091C7D9 /* SortedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B92B12A9CF43A0091C7D9 /* SortedAlert.swift */; };
 		6C2B92B52A9CFB200091C7D9 /* UserInfoScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B92B42A9CFB200091C7D9 /* UserInfoScreenViewController.swift */; };
+		6C520DF92AAF2509004A9BB3 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C520DF82AAF2509004A9BB3 /* SF-Pro.ttf */; };
 		6C67E67A2AA1F74000E80A05 /* SortingOrderStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C67E6792AA1F74000E80A05 /* SortingOrderStorage.swift */; };
 		6C94E6782AA086FD00D9E593 /* WebViewUserWebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C94E6772AA086FD00D9E593 /* WebViewUserWebsiteViewController.swift */; };
 		6C94E67B2AA0948100D9E593 /* UserCollectionScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C94E67A2AA0948100D9E593 /* UserCollectionScreenViewController.swift */; };
@@ -119,6 +120,7 @@
 		6C2B92AF2A9CE9E10091C7D9 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		6C2B92B12A9CF43A0091C7D9 /* SortedAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedAlert.swift; sourceTree = "<group>"; };
 		6C2B92B42A9CFB200091C7D9 /* UserInfoScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoScreenViewController.swift; sourceTree = "<group>"; };
+		6C520DF82AAF2509004A9BB3 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		6C67E6792AA1F74000E80A05 /* SortingOrderStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingOrderStorage.swift; sourceTree = "<group>"; };
 		6C94E6772AA086FD00D9E593 /* WebViewUserWebsiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewUserWebsiteViewController.swift; sourceTree = "<group>"; };
 		6C94E67A2AA0948100D9E593 /* UserCollectionScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionScreenViewController.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		59CAB77A2A9AAA0600C4938D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				6C520DF32AAF20FC004A9BB3 /* Fonts */,
 				59CAB77B2A9AAA2900C4938D /* UIColor+Extensions.swift */,
 				59CAB77D2A9AAA7000C4938D /* UIFont+Extensions.swift */,
 				59CAB77F2A9AAB8300C4938D /* UIImage+Extensions.swift */,
@@ -379,6 +382,14 @@
 				6C94E6772AA086FD00D9E593 /* WebViewUserWebsiteViewController.swift */,
 			);
 			path = UserInfoScreen;
+			sourceTree = "<group>";
+		};
+		6C520DF32AAF20FC004A9BB3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6C520DF82AAF2509004A9BB3 /* SF-Pro.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		6C94E6792AA0943000D9E593 /* UserCollectionScreen */ = {
@@ -518,6 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
+				6C520DF92AAF2509004A9BB3 /* SF-Pro.ttf in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

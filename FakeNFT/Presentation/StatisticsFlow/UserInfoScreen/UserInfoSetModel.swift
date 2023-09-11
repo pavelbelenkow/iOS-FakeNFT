@@ -8,12 +8,12 @@
 import UIKit
 
 struct UserInfoSetModel {
-    //URL адрес аватара юзера
+    /// URL адрес аватара юзера
     let avatar: URL
-    //Имя юзера
+    /// Имя юзера
     let name: String
-    //Описание юзера
+    /// Описание юзера
     let description: String
-    //Адрес веб-сайта юзера
+    /// Адрес веб-сайта юзера
     let website: String
 }
