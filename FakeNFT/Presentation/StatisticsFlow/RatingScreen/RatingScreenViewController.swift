@@ -14,6 +14,7 @@ final class RatingScreenViewController: UIViewController {
         ratingTableView.bounces = false
         ratingTableView.allowsMultipleSelection = false
         ratingTableView.register(RatingTableViewCell.self)
+        ratingTableView.showsVerticalScrollIndicator = false
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
         return ratingTableView
     }()
@@ -24,11 +25,25 @@ final class RatingScreenViewController: UIViewController {
         makeNavBarWithSortingButton()
         addSubviews()
         makeConstraints()
-        viewModel.$listUsers.bind { [weak self] listUsers in
+        bind()
+        viewModel.getListUsers()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.dismissProgressHUD()
+    }
+    
+    private func bind() {
+        viewModel.$listUsers.bind { [weak self] _ in
             guard let self = self else { return }
             self.ratingTableView.reloadData()
         }
-        viewModel.getListUsers()
+        
+        viewModel.$isLoading.bind { [weak self] isLoading in
+            guard let self = self else { return }
+            self.progressStatus(isLoading)
+        }
     }
     
     private func makeNavBarWithSortingButton() {
@@ -84,22 +99,38 @@ final class RatingScreenViewController: UIViewController {
 }
 
 extension RatingScreenViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return viewModel.listUsers.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell() as RatingTableViewCell
-        cell.configureRatingTableViewCell(with: viewModel.setInfoRatingTableViewCell(indexRow: indexPath.row))
+        cell.configureRatingTableViewCell(
+            with: viewModel.setInfoRatingTableViewCell(
+                indexRow: indexPath.row
+            )
+        )
         
         return cell
     }
 }
 
 extension RatingScreenViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         let userInfoScreenVC = UserInfoScreenViewController()
         userInfoScreenVC.userId = viewModel.listUsers[indexPath.row].id
-        navigationController?.pushViewController(userInfoScreenVC, animated: true)
+        navigationController?.pushViewController(
+            userInfoScreenVC,
+            animated: true
+        )
     }
 }

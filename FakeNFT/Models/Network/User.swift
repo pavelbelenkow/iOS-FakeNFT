@@ -8,11 +8,18 @@
 import Foundation
 
 struct User: Codable {
+    /// Имя юзера
     let name: String
+    /// Адрес аватара юзера
     let avatar: String
+    /// Описание юзера
     let description: String
+    /// Адрес веб-сайта юзера
     let website: String
+    /// Список NFT юзера
     let nfts: [String]
+    /// Рейтинг юзера
     let rating: String
+    /// Id юзера
     let id: String
 }

@@ -8,8 +8,12 @@
 import UIKit
 
 struct RatingTableViewCellModel {
+    /// Порядковый номер юзера в таблице
     let indexRow: Int
+    /// URL адрес аватара юзера
     let avatar: URL
+    /// Имя юзера
     let name: String
+    /// Рейтинг юзера
     let rating: String
 }

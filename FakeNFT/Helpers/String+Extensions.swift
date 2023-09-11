@@ -9,6 +9,6 @@ import Foundation
 
 extension String {
     func toInt() -> Int {
-        return Int(self) ?? 0
+        return Int(self) ?? .zero
     }
 }

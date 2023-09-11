@@ -8,7 +8,10 @@
 import UIKit
 
 final class SortedAlert {
-    func callAlert(nameAction: @escaping () -> (), ratingAction: @escaping () -> ()) -> UIAlertController {
+    func callAlert(
+        nameAction: @escaping () -> (),
+        ratingAction: @escaping () -> ()
+    ) -> UIAlertController {
         let alert = UIAlertController(
             title: "",
             message: "Сортировка",

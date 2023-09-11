@@ -7,7 +7,8 @@ extension UIImage {
         static let cartAdd = UIImage(named: "CartAdd") ?? UIImage(systemName: "bag.badge.plus")!
         static let cartDelete = UIImage(named: "CartDelete") ?? UIImage(systemName: "bag.badge.minus")!
         static let catalogue = UIImage(named: "Catalogue") ?? UIImage(systemName: "square.stack.fill")!
-        static let chevronLeft = UIImage(named: "Chevron") ?? UIImage(systemName: "chevron.left")!
+        static let chevronLeft = UIImage(named: "ChevronLeft") ?? UIImage(systemName: "chevron.left")!
+        static let chevronForward = UIImage(named: "ChevronForward") ?? UIImage(systemName: "chevron.forward")!
         static let liked = UIImage(named: "Liked") ?? UIImage(systemName: "heart.fill")!
         static let notLiked = UIImage(named: "NotLiked") ?? UIImage(systemName: "heart")!
         static let profile = UIImage(named: "Profile") ?? UIImage(systemName: "person.crop.circle.fill")!
@@ -26,12 +27,12 @@ extension UIImage {
     class func colorForTabBar(color: UIColor) -> UIImage {
         let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
         UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        context!.setFillColor(color.cgColor)
-        context!.fill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        guard let context = UIGraphicsGetCurrentContext() else { return UIImage() }
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
         UIGraphicsEndImageContext()
         
-        return image!
+        return image
     }
 }
