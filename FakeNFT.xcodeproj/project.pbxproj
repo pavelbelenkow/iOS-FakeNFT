@@ -29,6 +29,9 @@
 		590629D32A9D43BA0047A0B6 /* ExampleNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590629D22A9D43BA0047A0B6 /* ExampleNetworkModel.swift */; };
 		590629D52A9D44AC0047A0B6 /* NFTNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590629D42A9D44AC0047A0B6 /* NFTNetworkModel.swift */; };
 		590629D72A9D4BC50047A0B6 /* NFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590629D62A9D4BC50047A0B6 /* NFTRequest.swift */; };
+		5910BB482AB07F350038A13B /* SuccessPayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB472AB07F350038A13B /* SuccessPayment.mp3 */; };
+		5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */; };
+		5910BB512AB086000038A13B /* FailurePayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB502AB086000038A13B /* FailurePayment.mp3 */; };
 		591D8EF72AAD13600036BEA4 /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D8EF62AAD13600036BEA4 /* NetworkErrorHandler.swift */; };
 		5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */; };
 		5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */; };
@@ -110,6 +113,9 @@
 		590629D22A9D43BA0047A0B6 /* ExampleNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleNetworkModel.swift; sourceTree = "<group>"; };
 		590629D42A9D44AC0047A0B6 /* NFTNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NFTNetworkModel.swift; path = FakeNFT/Presentation/CartFlow/ViewModels/NFTNetworkModel.swift; sourceTree = SOURCE_ROOT; };
 		590629D62A9D4BC50047A0B6 /* NFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTRequest.swift; sourceTree = "<group>"; };
+		5910BB472AB07F350038A13B /* SuccessPayment.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SuccessPayment.mp3; sourceTree = "<group>"; };
+		5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultSoundPlayer.swift; sourceTree = "<group>"; };
+		5910BB502AB086000038A13B /* FailurePayment.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FailurePayment.mp3; sourceTree = "<group>"; };
 		591D8EF62AAD13600036BEA4 /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkErrorHandler.swift; path = ../../../../../../../.Trash/NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 				3F6806C729CBBC5B00B4F915 /* Scenes  */,
 				3F6806C629CBBC4E00B4F915 /* Services */,
 				59CAB77A2A9AAA0600C4938D /* Helpers */,
+				5910BB4F2AB085620038A13B /* SoundEffects */,
 				596D41202AA12198007F2669 /* Constants.swift */,
 				3F68069F29CBBAF200B4F915 /* Assets.xcassets */,
 				3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */,
@@ -331,6 +338,32 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		5910BB492AB07F790038A13B /* RemoveNftViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */,
+			);
+			path = RemoveNftViewController;
+			sourceTree = "<group>";
+		};
+		5910BB4A2AB07F9A0038A13B /* PaymentResultViewController */ = {
+			isa = PBXGroup;
+			children = (
+				59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */,
+				5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */,
+			);
+			path = PaymentResultViewController;
+			sourceTree = "<group>";
+		};
+		5910BB4F2AB085620038A13B /* SoundEffects */ = {
+			isa = PBXGroup;
+			children = (
+				5910BB472AB07F350038A13B /* SuccessPayment.mp3 */,
+				5910BB502AB086000038A13B /* FailurePayment.mp3 */,
+			);
+			path = SoundEffects;
+			sourceTree = "<group>";
+		};
 		5923ACEE2A9BDC7900E31FA5 /* CartViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,9 +466,9 @@
 			children = (
 				590629C92A9D41240047A0B6 /* ViewModels */,
 				5923ACEE2A9BDC7900E31FA5 /* CartViewController */,
-				5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */,
+				5910BB492AB07F790038A13B /* RemoveNftViewController */,
 				5923ACEF2A9BDC9300E31FA5 /* PaymentViewController */,
-				59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */,
+				5910BB4A2AB07F9A0038A13B /* PaymentResultViewController */,
 			);
 			path = CartFlow;
 			sourceTree = "<group>";
@@ -553,7 +586,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5910BB482AB07F350038A13B /* SuccessPayment.mp3 in Resources */,
 				5999DC182AA9BCFB0004D05B /* Assets.xcassets in Resources */,
+				5910BB512AB086000038A13B /* FailurePayment.mp3 in Resources */,
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -634,6 +669,7 @@
 				5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */,
 				59D1BE752AA8CEDD008EC168 /* PaymentResultNetworkModel.swift in Sources */,
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
+				5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */,
 				59D1BE792AA8EF11008EC168 /* PaymentResultViewController.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
