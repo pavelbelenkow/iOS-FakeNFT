@@ -18,6 +18,7 @@ final class NFTScreenCell: UICollectionViewCell {
 
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
 
         return view
     }()
@@ -93,7 +94,6 @@ final class NFTScreenCell: UICollectionViewCell {
         setRatingImage(rating: model.rating)
         nameLabel.text = model.name
         priceLabel.text = "\(model.price) ETH"
-        print(model.isOrdered)
         setLikeImage(isLiked: model.isLiked)
         setOrderImage(isOrdered: model.isOrdered)
         nftID = model.id

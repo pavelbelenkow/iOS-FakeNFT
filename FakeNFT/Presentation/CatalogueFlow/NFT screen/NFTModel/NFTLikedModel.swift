@@ -7,6 +7,9 @@
 
 import Foundation
 
-struct NFTLikedModel: Decodable {
-    let likes: [String]
+struct NFTLikedModel: Codable {
+    let name: String
+    let description: String
+    let website: String
+    var likes: [String]
 }

@@ -8,6 +8,9 @@
 import Foundation
 
 final class NFTScreenViewModel {
+    //MARK: File Private Properties
+    fileprivate let api = "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/"
+
     //MARK: Private Properties
     @Observable
     private(set) var nftCollection: [NFTModel] = []
@@ -25,28 +28,22 @@ final class NFTScreenViewModel {
     //MARK: Internal Methods
     func getNFTCollection() {
         let nftRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(
-                string: "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/nft"
-            ),
+            endpoint: URL(string: "\(api)nft"),
             httpMethod: .get,
             dto: nil
         )
         let nftOrderedRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(
-                string: "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/orders/1"
-            ),
+            endpoint: URL(string: "\(api)orders/1"),
             httpMethod: .get,
             dto: nil
         )
         let nftLikedRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(
-                string: "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/profile/1"
-            ),
+            endpoint: URL(string: "\(api)profile/1"),
             httpMethod: .get,
             dto: nil
         )
 
-        nftQueue.async(flags: .barrier) {
+        nftQueue.async() {
             self.networkClient.send(
                 request: nftRequest,
                 type: [NFTModel].self
@@ -102,14 +99,72 @@ final class NFTScreenViewModel {
     }
 
     func addNFTToFavourites(id: String) {
+        let getRequest: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)profile/1"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        var profile = NFTLikedModel(
+            name: String(), description: String(), website: String(), likes: [String]()
+        )
+        var isLiked: Bool = false
+
+        lazy var putRequest: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)profile/1"),
+            httpMethod: .put,
+            dto: profile
+        )
+
+        nftQueue.async {
+            self.networkClient.send(
+                request: getRequest,
+                type: NFTLikedModel.self
+            ) { result in
+                switch result {
+                case .success(let data):
+                    profile = data
+
+                    if profile.likes.contains(id) {
+                        profile.likes.removeAll(where: { $0 == id })
+                    } else {
+                        profile.likes.append(id)
+                        isLiked = true
+                    }
+
+                    self.networkClient.send(request: putRequest) { result in
+                        self.mainQueue.async {
+                            switch result {
+                            case .success( _):
+                                if isLiked {
+                                    for index in 0..<self.nftCollection.count {
+                                        if self.nftCollection[index].id == id {
+                                            self.nftCollection[index].isLiked = true
+                                        }
+                                    }
+                                } else {
+                                    for index in 0..<self.nftCollection.count {
+                                        if self.nftCollection[index].id == id {
+                                            self.nftCollection[index].isLiked = false
+                                        }
+                                    }
+                                }
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                    }
+                case.failure(let error):
+                    print(error)
+                }
+                }
+        }
 
     }
 
     func cartNFT(id: String) {
         let getRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(
-                string: "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/orders/1"
-            ),
+            endpoint: URL(string: "\(api)orders/1"),
             httpMethod: .get,
             dto: nil
         )
@@ -117,18 +172,16 @@ final class NFTScreenViewModel {
         var orderList: NFTOrderedModel = NFTOrderedModel(nfts: [], id: String())
         var isOrdered: Bool = false
 
-        lazy var orderPutRequest: NetworkRequest = {
+        lazy var putRequest: NetworkRequest = {
             let request = NFTRequestModel(
-                endpoint: URL(
-                    string: "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/orders/1"
-                ),
+                endpoint: URL(string: "\(api)orders/1"),
                 httpMethod: .put,
                 dto: orderList
             )
             return request
         }()
 
-        nftQueue.async(flags: .barrier) {
+        nftQueue.async() {
             self.networkClient.send(
                 request: getRequest,
                 type: NFTOrderedModel.self
@@ -144,7 +197,7 @@ final class NFTScreenViewModel {
                         isOrdered = true
                     }
 
-                    self.networkClient.send(request: orderPutRequest) { result in
+                    self.networkClient.send(request: putRequest) { result in
                         self.mainQueue.async {
                             switch result {
                             case .success( _):
