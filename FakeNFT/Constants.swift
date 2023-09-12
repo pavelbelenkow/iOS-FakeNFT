@@ -19,7 +19,7 @@ enum Constants {
         static let currency = "ETH"
         static let currencyReuseIdentifier = "currency"
         static let emptyCartText = "Корзина пуста"
-        static let failurePaymentResultText = "Упс! Что-то пошло не так :( Попробуйте ещё раз!"
+        static let failurePaymentResultText = "Упс! Что-то пошло не так :(\nПопробуйте ещё раз!"
         static let nftText = "NFT"
         static let ok = "OK"
         static let pay = "Оплатить"
