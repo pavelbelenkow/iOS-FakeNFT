@@ -50,12 +50,15 @@ final class PaymentResultViewController: UIViewController {
     
     private let isSuccess: Bool
     private let viewModel: OrderPaymentViewModelProtocol
+    private let soundPlayer: PaymentResultSoundPlayer?
     
     // MARK: - Initializers
     
     init(_ isSuccess: Bool, viewModel: OrderPaymentViewModelProtocol) {
         self.isSuccess = isSuccess
         self.viewModel = viewModel
+        let soundFileName = isSuccess ? Constants.Cart.successSound : Constants.Cart.failureSound
+        self.soundPlayer = PaymentResultSoundPlayer(with: soundFileName)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -69,6 +72,11 @@ final class PaymentResultViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         addSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        soundPlayer?.play()
     }
 }
 
