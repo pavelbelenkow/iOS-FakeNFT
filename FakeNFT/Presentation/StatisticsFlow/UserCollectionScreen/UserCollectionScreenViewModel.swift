@@ -19,7 +19,6 @@ final class UserCollectionScreenViewModel {
     
     func getNFTsUser(nfts: [String]) {
         isLoading = true
-        let group = DispatchGroup()
         
         getNFTsUser(idNFTs: nfts) { [weak self] result in
             guard let self = self else { return }
@@ -56,24 +55,6 @@ final class UserCollectionScreenViewModel {
             id: String(),
             isLiked: Bool()
         )
-    }
-    
-    private func getLikedNFTs() {
-        let request = ListLikedNFTRequest()
-        client.send(
-            request: request,
-            type: Profile.self
-        ) { [weak self] result in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let profile):
-                    self.likedNFTs = profile.likes
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
     }
     
     private func getNFTsUser(
