@@ -17,6 +17,7 @@ final class PaymentResultViewController: UIViewController {
     
     private lazy var resultImageView: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFit
         view.image = isSuccessImage()
         return view
     }()
