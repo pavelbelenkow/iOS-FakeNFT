@@ -30,221 +30,72 @@ final class NFTScreenViewModel {
 
     //MARK: Internal Methods
     func getNFTCollection(completion: @escaping (Result<Void, Error>) -> Void) {
-        let nftRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)nft"),
-            httpMethod: .get,
-            dto: nil
-        )
-        let nftOrderedRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)orders/1"),
-            httpMethod: .get,
-            dto: nil
-        )
-        let nftLikedRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)profile/1"),
-            httpMethod: .get,
-            dto: nil
-        )
-
-        var nftCollectionData: [NFTModel] = []
-
-        nftQueue.async() {
-            self.networkClient.send(
-                request: nftRequest,
-                type: [NFTModel].self
-            ) { result in
-                self.mainQueue.async {
+        fetchNFTCollectionData() { result in
+            switch result {
+            case .success(let model):
+                self.fetchOrderedNFTs(nftCollection: model) { result in
                     switch result {
                     case .success(let model):
-                        nftCollectionData.append(
-                            contentsOf: model.filter { $0.author == self.author }
-                        )
-
-                        self.networkClient.send(
-                            request: nftOrderedRequest,
-                            type: NFTOrderedModel.self
-                        ) { result in
-                            self.mainQueue.async {
-                                switch result {
-                                case .success(let model):
-                                    for index in 0..<nftCollectionData.count {
-                                        if model.nfts.contains(nftCollectionData[index].id) {
-                                            nftCollectionData[index].isOrdered = true
-                                        }
-                                    }
-
-                                    self.networkClient.send(
-                                        request: nftLikedRequest,
-                                        type: NFTLikedModel.self
-                                    ) { result in
-                                        self.mainQueue.async {
-                                            switch result {
-                                            case .success(let model):
-                                                for index in 0..<nftCollectionData.count {
-                                                    if model.likes.contains(nftCollectionData[index].id) {
-                                                        nftCollectionData[index].isLiked = true
-                                                    }
-                                                }
-                                                self.nftCollection = nftCollectionData
-                                                completion(.success(()))
-                                            case .failure(let error):
-                                                print("Error - \(error)")
-                                                completion(.failure(error))
-                                            }
-                                        }
-                                    }
-
-                                case .failure(let error):
-                                    print("Error - \(error)")
-                                    completion(.failure(error))
-                                }
+                        self.fetchLikedNFTs(nftCollection: model) { result in
+                            switch result {
+                            case .success(let model):
+                                self.nftCollection = model
+                                completion(.success(()))
+                            case .failure(let error):
+                                completion(.failure(error))
                             }
                         }
-
                     case .failure(let error):
                         completion(.failure(error))
-                        preconditionFailure("\(error)")
                     }
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
 
     func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let getRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)profile/1"),
-            httpMethod: .get,
-            dto: nil
-        )
-
-        var profile = NFTLikedModel(
-            name: String(), description: String(), website: String(), likes: [String]()
-        )
-        var isLiked: Bool = false
-
-        lazy var putRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)profile/1"),
-            httpMethod: .put,
-            dto: profile
-        )
-
-        nftQueue.async {
-            self.networkClient.send(
-                request: getRequest,
-                type: NFTLikedModel.self
-            ) { result in
-                switch result {
-                case .success(let data):
-                    profile = data
-
-                    if profile.likes.contains(id) {
-                        profile.likes.removeAll(where: { $0 == id })
-                    } else {
-                        profile.likes.append(id)
-                        isLiked = true
+        fetchFavouritesModel(id: id) { result in
+            switch result {
+            case .success(let model):
+                self.sendFavourites(favouritesModel: model, id: id) { result in
+                    switch result {
+                    case .success( _):
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
-
-                    self.networkClient.send(request: putRequest) { result in
-                        self.mainQueue.async {
-                            switch result {
-                            case .success( _):
-                                if isLiked {
-                                    for index in 0..<self.nftCollection.count {
-                                        if self.nftCollection[index].id == id {
-                                            self.nftCollection[index].isLiked = true
-                                        }
-                                    }
-                                } else {
-                                    for index in 0..<self.nftCollection.count {
-                                        if self.nftCollection[index].id == id {
-                                            self.nftCollection[index].isLiked = false
-                                        }
-                                    }
-                                }
-                                completion(.success(()))
-                            case .failure(let error):
-                                print(error)
-                                completion(.failure(error))
-                            }
-                        }
-                    }
-                case.failure(let error):
-                    print(error)
-                    completion(.failure(error))
                 }
-                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
 
     }
 
     func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let getRequest: NetworkRequest = NFTRequestModel(
-            endpoint: URL(string: "\(api)orders/1"),
-            httpMethod: .get,
-            dto: nil
-        )
-
-        var orderList: NFTOrderedModel = NFTOrderedModel(nfts: [], id: String())
-        var isOrdered: Bool = false
-
-        lazy var putRequest: NetworkRequest = {
-            let request = NFTRequestModel(
-                endpoint: URL(string: "\(api)orders/1"),
-                httpMethod: .put,
-                dto: orderList
-            )
-            return request
-        }()
-
-        nftQueue.async() {
-            self.networkClient.send(
-                request: getRequest,
-                type: NFTOrderedModel.self
-            ) { result in
-                switch result {
-                case .success(let data):
-                    orderList = data
-
-                    if orderList.nfts.contains(id) {
-                        orderList.nfts.removeAll(where: { $0 == id })
-                    } else {
-                        orderList.nfts.append(id)
-                        isOrdered = true
+        fetchOrders(id: id) { result in
+            switch result {
+            case .success(let model):
+                self.sendOrders(id: id, ordersModel: model) { result in
+                    switch result {
+                    case .success( _):
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
-
-                    self.networkClient.send(request: putRequest) { result in
-                        self.mainQueue.async {
-                            switch result {
-                            case .success( _):
-                                if isOrdered {
-                                    for index in 0..<self.nftCollection.count {
-                                        if self.nftCollection[index].id == id {
-                                            self.nftCollection[index].isOrdered = true
-                                        }
-                                    }
-                                } else {
-                                    for index in 0..<self.nftCollection.count {
-                                        if self.nftCollection[index].id == id {
-                                            self.nftCollection[index].isOrdered = false
-                                        }
-                                    }
-                                }
-                                completion(.success(()))
-                            case .failure(let error):
-                                print(error)
-                                completion(.failure(error))
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print(error)
-                    completion(.failure(error))
                 }
-                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 
-    func getAuthorName(withID id: String) {
+    func getAuthorName(
+        withID id: String,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
         let getRequest: NetworkRequest = NFTRequestModel(
             endpoint: URL(string: "\(api)users/\(id)"),
             httpMethod: .get,
@@ -260,11 +111,275 @@ final class NFTScreenViewModel {
                     switch result {
                     case .success(let data):
                         self.authorName = data.name
+                        completion(.success(()))
                     case .failure(let error):
-                        print(error)
+                        completion(.failure(error))
                     }
                 }
             }
         }
     }
 }
+
+//MARK: Private Methods
+private extension NFTScreenViewModel {
+    func fetchNFTCollectionData(
+        completion: @escaping (Result<[NFTModel], Error>) -> Void
+    ) {
+        let request: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)nft"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        nftQueue.async() {
+            self.networkClient.send(
+                request: request,
+                type: [NFTModel].self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let model):
+                        completion(.success(model.filter( { $0.author == self.author } )))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchOrderedNFTs(
+        nftCollection: [NFTModel],
+        completion: @escaping (Result<[NFTModel], Error>) -> Void
+    ) {
+        let request: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)orders/1"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        nftQueue.async {
+            self.networkClient.send(
+                request: request,
+                type: NFTOrderedModel.self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let model):
+                        var collection = nftCollection
+                        for index in 0..<collection.count {
+                            if model.nfts.contains(collection[index].id) {
+                                collection[index].isOrdered = true
+                            }
+                        }
+                        completion(.success(collection))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchLikedNFTs(
+        nftCollection: [NFTModel],
+        completion: @escaping (Result<[NFTModel], Error>) -> Void
+    ) {
+        let request: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)profile/1"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        nftQueue.async {
+            self.networkClient.send(
+                request: request,
+                type: NFTLikedModel.self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let model):
+                        var collection = nftCollection
+                        for index in 0..<collection.count {
+                            if model.likes.contains(collection[index].id) {
+                                collection[index].isLiked = true
+                            }
+                        }
+                        completion(.success(collection))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchFavouritesModel(
+        id: String,
+        completion: @escaping (Result<FetchFavouritesModel, Error>) -> Void
+    ) {
+        let getRequest: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)profile/1"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        var favouritesModel = FetchFavouritesModel(
+            profile: NFTLikedModel(
+                name: String(), description: String(), website: String(), likes: [String]()
+            ),
+            isLiked: false
+        )
+
+        nftQueue.async {
+            self.networkClient.send(
+                request: getRequest,
+                type: NFTLikedModel.self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let data):
+                        favouritesModel.profile = data
+
+                        if favouritesModel.profile.likes.contains(id) {
+                            favouritesModel.profile.likes.removeAll(where: { $0 == id })
+                        } else {
+                            favouritesModel.profile.likes.append(id)
+                            favouritesModel.isLiked = true
+                        }
+                        completion(.success(favouritesModel))
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func sendFavourites(
+        favouritesModel: FetchFavouritesModel,
+        id: String,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let putRequest: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)profile/1"),
+            httpMethod: .put,
+            dto: favouritesModel.profile
+        )
+
+        nftQueue.async {
+            self.networkClient.send(request: putRequest) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success( _):
+                        if favouritesModel.isLiked {
+                            for index in 0..<self.nftCollection.count {
+                                if self.nftCollection[index].id == id {
+                                    self.nftCollection[index].isLiked = true
+                                }
+                            }
+                        } else {
+                            for index in 0..<self.nftCollection.count {
+                                if self.nftCollection[index].id == id {
+                                    self.nftCollection[index].isLiked = false
+                                }
+                            }
+                        }
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func fetchOrders(
+        id: String,
+        completion: @escaping (Result<FetchOrdersModel, Error>) -> Void
+    ) {
+        let request: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)orders/1"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        var ordersModel = FetchOrdersModel(
+            orderList: NFTOrderedModel(nfts: [], id: String()),
+            isOrdered: false
+        )
+
+        nftQueue.async() {
+            self.networkClient.send(
+                request: request,
+                type: NFTOrderedModel.self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let data):
+                        ordersModel.orderList = data
+
+                        if ordersModel.orderList.nfts.contains(id) {
+                            ordersModel.orderList.nfts.removeAll(where: { $0 == id })
+                        } else {
+                            ordersModel.orderList.nfts.append(id)
+                            ordersModel.isOrdered = true
+                        }
+
+                        completion(.success(ordersModel))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
+    func sendOrders(
+        id: String,
+        ordersModel: FetchOrdersModel,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let request: NetworkRequest = {
+            let request = NFTRequestModel(
+                endpoint: URL(string: "\(api)orders/1"),
+                httpMethod: .put,
+                dto: ordersModel.orderList
+            )
+            return request
+        }()
+
+        nftQueue.async {
+            self.networkClient.send(request: request) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success( _):
+                        if ordersModel.isOrdered {
+                            for index in 0..<self.nftCollection.count {
+                                if self.nftCollection[index].id == id {
+                                    self.nftCollection[index].isOrdered = true
+                                }
+                            }
+                        } else {
+                            for index in 0..<self.nftCollection.count {
+                                if self.nftCollection[index].id == id {
+                                    self.nftCollection[index].isOrdered = false
+                                }
+                            }
+                        }
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+

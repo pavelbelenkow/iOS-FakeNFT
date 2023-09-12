@@ -15,7 +15,6 @@ final class CatalogueViewController: UIViewController {
         super.viewDidLoad()
 
         setNavigationBar()
-        view.backgroundColor = UIColor.NFTColor.white
         bind()
         getCatalogue()
     }
@@ -89,6 +88,8 @@ final class CatalogueViewController: UIViewController {
                 ProgressHUD.dismiss()
             case .failure( _):
                 ProgressHUD.showFailed()
+                let errorView = ErrorView()
+                self.view = errorView
             }
         }
     }

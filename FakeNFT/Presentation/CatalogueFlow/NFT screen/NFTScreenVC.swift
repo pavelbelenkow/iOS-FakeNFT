@@ -101,13 +101,21 @@ final class NFTScreenVC: UIViewController {
 
     private func getData() {
         ProgressHUD.show()
-        nftScreenViewModel.getAuthorName(withID: catalogueCell.id)
+        nftScreenViewModel.getAuthorName(withID: catalogueCell.id) { result in
+            switch result {
+            case .success( _):
+                break
+            case .failure( _):
+                self.NFTView.showErrorAuthorName()
+            }
+        }
         nftScreenViewModel.getNFTCollection() { result in
             switch result {
             case .success(()):
                 ProgressHUD.dismiss()
             case .failure( _):
                 ProgressHUD.showFailed()
+                self.NFTView.showErrorView()
             }
         }
     }

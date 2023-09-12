@@ -119,7 +119,7 @@ final class CatalogueCell: UITableViewCell {
               let url = URL(
                 string: encodedUrlString
         ) else {
-            print("Invalid URL:", model.url)
+            assertionFailure("Invalid URL: \(model.url)")
             return
         }
         collectionImageView.kf.setImage(with: url, placeholder: placeholder)

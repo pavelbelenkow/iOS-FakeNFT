@@ -31,7 +31,6 @@ final class CatalogueViewModel {
                         completion(.success(()))
                     case .failure(let error):
                         completion(.failure(error))
-                        preconditionFailure("Error - \(error)")
                     }
                 }
             }

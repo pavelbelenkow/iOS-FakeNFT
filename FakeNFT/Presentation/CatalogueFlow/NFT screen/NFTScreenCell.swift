@@ -106,7 +106,7 @@ final class NFTScreenCell: UICollectionViewCell {
               let url = URL(
                 string: encodedUrlString
         ) else {
-            print("Invalid URL:", model.images[0])
+            assertionFailure("Invalid URL: \(model.images[0])")
             return
         }
 
@@ -124,8 +124,9 @@ private extension NFTScreenCell {
             switch result {
             case .success(()):
                 self.likeButton.layer.removeAllAnimations()
-            case .failure(let error):
-                print(error)
+            case .failure( _):
+                self.likeButton.layer.removeAllAnimations()
+                self.showError(button: self.likeButton)
             }
         }
         animateButton(likeButton)
@@ -137,8 +138,9 @@ private extension NFTScreenCell {
             switch result {
             case .success(()):
                 self.cartButton.layer.removeAllAnimations()
-            case .failure(let error):
-                print(error)
+            case .failure( _):
+                self.cartButton.layer.removeAllAnimations()
+                self.showError(button: self.cartButton)
             }
         }
         animateButton(cartButton)
@@ -285,4 +287,24 @@ private extension NFTScreenCell {
             }
         }
     }
+
+    func showError(button: UIButton) {
+        let originalPosition = button.center
+
+        let leftPosition = CGPoint(x: originalPosition.x - 10, y: originalPosition.y)
+        let rightPosition = CGPoint(x: originalPosition.x + 10, y: originalPosition.y)
+
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/3) {
+                button.center = leftPosition
+            }
+            UIView.addKeyframe(withRelativeStartTime: 1/3, relativeDuration: 1/3) {
+                button.center = rightPosition
+            }
+            UIView.addKeyframe(withRelativeStartTime: 2/3, relativeDuration: 1/3) {
+                button.center = originalPosition
+            }
+        }, completion: nil)
+    }
+
 }
