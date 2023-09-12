@@ -81,6 +81,7 @@ final class PaymentResultViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         soundPlayer?.play()
+        isSuccess ? animateSuccess() : animateFailure()
     }
 }
 
@@ -119,6 +120,37 @@ private extension PaymentResultViewController {
 // MARK: - Private methods
 
 private extension PaymentResultViewController {
+    
+    func animateSuccess() {
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 1,
+            animations: {
+                self.resultStackView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.3,
+                    delay: 0,
+                    usingSpringWithDamping: 0.7,
+                    initialSpringVelocity: 1,
+                    animations: {
+                        self.resultStackView.transform = .identity
+                    }
+                )
+            }
+        )
+    }
+
+    func animateFailure() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.duration = 0.5
+        animation.values = [-6.0, 6.0, -6.0, 6.0, -3.0, 3.0, -1.0, 1.0, 0.0]
+        resultStackView.layer.add(animation, forKey: "failureAnimation")
+    }
     
     func isSuccessImage() -> UIImage? {
         isSuccess ? UIImage.NFTImage.successPaymentResult : UIImage.NFTImage.failurePaymentResult
