@@ -12,7 +12,7 @@ struct CatalogueCellModel: Decodable {
     let url: String
     let nfts: [String]
     let description: String
-    let author: String
+    var author: String
     let id: String
 
     private enum CodingKeys: String, CodingKey {

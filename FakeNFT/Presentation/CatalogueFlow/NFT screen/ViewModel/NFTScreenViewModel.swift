@@ -15,6 +15,9 @@ final class NFTScreenViewModel {
     @Observable
     private(set) var nftCollection: [NFTModel] = []
 
+    @Observable
+    private(set) var authorName = String()
+
     private let author: String
     private let networkClient: NetworkClient = DefaultNetworkClient()
     private let nftQueue = DispatchQueue(label: "com.nftScreen.queue", attributes: .concurrent)
@@ -229,6 +232,30 @@ final class NFTScreenViewModel {
                     completion(.failure(error))
                 }
                 }
+        }
+    }
+
+    func getAuthorName(withID id: String) {
+        let getRequest: NetworkRequest = NFTRequestModel(
+            endpoint: URL(string: "\(api)users/\(id)"),
+            httpMethod: .get,
+            dto: nil
+        )
+
+        nftQueue.async {
+            self.networkClient.send(
+                request: getRequest,
+                type: AuthorModel.self
+            ) { result in
+                self.mainQueue.async {
+                    switch result {
+                    case .success(let data):
+                        self.authorName = data.name
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
         }
     }
 }

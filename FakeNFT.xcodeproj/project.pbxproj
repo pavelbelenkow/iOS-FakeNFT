@@ -51,6 +51,7 @@
 		E45C4C8F2AA0D3A8002A1B41 /* CatalogueCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C8E2AA0D3A8002A1B41 /* CatalogueCellModel.swift */; };
 		E45C4C922AA0D5DE002A1B41 /* CatalogueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C912AA0D5DE002A1B41 /* CatalogueViewModel.swift */; };
 		E45C4C942AA643F6002A1B41 /* CatalogueRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C4C932AA643F6002A1B41 /* CatalogueRequestModel.swift */; };
+		E4A97D5F2AB071E3009D28BF /* AuthorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A97D5E2AB071E3009D28BF /* AuthorModel.swift */; };
 		E4DB12E82AA65544004097EA /* NFTScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12E72AA65544004097EA /* NFTScreenViewModel.swift */; };
 		E4DB12EC2AA65CF9004097EA /* NFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12EB2AA65CF9004097EA /* NFTModel.swift */; };
 		E4DB12EE2AA65E5F004097EA /* NFTRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */; };
@@ -124,6 +125,7 @@
 		E45C4C8E2AA0D3A8002A1B41 /* CatalogueCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueCellModel.swift; sourceTree = "<group>"; };
 		E45C4C912AA0D5DE002A1B41 /* CatalogueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueViewModel.swift; sourceTree = "<group>"; };
 		E45C4C932AA643F6002A1B41 /* CatalogueRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogueRequestModel.swift; sourceTree = "<group>"; };
+		E4A97D5E2AB071E3009D28BF /* AuthorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorModel.swift; sourceTree = "<group>"; };
 		E4DB12E72AA65544004097EA /* NFTScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTScreenViewModel.swift; sourceTree = "<group>"; };
 		E4DB12EB2AA65CF9004097EA /* NFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTModel.swift; sourceTree = "<group>"; };
 		E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTRequestModel.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				E4DB12ED2AA65E5F004097EA /* NFTRequestModel.swift */,
 				E4DB12F42AA67EF1004097EA /* NFTOrderedModel.swift */,
 				E4DB12F62AA680CF004097EA /* NFTLikedModel.swift */,
+				E4A97D5E2AB071E3009D28BF /* AuthorModel.swift */,
 			);
 			path = NFTModel;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				E45C4C922AA0D5DE002A1B41 /* CatalogueViewModel.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				59CAB77C2A9AAA2900C4938D /* UIColor+Extensions.swift in Sources */,
+				E4A97D5F2AB071E3009D28BF /* AuthorModel.swift in Sources */,
 				3F6806CB29CBBCC700B4F915 /* ExampleNetworkModel.swift in Sources */,
 				E4DB12EC2AA65CF9004097EA /* NFTModel.swift in Sources */,
 				59CAB77E2A9AAA7000C4938D /* UIFont+Extensions.swift in Sources */,

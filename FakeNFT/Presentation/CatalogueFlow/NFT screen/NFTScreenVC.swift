@@ -8,6 +8,9 @@
 import UIKit
 
 final class NFTScreenVC: UIViewController {
+    //MARK: Private Properties
+    private var catalogueCell: CatalogueCellModel
+
     //MARK: Internal Properties
     lazy var NFTView = NFTScreenView(
         dataSource: self,
@@ -24,8 +27,8 @@ final class NFTScreenVC: UIViewController {
     //MARK: Initialisers
     init(catalogueCell: CatalogueCellModel) {
         nftScreenViewModel = NFTScreenViewModel(author: catalogueCell.author)
+        self.catalogueCell = catalogueCell
         super.init(nibName: nil, bundle: nil)
-        NFTView.configView(with: catalogueCell)
     }
 
     required init?(coder: NSCoder) {
@@ -40,6 +43,7 @@ final class NFTScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        nftScreenViewModel.getAuthorName(withID: catalogueCell.id)
         nftScreenViewModel.getNFTCollection()
     }
 
@@ -86,6 +90,12 @@ final class NFTScreenVC: UIViewController {
         nftScreenViewModel.$nftCollection.bind { [weak self] _ in
             guard let self else { return }
             self.NFTView.updateCollectionView()
+        }
+
+        nftScreenViewModel.$authorName.bind { [weak self] _ in
+            guard let self else { return }
+            self.catalogueCell.author = self.nftScreenViewModel.authorName
+            self.NFTView.configView(with: self.catalogueCell)
         }
     }
 }
