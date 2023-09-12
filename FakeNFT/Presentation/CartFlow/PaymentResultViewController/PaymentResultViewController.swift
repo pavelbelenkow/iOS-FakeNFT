@@ -50,6 +50,7 @@ final class PaymentResultViewController: UIViewController {
     
     private let isSuccess: Bool
     private let viewModel: OrderPaymentViewModelProtocol
+    private let resultFeedbackGenerator: UINotificationFeedbackGenerator
     private let soundPlayer: PaymentResultSoundPlayer?
     
     // MARK: - Initializers
@@ -57,6 +58,8 @@ final class PaymentResultViewController: UIViewController {
     init(_ isSuccess: Bool, viewModel: OrderPaymentViewModelProtocol) {
         self.isSuccess = isSuccess
         self.viewModel = viewModel
+        self.resultFeedbackGenerator = UINotificationFeedbackGenerator()
+        
         let soundFileName = isSuccess ? Constants.Cart.successSound : Constants.Cart.failureSound
         self.soundPlayer = PaymentResultSoundPlayer(with: soundFileName)
         super.init(nibName: nil, bundle: nil)
@@ -72,6 +75,7 @@ final class PaymentResultViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         addSubviews()
+        isSuccessFeedback()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +130,11 @@ private extension PaymentResultViewController {
     
     func isSuccessButtonTitle() -> String {
         isSuccess ? Constants.Cart.backToCatalogue : Constants.Cart.tryAgain
+    }
+    
+    func isSuccessFeedback() {
+        resultFeedbackGenerator.prepare()
+        resultFeedbackGenerator.notificationOccurred(isSuccess ? .success : .error)
     }
     
     @objc func resultButtonTapped() {
