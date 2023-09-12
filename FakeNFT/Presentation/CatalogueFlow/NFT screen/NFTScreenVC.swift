@@ -108,11 +108,25 @@ extension NFTScreenVC: UITextViewDelegate {
 
 //MARK: - NFTCellDelegate
 extension NFTScreenVC: NFTCellDelegate {
-    func addNFTToFavourites(id: String) {
-        nftScreenViewModel.addNFTToFavourites(id: id)
+    func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        nftScreenViewModel.addNFTToFavourites(id: id) { result in
+            switch result {
+            case .success(()):
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 
-    func cartNFT(id: String) {
-        nftScreenViewModel.cartNFT(id: id)
+    func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        nftScreenViewModel.cartNFT(id: id) { result in
+            switch result {
+            case .success(()):
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

@@ -98,7 +98,7 @@ final class NFTScreenViewModel {
         }
     }
 
-    func addNFTToFavourites(id: String) {
+    func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let getRequest: NetworkRequest = NFTRequestModel(
             endpoint: URL(string: "\(api)profile/1"),
             httpMethod: .get,
@@ -149,20 +149,23 @@ final class NFTScreenViewModel {
                                         }
                                     }
                                 }
+                                completion(.success(()))
                             case .failure(let error):
                                 print(error)
+                                completion(.failure(error))
                             }
                         }
                     }
                 case.failure(let error):
                     print(error)
+                    completion(.failure(error))
                 }
                 }
         }
 
     }
 
-    func cartNFT(id: String) {
+    func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let getRequest: NetworkRequest = NFTRequestModel(
             endpoint: URL(string: "\(api)orders/1"),
             httpMethod: .get,
@@ -214,13 +217,16 @@ final class NFTScreenViewModel {
                                         }
                                     }
                                 }
+                                completion(.success(()))
                             case .failure(let error):
                                 print(error)
+                                completion(.failure(error))
                             }
                         }
                     }
                 case .failure(let error):
                     print(error)
+                    completion(.failure(error))
                 }
                 }
         }

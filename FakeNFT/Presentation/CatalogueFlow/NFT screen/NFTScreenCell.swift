@@ -120,12 +120,28 @@ final class NFTScreenCell: UICollectionViewCell {
 private extension NFTScreenCell {
     @objc
     func likeButtonTap() {
-        delegate?.addNFTToFavourites(id: nftID)
+        delegate?.addNFTToFavourites(id: nftID) { result in
+            switch result {
+            case .success(()):
+                self.likeButton.layer.removeAllAnimations()
+            case .failure(let error):
+                print(error)
+            }
+        }
+        animateButton(likeButton)
     }
 
     @objc
     func cartButtonTap() {
-        delegate?.cartNFT(id: nftID)
+        delegate?.cartNFT(id: nftID) { result in
+            switch result {
+            case .success(()):
+                self.cartButton.layer.removeAllAnimations()
+            case .failure(let error):
+                print(error)
+            }
+        }
+        animateButton(cartButton)
     }
 
     func makeCell() {
@@ -257,5 +273,16 @@ private extension NFTScreenCell {
         }
 
         cartButton.setImage(UIImage(named: orderImageName), for: .normal)
+    }
+
+    func animateButton(_ button: UIButton) {
+        UIView.animateKeyframes(withDuration: 0.4, delay: 0, options: [.repeat]) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                button.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                button.transform = .identity
+            }
+        }
     }
 }
