@@ -7,8 +7,7 @@ final class RemoveNftViewController: UIViewController {
     // MARK: - Properties
     
     private lazy var blurEffectView: UIVisualEffectView = {
-        let effect = UIBlurEffect(style: .systemUltraThinMaterial)
-        let view = UIVisualEffectView(effect: effect)
+        let view = UIVisualEffectView()
         view.frame = self.view.bounds
         return view
     }()
@@ -108,6 +107,11 @@ final class RemoveNftViewController: UIViewController {
         addSubviews()
         setNftImage()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animateBlurEffect()
+    }
 }
 
 // MARK: - Add Subviews
@@ -167,6 +171,12 @@ private extension RemoveNftViewController {
 // MARK: - Private methods
 
 private extension RemoveNftViewController {
+    
+    func animateBlurEffect() {
+        UIView.animate(withDuration: 0.5) {
+            self.blurEffectView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
+        }
+    }
     
     func setNftImage() {
         guard let nft else { return }
