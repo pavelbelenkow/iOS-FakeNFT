@@ -67,6 +67,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
             reuseIdentifier: reuseIdentifier
         )
         selectionStyle = .none
+        contentView.backgroundColor = UIColor.NFTColor.white
         addSubviews()
         makeConstraints()
     }

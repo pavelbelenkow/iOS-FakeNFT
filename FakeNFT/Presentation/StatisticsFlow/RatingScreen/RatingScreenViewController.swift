@@ -8,7 +8,7 @@ final class RatingScreenViewController: UIViewController {
         let ratingTableView = UITableView()
         ratingTableView.dataSource = self
         ratingTableView.delegate = self
-        ratingTableView.backgroundColor = .clear
+        ratingTableView.backgroundColor = UIColor.NFTColor.white
         ratingTableView.rowHeight = 88.0
         ratingTableView.separatorStyle = .none
         ratingTableView.bounces = false
