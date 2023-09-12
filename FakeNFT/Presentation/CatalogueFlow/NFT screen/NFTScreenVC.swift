@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class NFTScreenVC: UIViewController {
     //MARK: Private Properties
@@ -43,8 +44,7 @@ final class NFTScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-        nftScreenViewModel.getAuthorName(withID: catalogueCell.id)
-        nftScreenViewModel.getNFTCollection()
+        getData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +96,19 @@ final class NFTScreenVC: UIViewController {
             guard let self else { return }
             self.catalogueCell.author = self.nftScreenViewModel.authorName
             self.NFTView.configView(with: self.catalogueCell)
+        }
+    }
+
+    private func getData() {
+        ProgressHUD.show()
+        nftScreenViewModel.getAuthorName(withID: catalogueCell.id)
+        nftScreenViewModel.getNFTCollection() { result in
+            switch result {
+            case .success(()):
+                ProgressHUD.dismiss()
+            case .failure( _):
+                ProgressHUD.showFailed()
+            }
         }
     }
 }

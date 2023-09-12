@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class CatalogueViewController: UIViewController {
     //MARK: Internal Properties
@@ -16,7 +17,7 @@ final class CatalogueViewController: UIViewController {
         setNavigationBar()
         view.backgroundColor = UIColor.NFTColor.white
         bind()
-        catalogueViewModel.getCatalogue()
+        getCatalogue()
     }
 
     //MARK: Private Methods
@@ -78,5 +79,17 @@ final class CatalogueViewController: UIViewController {
         }
 
         present(alertController, animated: true, completion: nil)
+    }
+
+    private func getCatalogue() {
+        ProgressHUD.show()
+        catalogueViewModel.getCatalogue() { result in
+            switch result {
+            case .success(()):
+                ProgressHUD.dismiss()
+            case .failure( _):
+                ProgressHUD.showFailed()
+            }
+        }
     }
 }

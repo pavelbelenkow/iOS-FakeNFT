@@ -29,7 +29,7 @@ final class NFTScreenViewModel {
     }
 
     //MARK: Internal Methods
-    func getNFTCollection() {
+    func getNFTCollection(completion: @escaping (Result<Void, Error>) -> Void) {
         let nftRequest: NetworkRequest = NFTRequestModel(
             endpoint: URL(string: "\(api)nft"),
             httpMethod: .get,
@@ -46,6 +46,8 @@ final class NFTScreenViewModel {
             dto: nil
         )
 
+        var nftCollectionData: [NFTModel] = []
+
         nftQueue.async() {
             self.networkClient.send(
                 request: nftRequest,
@@ -54,7 +56,7 @@ final class NFTScreenViewModel {
                 self.mainQueue.async {
                     switch result {
                     case .success(let model):
-                        self.nftCollection.append(
+                        nftCollectionData.append(
                             contentsOf: model.filter { $0.author == self.author }
                         )
 
@@ -65,35 +67,42 @@ final class NFTScreenViewModel {
                             self.mainQueue.async {
                                 switch result {
                                 case .success(let model):
-                                    for index in 0..<self.nftCollection.count {
-                                        if model.nfts.contains(self.nftCollection[index].id) {
-                                            self.nftCollection[index].isOrdered = true
+                                    for index in 0..<nftCollectionData.count {
+                                        if model.nfts.contains(nftCollectionData[index].id) {
+                                            nftCollectionData[index].isOrdered = true
                                         }
                                     }
+
+                                    self.networkClient.send(
+                                        request: nftLikedRequest,
+                                        type: NFTLikedModel.self
+                                    ) { result in
+                                        self.mainQueue.async {
+                                            switch result {
+                                            case .success(let model):
+                                                for index in 0..<nftCollectionData.count {
+                                                    if model.likes.contains(nftCollectionData[index].id) {
+                                                        nftCollectionData[index].isLiked = true
+                                                    }
+                                                }
+                                                self.nftCollection = nftCollectionData
+                                                completion(.success(()))
+                                            case .failure(let error):
+                                                print("Error - \(error)")
+                                                completion(.failure(error))
+                                            }
+                                        }
+                                    }
+
                                 case .failure(let error):
                                     print("Error - \(error)")
+                                    completion(.failure(error))
                                 }
                             }
                         }
 
-                        self.networkClient.send(
-                            request: nftLikedRequest,
-                            type: NFTLikedModel.self
-                        ) { result in
-                            self.mainQueue.async {
-                                switch result {
-                                case .success(let model):
-                                    for index in 0..<self.nftCollection.count {
-                                        if model.likes.contains(self.nftCollection[index].id) {
-                                            self.nftCollection[index].isLiked = true
-                                        }
-                                    }
-                                case .failure(let error):
-                                    print("Error - \(error)")
-                                }
-                            }
-                        }
                     case .failure(let error):
+                        completion(.failure(error))
                         preconditionFailure("\(error)")
                     }
                 }

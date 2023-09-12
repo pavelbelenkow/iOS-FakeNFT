@@ -92,6 +92,8 @@ final class NFTScreenView: UIView {
         return view
     }()
 
+    private let placeholder = ImagesPlaceholder()
+
     //MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -234,7 +236,7 @@ final class NFTScreenView: UIView {
             print("Invalid URL:", url)
             return
         }
-        coverImage.kf.setImage(with: url)
+        coverImage.kf.setImage(with: url, placeholder: placeholder)
     }
 
     //MARK: Internal Methods
