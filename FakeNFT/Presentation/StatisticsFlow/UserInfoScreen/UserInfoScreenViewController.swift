@@ -123,6 +123,18 @@ final class UserInfoScreenViewController: UIViewController {
         self.dismissProgressHUD()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #available(iOS 13.0, *),
+           traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if traitCollection.userInterfaceStyle == .dark {
+                goToSiteUserButton.layer.borderColor = UIColor.NFTColor.whiteUniversal.cgColor
+            } else {
+                goToSiteUserButton.layer.borderColor = UIColor.NFTColor.blackUniversal.cgColor
+            }
+        }
+    }
+    
     private func bind() {
         viewModel.$user.bind { [weak self] _ in
             guard let self = self else { return }
