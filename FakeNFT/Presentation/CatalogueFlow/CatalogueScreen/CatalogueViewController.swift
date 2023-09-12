@@ -31,7 +31,7 @@ final class CatalogueViewController: UIViewController {
             image: largeImage,
             style: .plain,
             target: self,
-            action: nil
+            action: #selector(showBottomSheet)
         )
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.tintColor = .black
@@ -44,5 +44,39 @@ final class CatalogueViewController: UIViewController {
             guard let self else { return }
             self.catalogueView.reloadTableView()
         }
+    }
+
+    @objc
+    private func showBottomSheet() {
+        let alertController = UIAlertController(
+            title: NSLocalizedString("Сортировка", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let nameSorting = UIAlertAction(
+            title: NSLocalizedString("По названию", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.catalogueViewModel.sortByName()
+        }
+
+        let countSorting = UIAlertAction(
+            title: NSLocalizedString("По количеству NFT", comment: ""),
+            style: .default
+        ) { [weak self] _ in
+            self?.catalogueViewModel.sortByCount()
+        }
+
+        let cancel = UIAlertAction(
+            title: NSLocalizedString("Закрыть", comment: ""),
+            style: .cancel
+        )
+
+        [nameSorting, countSorting, cancel].forEach { item in
+            alertController.addAction(item)
+        }
+
+        present(alertController, animated: true, completion: nil)
     }
 }

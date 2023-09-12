@@ -34,6 +34,13 @@ final class CatalogueViewModel {
                 }
             }
         }
+    }
 
+    func sortByName() {
+        catalogue.sort { $0.name < $1.name }
+    }
+
+    func sortByCount() {
+        catalogue.sort { $0.nfts.count > $1.nfts.count }
     }
 }
