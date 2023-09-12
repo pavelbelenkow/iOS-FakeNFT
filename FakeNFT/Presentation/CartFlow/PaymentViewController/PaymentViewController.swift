@@ -7,9 +7,20 @@ final class PaymentViewController: UIViewController {
     
     // MARK: - Properties
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(
+            self,
+            action: #selector(refreshCurrencies),
+            for: .valueChanged
+        )
+        return control
+    }()
+    
     private lazy var currencyCollectionView: CurrencyCollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = CurrencyCollectionView(viewModel: viewModel, layout: layout)
+        view.refreshControl = refreshControl
         return view
     }()
     
@@ -220,6 +231,7 @@ private extension PaymentViewController {
     func showViewController(_ isSuccess: Bool) {
         let viewController = PaymentResultViewController(isSuccess, viewModel: viewModel)
         viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
         navigationController?.present(viewController, animated: true)
     }
     
@@ -241,6 +253,15 @@ private extension PaymentViewController {
     
     @objc func backToCart() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func refreshCurrencies() {
+        refreshControl.beginRefreshing()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            guard let self else { return }
+            self.refreshControl.endRefreshing()
+            self.updateCurrencies()
+        }
     }
     
     @objc func userAgreementButtonTapped() {
