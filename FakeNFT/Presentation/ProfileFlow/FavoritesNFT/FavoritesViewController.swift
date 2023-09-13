@@ -6,6 +6,11 @@ final class FavoritesViewController: UIViewController {
 
     private var viewModel = FavoritesViewModel()
 
+    private enum Constants {
+        static let plugText = "У Вас еще нет избранных  NFT"
+        static let title = "Избранные NFT"
+    }
+
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(
@@ -30,6 +35,16 @@ final class FavoritesViewController: UIViewController {
         return button
     }()
 
+    private lazy var plugLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyBold
+        label.text = Constants.plugText
+        label.textAlignment = .center
+        label.isHidden = false
+        return label
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -45,7 +60,8 @@ final class FavoritesViewController: UIViewController {
     }
 
     private func bind() {
-        viewModel.$nfts.bind { [weak self] _ in
+        viewModel.$nfts.bind { [weak self] nftCollection in
+            self?.plugLabel.isHidden = nftCollection.isEmpty ? false : true
             self?.collectionView.reloadData()
         }
     }
@@ -54,10 +70,11 @@ final class FavoritesViewController: UIViewController {
 // MARK: - Setupview functions
 private extension FavoritesViewController {
     func setupView() {
-        title = "Избранные NFT"
+        title = Constants.title
 
         view.backgroundColor = UIColor.NFTColor.white
         view.addSubview(collectionView)
+        view.addSubview(plugLabel)
         navigationItem.leftBarButtonItem = .init(customView: backButton)
     }
 
@@ -67,7 +84,11 @@ private extension FavoritesViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edge),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edge),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            plugLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            plugLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edge),
+            plugLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edge)
         ])
     }
 }

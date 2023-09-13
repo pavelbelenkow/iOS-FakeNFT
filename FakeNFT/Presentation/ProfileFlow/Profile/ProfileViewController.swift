@@ -100,6 +100,11 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        profileViewModel.getUserInfo()
+    }
+
     // MARK: - Private functions
     private func bind() {
         profileViewModel.$user.bind { [weak self] user in

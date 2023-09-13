@@ -27,7 +27,7 @@ final class FavoritesViewModel {
         ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(_):
+                case .success:
                     self?.nfts.removeValue(forKey: id)
                 case let .failure(error):
                     print(error.localizedDescription)
