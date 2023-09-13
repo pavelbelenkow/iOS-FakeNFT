@@ -71,6 +71,12 @@ private extension FavoritesViewController {
         ])
     }
 }
+
+extension FavoritesViewController: FavoritesCellDelegate {
+    func likeButtonTapped(with nftID: String) {
+        viewModel.deleteFromFavorites(by: nftID)
+    }
+}
 // MARK: - UICollectionViewDataSource
 extension FavoritesViewController: UICollectionViewDataSource {
     func numberOfSections(
@@ -92,7 +98,9 @@ extension FavoritesViewController: UICollectionViewDataSource {
             withReuseIdentifier: FavoritesCell.reuseIdentifier,
             for: indexPath
         ) as? FavoritesCell else { return FavoritesCell() }
-        let nft = viewModel.nfts[indexPath.row]
+        let arrayNft = Array(viewModel.nfts.values)
+        let nft = arrayNft[indexPath.row]
+        cell.delegate = self
         cell.configCell(nft: nft)
         return cell
     }

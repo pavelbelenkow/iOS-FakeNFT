@@ -1,7 +1,15 @@
 import UIKit
 
+protocol FavoritesCellDelegate: AnyObject {
+    func likeButtonTapped(with nftID: String)
+}
+
 final class FavoritesCell: UICollectionViewCell {
     static let reuseIdentifier = "favoriteCell"
+
+    weak var delegate: FavoritesCellDelegate?
+
+    private var nftId: String?
 
     private enum Constants {
         static let likeButtonSize: CGFloat = 42
@@ -73,10 +81,12 @@ final class FavoritesCell: UICollectionViewCell {
         setupRating(nft.rating)
         guard let image = nft.images.first else { return }
         nftImageView.loadImage(url: image.toURL, cornerRadius: 12)
+        nftId = nft.id
     }
 
     @objc
     private func likeButtonTapped() {
+        delegate?.likeButtonTapped(with: self.nftId ?? "")
     }
 
     private func setupRating(_ rating: Int) {
@@ -101,7 +111,7 @@ final class FavoritesCell: UICollectionViewCell {
         let infoViews = [nameLabel, starsImageView, priceLabel]
 
         contentView.addSubview(nftImageView)
-        nftImageView.addSubview(likeButton)
+        contentView.addSubview(likeButton)
         imageViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         contentView.addSubview(infoStack)
