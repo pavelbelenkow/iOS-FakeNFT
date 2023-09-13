@@ -1,10 +1,18 @@
 import Foundation
 
+// MARK: - SortOption enum
+
+/// Типы сортировки
 enum SortOption: String {
     case price
     case rating
     case name
     
+    /**
+     Сравнительная функция для сортировки
+     - Parameter sortDirection: Направление сортировки
+     - Returns: Функция, которая принимает два ``NFT`` и возвращает **true**, если первый элемент должен быть раньше в отсортированном массиве
+     */
     func compareFunction(sortDirection: SortDirection) -> (NFT, NFT) -> Bool {
         switch self {
         case .price:
@@ -23,6 +31,9 @@ enum SortOption: String {
     }
 }
 
+// MARK: - SortDirection enum
+
+/// Направление сортировки
 enum SortDirection: String {
     case ascending
     case descending

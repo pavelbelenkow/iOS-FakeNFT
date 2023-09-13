@@ -2,10 +2,16 @@ import UIKit
 
 // MARK: - PaymentResultViewController class
 
+/**
+ ``PaymentResultViewController`` - это контроллер, который отображает результат оплаты заказа и позволяет пользователю вернуться в корзину или перейти в каталог
+ 
+ В зависимости от результата оплаты, на экране отображается изображение, лейбл и кнопка для перехода к каталогу или повторной оплаты. Также класс обрабатывает нажатие на кнопку и передает результат оплаты в ``OrderPaymentViewModel``.
+ */
 final class PaymentResultViewController: UIViewController {
     
     // MARK: - Properties
     
+    /// Вертикальный стек, содержащий изображение результата оплаты и надпись
     private lazy var resultStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -15,6 +21,7 @@ final class PaymentResultViewController: UIViewController {
         return view
     }()
     
+    /// Изображение результата оплаты
     private lazy var resultImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -22,6 +29,7 @@ final class PaymentResultViewController: UIViewController {
         return view
     }()
     
+    /// Надпись результата оплаты
     private lazy var resultTitleLabel: UILabel = {
         let label = UILabel()
         label.text = isSuccessTitleLabel()
@@ -32,6 +40,7 @@ final class PaymentResultViewController: UIViewController {
         return label
     }()
     
+    /// Кнопка возврата к каталогу или повторной оплате через корзину
     private lazy var resultButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(
@@ -48,13 +57,28 @@ final class PaymentResultViewController: UIViewController {
         return button
     }()
     
+    /// Флаг успешности оплаты
     private let isSuccess: Bool
+    
+    /// Вью-модель для обработки результата оплаты
     private let viewModel: OrderPaymentViewModelProtocol
+    
+    /// Генератор тактильной обратной связи результата оплаты
     private let resultFeedbackGenerator: UINotificationFeedbackGenerator
+    
+    /// Проигрыватель звука результата оплаты
     private let soundPlayer: PaymentResultSoundPlayer?
     
     // MARK: - Initializers
     
+    /**
+     Создает новый объект ``PaymentResultViewController`` с указанной вью-моделью результата оплаты заказа
+     
+     В инициализаторе также создаются экземпляры генератора тактильной обратной связи `UINotificationFeedbackGenerator` и проигрывателя звука результата оплаты ``PaymentResultSoundPlayer``
+     - Parameters:
+        - isSuccess: Флаг успешности оплаты - ``PaymentResultNetworkModel/success``
+        - viewModel: ``OrderPaymentViewModelProtocol`` для обработки результата оплаты
+     */
     init(_ isSuccess: Bool, viewModel: OrderPaymentViewModelProtocol) {
         self.isSuccess = isSuccess
         self.viewModel = viewModel
@@ -121,6 +145,7 @@ private extension PaymentResultViewController {
 
 private extension PaymentResultViewController {
     
+    /// Анимирует скейлом вертикальный стек при успешном результате оплаты
     func animateSuccess() {
         UIView.animate(
             withDuration: 0.3,
@@ -143,7 +168,8 @@ private extension PaymentResultViewController {
             }
         )
     }
-
+    
+    /// Анимирует тряской вертикальный стек при неуспешном результате оплаты
     func animateFailure() {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         animation.timingFunction = CAMediaTimingFunction(name: .linear)
@@ -152,23 +178,42 @@ private extension PaymentResultViewController {
         resultStackView.layer.add(animation, forKey: "failureAnimation")
     }
     
+    /**
+     Возвращает изображение в зависимости от результата оплаты
+     - Returns: Изображение результата оплаты
+     */
     func isSuccessImage() -> UIImage? {
         isSuccess ? UIImage.NFTImage.successPaymentResult : UIImage.NFTImage.failurePaymentResult
     }
     
+    /**
+     Возвращает надпись в зависимости от результата оплаты
+     - Returns: Надпись результата оплаты
+     */
     func isSuccessTitleLabel() -> String {
         isSuccess ? Constants.Cart.successPaymentResultText : Constants.Cart.failurePaymentResultText
     }
     
+    /**
+     Возвращает надпись для кнопки в зависимости от результата оплаты
+     - Returns: Надпись кнопки результата оплаты
+     */
     func isSuccessButtonTitle() -> String {
         isSuccess ? Constants.Cart.backToCatalogue : Constants.Cart.tryAgain
     }
     
+    /// Генерирует тактильную обратную связь в зависимости от результата оплаты
     func isSuccessFeedback() {
         resultFeedbackGenerator.prepare()
         resultFeedbackGenerator.notificationOccurred(isSuccess ? .success : .error)
     }
     
+    /**
+     Обрабатывает нажатие на кнопку возврата к каталогу или повторной оплате через корзину
+     - Вызывает метод ``OrderPaymentViewModelProtocol/handlePaymentResult(_:)`` и передает туда результат оплаты
+        - В зависимости от результата оплаты, метод ``OrderPaymentViewModelProtocol/handlePaymentResult(_:)`` вызовет обработчик ``OrderPaymentViewModel/paymentResultHandler`` и передаст туда результат оплаты
+     - Скрывает экран ``PaymentResultViewController``
+     */
     @objc func resultButtonTapped() {
         viewModel.handlePaymentResult(isSuccess)
         dismiss(animated: true)

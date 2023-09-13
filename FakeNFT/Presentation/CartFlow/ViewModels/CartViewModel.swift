@@ -2,29 +2,83 @@ import Foundation
 
 // MARK: - Protocols
 
+/**
+``CartViewModelProtocol`` определяет интерфейс для работы с моделью(``CartViewModel``) корзины
+ 
+Содержит свойства и методы для получения списка ``NFT``, удаления ``NFT``, очистки корзины и т.д.
+*/
 protocol CartViewModelProtocol {
+    
+    /// Вычисляемое свойство с актуальными ``NFT`` в заказе
     var listNfts: [NFT] { get }
+    
+    /**
+     Привязывает замыкание к изменению списка ``NFT`` в корзине
+     - Parameter completion: Замыкание, которое вызывается при изменении списка ``NFT`` в корзине
+     */
     func bindNfts(_ completion: @escaping ([NFT]) -> Void)
+    
+    /**
+     Получает заказ
+     - Parameters:
+        - completion: Замыкание, которое вызывается при завершении запроса на получение заказа
+            - Если запрос завершился успешно, возвращает отсортированный список ``NFT`` в корзине
+            - Если запрос завершился неудачно, возвращает ошибку
+     */
     func getOrder(_ completion: @escaping (Error) -> Void)
+    
+    /**
+     Получает общую стоимость ``NFT`` в корзине
+     - Returns: Общая стоимость ``NFT`` в корзине
+     */
     func getNftsTotalValue() -> Float
+    
+    /**
+     Удаляет ``NFT`` из корзины
+     - Parameters:
+        - id: ``NFT/id`` удаляемого ``NFT``
+        - completion: Замыкание, которое вызывается при завершении удаления ``NFT`` из корзины
+            - Если удаление прошло успешно, возвращает `nil`
+            - Если удаление завершилось неудачно, возвращает ошибку
+     */
     func removeNft(by id: String, _ completion: @escaping (Error?) -> Void)
+    
+    /// Очищает корзину c заказом
     func clearCart()
+    
+    /**
+     Сортирует ``NFT`` в корзине
+     - Parameter option: Тип ``SortOption`` сортировки
+     */
     func sortBy(option: SortOption)
 }
 
 // MARK: - CartViewModel class
 
+/**
+``CartViewModel`` - это вью-модель корзины
+ 
+Cодержит методы для работы с корзиной, такие как получение заказа, удаление ``NFT`` из корзины, очистка корзины и т.д.
+*/
 final class CartViewModel {
     
     // MARK: - Properties
     
+    /// Наблюдаемое свойство списка ``NFT`` в корзине
     @Observable var nfts: [NFT]
     
+    /// Сетевой сервис корзины
     private let cartService: CartServiceProtocol
+    
+    /// Менеджер хранения ``SortOption`` и ``SortDirection`` сортировки
     private let sortStorageManager: SortStorageManager
     
     // MARK: - Initializers
     
+    /**
+     Создает новый объект ``CartViewModel`` с указанным сервисом корзины
+     - Parameter cartService: Сетевой сервис корзины (необязательный параметр, по умолчанию - ``CartService``)
+     */
     init(cartService: CartServiceProtocol = CartService()) {
         self.nfts = []
         self.cartService = cartService
@@ -36,6 +90,13 @@ final class CartViewModel {
 
 private extension CartViewModel {
     
+    /**
+     Сортирует ``NFT`` в соответствии с текущим типом и направлением сортировки
+     
+     По умолчанию, если не был ранее установлен тип и направление сортировки, она будет произведена по ``SortDirection/ascending`` и по ``SortOption/name`` ``NFT``
+     - Parameter nfts: Список ``NFT``, который нужно отсортировать
+     - Returns: Отсортированный список ``NFT``
+     */
     func sortNfts(_ nfts: [NFT]) -> [NFT] {
         let sortOption = sortStorageManager.sortOption
         let sortDirection = sortStorageManager.sortDirection

@@ -32,7 +32,6 @@
 		5910BB482AB07F350038A13B /* SuccessPayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB472AB07F350038A13B /* SuccessPayment.mp3 */; };
 		5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */; };
 		5910BB512AB086000038A13B /* FailurePayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB502AB086000038A13B /* FailurePayment.mp3 */; };
-		591D8EF72AAD13600036BEA4 /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D8EF62AAD13600036BEA4 /* NetworkErrorHandler.swift */; };
 		5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */; };
 		5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */; };
 		5923ACF42A9C072000E31FA5 /* RemoveNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */; };
@@ -68,6 +67,7 @@
 		59D1BE792AA8EF11008EC168 /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */; };
 		59D8CBD02A9EA5F30075038E /* OrderRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8CBCF2A9EA5F30075038E /* OrderRequests.swift */; };
 		59D8CBD22A9EACAA0075038E /* OrderNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8CBD12A9EACAA0075038E /* OrderNetworkModel.swift */; };
+		59DEE05A2AB11B760064603F /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +116,6 @@
 		5910BB472AB07F350038A13B /* SuccessPayment.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SuccessPayment.mp3; sourceTree = "<group>"; };
 		5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultSoundPlayer.swift; sourceTree = "<group>"; };
 		5910BB502AB086000038A13B /* FailurePayment.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FailurePayment.mp3; sourceTree = "<group>"; };
-		591D8EF62AAD13600036BEA4 /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkErrorHandler.swift; path = ../../../../../../../.Trash/NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveNftViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +150,7 @@
 		59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
 		59D8CBCF2A9EA5F30075038E /* OrderRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequests.swift; sourceTree = "<group>"; };
 		59D8CBD12A9EACAA0075038E /* OrderNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNetworkModel.swift; sourceTree = "<group>"; };
+		59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,7 +291,7 @@
 				3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */,
 				3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */,
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
-				591D8EF62AAD13600036BEA4 /* NetworkErrorHandler.swift */,
+				59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -637,7 +637,6 @@
 			files = (
 				592C9F332AA286B900FAF74F /* UIViewController+Extensions.swift in Sources */,
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
-				591D8EF72AAD13600036BEA4 /* NetworkErrorHandler.swift in Sources */,
 				5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */,
 				5989722E2A9BA85A00F8811E /* CartTableView.swift in Sources */,
 				599CF8532AA7BEF0003CFA24 /* CurrenciesRequest.swift in Sources */,
@@ -671,6 +670,7 @@
 				3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */,
 				5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */,
 				59D1BE792AA8EF11008EC168 /* PaymentResultViewController.swift in Sources */,
+				59DEE05A2AB11B760064603F /* NetworkErrorHandler.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

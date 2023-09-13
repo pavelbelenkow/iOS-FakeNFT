@@ -2,16 +2,23 @@ import UIKit
 
 // MARK: - RemoveNftViewController class
 
+/**
+ ``RemoveNftViewController`` - это контроллер, который отображает экран удаления ``NFT`` из корзины
+
+ Содержит ``NFT/image``, кнопки для удаления ``NFT`` и возврата в ``CartViewController`` и т.д.
+ */
 final class RemoveNftViewController: UIViewController {
     
     // MARK: - Properties
     
+    /// Эффект размытия для фона вью
     private lazy var blurEffectView: UIVisualEffectView = {
         let view = UIVisualEffectView()
         view.frame = self.view.bounds
         return view
     }()
     
+    /// Вертикальный стек-контейнер с информацией об удаляемом ``NFT`` и кнопками
     private lazy var nftContainerView: UIStackView = {
         let view = UIStackView()
         view.backgroundColor = .clear
@@ -23,12 +30,14 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
     
+    /// Контейнер для изображения ``NFT`` и надписи подтверждения удаления
     private lazy var detailNftView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    /// Изображение ``NFT``
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -38,6 +47,7 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
     
+    /// Надпись подтверждения удаления ``NFT``
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.Cart.removeFromCart
@@ -49,6 +59,7 @@ final class RemoveNftViewController: UIViewController {
         return label
     }()
     
+    /// Горизонтальный стек для кнопок удаления и возврата в корзину
     private lazy var buttonStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -58,6 +69,7 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
     
+    /// Кнопка для подтверждения удаления ``NFT`` из корзины
     private lazy var removeNftButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(
@@ -73,6 +85,7 @@ final class RemoveNftViewController: UIViewController {
         return button
     }()
     
+    /// Кнопка для отмены подтверждения удаления ``NFT`` из корзины
     private lazy var cancelActionButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(with: .other, for: Constants.Cart.back)
@@ -84,11 +97,20 @@ final class RemoveNftViewController: UIViewController {
         return button
     }()
     
+    /// Вью-модель корзины
     private let viewModel: CartViewModelProtocol
+    
+    /// Удаляемый ``NFT``
     private var nft: NFT?
     
     // MARK: - Initializers
     
+    /**
+     Создает новый объект ``RemoveNftViewController`` с указанной вью-моделью корзины
+     - Parameters:
+        - viewModel: ``CartViewModelProtocol`` корзины
+        - nft: ``NFT``, который нужно удалить
+     */
     init(viewModel: CartViewModelProtocol, nft: NFT) {
         self.viewModel = viewModel
         self.nft = nft
@@ -172,18 +194,24 @@ private extension RemoveNftViewController {
 
 private extension RemoveNftViewController {
     
+    /// Анимирует эффект размытия фона
     func animateBlurEffect() {
         UIView.animate(withDuration: 0.5) {
             self.blurEffectView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         }
     }
     
+    /// Загружает и кэширует изображение ``NFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
     func setNftImage() {
         guard let nft else { return }
         let imageURL = URL(string: nft.image)
         NFTImageCache.loadAndCacheImage(for: nftImageView, with: imageURL)
     }
     
+    /**
+     Отображает диалоговое окно с сообщением об ошибке при запросе удаления ``NFT``, кнопками "Повторить" и "Отменить"
+     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
+     */
     func showErrorAlert(_ error: Error) {
         let errorData = NetworkErrorHandler.handleError(error)
         
@@ -195,6 +223,13 @@ private extension RemoveNftViewController {
         }
     }
     
+    /**
+     Метод, который вызывается при нажатии на кнопку подтверждения удаления ``NFT`` из корзины
+     
+     Вызывает метод ``CartViewModelProtocol/removeNft(by:_:)``, который будет выполнять запрос ``CartServiceProtocol/putOrder(with:_:)``
+      - В случае успешности запроса - ``NFT`` будет удалена из ``CartTableView`` и в ``OrderNetworkModel`` на сервере
+      - В случае неуспешности запроса - будет показано диалоговое окно с предложением повторить запрос на удаление или отменить действие
+     */
     @objc func removeNftFromCart() {
         guard let nft else { return }
         
@@ -211,6 +246,11 @@ private extension RemoveNftViewController {
         }
     }
     
+    /**
+     Обрабатывает нажатие на кнопку отмены подтверждения удаления ``NFT`` из корзины
+     
+     Cкрывает ``RemoveNftViewController``
+     */
     @objc func dismissViewController() {
         dismiss(animated: true)
     }

@@ -1,8 +1,15 @@
 import UIKit
 import Kingfisher
 
+/// Кэширование изображений
 struct NFTImageCache {
     
+    /**
+     Загружает и кэширует изображение
+     - Parameters:
+        - imageView: `UIImageView`, в котором будет отображено изображение
+        - url: `URL`, по которому изображение будет загружено
+     */
     static func loadAndCacheImage(for imageView: UIImageView, with url: URL?) {
         guard let url else { return }
         

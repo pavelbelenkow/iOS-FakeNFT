@@ -2,12 +2,19 @@ import UIKit
 
 // MARK: - CurrencyCell class
 
+/**
+ Класс ``CurrencyCell`` предоставляет методы для настройки ячейки `валюты` в ``CurrencyCollectionView``
+ 
+ Содержит набор представлений для отображения информации о валюте
+ */
 final class CurrencyCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    /// Идентификатор ячейки валюты в коллекции
     static let reuseIdentifier = Constants.Cart.currencyReuseIdentifier
     
+    /// Горизонтальный стек-контейнер, содержащий изображение валюты и вертикальный стек с описанием валюты
     private lazy var contentStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -17,6 +24,7 @@ final class CurrencyCell: UICollectionViewCell {
         return view
     }()
     
+    /// Изображение валюты
     private lazy var currencyImageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = UIColor.NFTColor.blackUniversal
@@ -27,6 +35,7 @@ final class CurrencyCell: UICollectionViewCell {
         return view
     }()
     
+    /// Вертикальный стек, содержащий надпись названия и аббревиатуры валюты
     private lazy var descriptionCurrencyStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -34,6 +43,7 @@ final class CurrencyCell: UICollectionViewCell {
         return view
     }()
     
+    /// Надпись названия валюты
     private lazy var currencyTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.NFTColor.black
@@ -41,6 +51,7 @@ final class CurrencyCell: UICollectionViewCell {
         return label
     }()
     
+    /// Надпись аббревиатуры валюты
     private lazy var currencyAbbreviationLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.NFTColor.green
@@ -48,6 +59,7 @@ final class CurrencyCell: UICollectionViewCell {
         return label
     }()
     
+    /// Обработчик нажатия на ячейку. Если ячейка выбрана, то отображается рамка вокруг ячейки, иначе рамка скрывается
     override var isSelected: Bool {
         didSet {
             layer.borderWidth = isSelected ? 1 : 0
@@ -98,6 +110,10 @@ private extension CurrencyCell {
 
 private extension CurrencyCell {
     
+    /**
+     Устанавливает изображение валюты в `currencyImageView`
+     - Parameter image: `Ссылка` на ``Currency/image`` валюты
+     */
     func setCurrencyImage(from image: String) {
         let imageURL = URL(string: image)
         NFTImageCache.loadAndCacheImage(for: currencyImageView, with: imageURL)
@@ -108,6 +124,10 @@ private extension CurrencyCell {
 
 extension CurrencyCell {
     
+    /**
+     Настраивает отображение ячейки коллекции с информацией о валюте
+     - Parameter currency: ``Currency`` для которой необходимо настроить отображение ячейки коллекции
+     */
     func configure(from currency: Currency) {
         backgroundColor = UIColor.NFTColor.lightGray
         layer.cornerRadius = Constants.Cart.radius

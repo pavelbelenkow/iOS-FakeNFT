@@ -2,18 +2,31 @@ import UIKit
 
 // MARK: - Protocols
 
+/// Протокол ``CartCellDelegate`` определяет методы для удаления ``NFT`` из корзины
 protocol CartCellDelegate: AnyObject {
+    
+    /**
+     Метод, который обрабатывает нажатие на кнопку удаления ``NFT`` из корзины
+     - Parameter nft: ``NFT``, который необходимо удалить
+     */
     func cartCellDidTapRemoveButton(by nft: NFT)
 }
 
 // MARK: - CartCell class
 
+/**
+ Класс ``CartCell`` предоставляет методы для настройки ячейки корзины в ``CartTableView``
+ 
+ Содержит набор представлений для отображения информации о ``NFT``
+ */
 final class CartCell: UITableViewCell {
     
     // MARK: - Properties
     
+    /// Идентификатор ячейки корзины
     static let reuseIdentifier = Constants.Cart.cartReuseIdentifier
     
+    /// Изображение ``NFT``
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = Constants.Cart.radius
@@ -22,12 +35,14 @@ final class CartCell: UITableViewCell {
         return view
     }()
     
+    /// Контейнер для детальной информации о ``NFT``
     private lazy var detailNftView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    /// Надпись о названии ``NFT``
     private lazy var nftTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.NFTColor.black
@@ -36,6 +51,7 @@ final class CartCell: UITableViewCell {
         return label
     }()
     
+    /// Горизонтальный стек внутри контейнера для размещения рейтинга в звёздах
     private lazy var ratingStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -45,6 +61,7 @@ final class CartCell: UITableViewCell {
         return view
     }()
     
+    /// Надпись о названии цены
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.Cart.priceText
@@ -54,6 +71,7 @@ final class CartCell: UITableViewCell {
         return label
     }()
     
+    /// Надпись о цене ``NFT``
     private lazy var nftPriceLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.NFTColor.black
@@ -62,6 +80,7 @@ final class CartCell: UITableViewCell {
         return label
     }()
     
+    /// Кнопка удаления ``NFT`` из корзины
     private lazy var removeNftButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = UIColor.NFTColor.black
@@ -75,7 +94,10 @@ final class CartCell: UITableViewCell {
         return button
     }()
     
+    /// ``NFT``, отображаемый в ячейке
     var nft: NFT?
+    
+    /// ``delegate`` ячейки корзины
     weak var delegate: CartCellDelegate?
     
     // MARK: - Lifecycle
@@ -173,11 +195,21 @@ private extension CartCell {
 
 private extension CartCell {
     
+    /**
+     Загружает и кэширует изображение ``NFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
+     - Parameter image: Ссылка на ``NFT/image``
+     */
     func setImage(from image: String) {
         let imageURL = URL(string: image)
         NFTImageCache.loadAndCacheImage(for: nftImageView, with: imageURL)
     }
     
+    /**
+     Создает `UIImageView` для отображения рейтинга ``NFT``
+     
+     При вызове метода для каждой ячейки с ``NFT`` очищается `ratingStackView` и снова заполняется при помощи `UIImageView` желтыми или прозрачными звездами в зависимости от рейтинга ``NFT``
+     - Parameter rating: Значение ``NFT/rating``
+     */
     func setRating(from rating: Int) {
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -189,6 +221,11 @@ private extension CartCell {
         }
     }
     
+    /**
+     Преобразует значение цены ``NFT`` в строку с форматированием в виде денежного значения
+     - Parameter price: Значение ``NFT/price``
+     - Returns: Строка с форматированием в виде денежного значения
+     */
     func formatPrice(_ price: Float) -> String {
         let priceString = NumberFormatter
             .currencyFormatter
@@ -196,6 +233,11 @@ private extension CartCell {
         return priceString + " " + Constants.Cart.currency
     }
     
+    /**
+     Метод, который вызывается при нажатии на кнопку удаления ``NFT`` из корзины
+     
+     Вызывает ``delegate`` ячейки корзины, который будет обрабатывать нажатие кнопки удаления ``NFT`` из корзины
+     */
     @objc func removeNftFromCart() {
         guard let nft else { return }
         delegate?.cartCellDidTapRemoveButton(by: nft)
@@ -206,6 +248,10 @@ private extension CartCell {
 
 extension CartCell {
     
+    /**
+     Настраивает отображение ячейки корзины с информацией о ``NFT``
+     - Parameter nft: ``NFT``, для которого необходимо настроить отображение ячейки корзины
+     */
     func configure(from nft: NFT) {
         backgroundColor = .clear
         addSubviews()

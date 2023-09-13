@@ -3,10 +3,16 @@ import SafariServices
 
 // MARK: - PaymentViewController class
 
+/**
+``PaymentViewController`` - это контроллер, который отображает доступные валюты и позволяет пользователю выбрать валюту для оплаты своего заказа
+
+Отображает ``CurrencyCollectionView`` с доступными валютами вместе с пользовательским соглашением и кнопкой оплаты
+*/
 final class PaymentViewController: UIViewController {
     
     // MARK: - Properties
     
+    /// Элемент управления для обновления списка доступных валют
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(
@@ -17,6 +23,7 @@ final class PaymentViewController: UIViewController {
         return control
     }()
     
+    /// Коллекция для отображения доступных валют
     private lazy var currencyCollectionView: CurrencyCollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = CurrencyCollectionView(viewModel: viewModel, layout: layout)
@@ -24,6 +31,7 @@ final class PaymentViewController: UIViewController {
         return view
     }()
     
+    /// Контейнер для пользовательского соглашения и кнопки оплаты
     private lazy var paymentView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.NFTColor.lightGray
@@ -33,6 +41,7 @@ final class PaymentViewController: UIViewController {
         return view
     }()
     
+    /// Вертикальный стек-контейнер внутри контейнера для отображения пользовательского соглашения и кнопки оплаты
     private lazy var paymentStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -42,6 +51,7 @@ final class PaymentViewController: UIViewController {
         return view
     }()
     
+    /// Вертикальный стек внутри стека-контейнера для отображения текста и ссылки пользовательского соглашения
     private lazy var userAgreementStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -51,6 +61,7 @@ final class PaymentViewController: UIViewController {
         return view
     }()
     
+    /// Надпись пользовательского соглашения
     private lazy var userAgreementTitleLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.Cart.userAgreementText
@@ -60,6 +71,7 @@ final class PaymentViewController: UIViewController {
         return label
     }()
     
+    /// Кнопка-ссылка для перехода на пользовательское соглашение в вебе
     private lazy var userAgreementButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Constants.Cart.userAgreementLinkText, for: .normal)
@@ -72,6 +84,7 @@ final class PaymentViewController: UIViewController {
         return button
     }()
     
+    /// Кнопка для оплаты заказа с выбранной валютой
     private lazy var paymentButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(
@@ -87,10 +100,15 @@ final class PaymentViewController: UIViewController {
         return button
     }()
     
+    /// Вью-модель оплаты заказа
     private let viewModel: OrderPaymentViewModelProtocol
     
     // MARK: - Initializers
     
+    /**
+     Создает новый объект ``PaymentViewController`` с указанной вью-моделью оплаты заказа
+     - Parameter viewModel: ``OrderPaymentViewModelProtocol`` для оплаты заказа
+     */
     init(viewModel: OrderPaymentViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -188,6 +206,10 @@ private extension PaymentViewController {
 
 private extension PaymentViewController {
     
+    /**
+     Отображает диалоговое окно с сообщением об ошибке при получении списка валют, и кнопками "Повторить" и "Отменить"
+     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
+     */
     func showCurrenciesErrorAlert(_ error: Error) {
         let errorData = NetworkErrorHandler.handleError(error)
         
@@ -204,12 +226,14 @@ private extension PaymentViewController {
         }
     }
     
+    /// Обновляет данные коллекции, получая актуальный список валют
     func updateCurrencies() {
         viewModel.getCurrencies { [weak self] error in
             self?.showCurrenciesErrorAlert(error)
         }
     }
     
+    /// Связывает вью-модель с контроллером, обновляя коллекцию с списком доступных валют
     func bindViewModel() {
         UIBlockingProgressHUD.show()
         
@@ -220,6 +244,7 @@ private extension PaymentViewController {
         }
     }
     
+    /// Отображает диалоговое окно с сообщением об ошибке и кнопкой "OK", если пользователь не выбрал валюту для оплаты
     func showUnselectedCurrencyAlert() {
         showAlert(
             title: Constants.Cart.unselectedPaymentMethod,
@@ -228,6 +253,10 @@ private extension PaymentViewController {
         )
     }
     
+    /**
+     Отображает экран с результатом оплаты
+     - Parameter isSuccess: Флаг успешности оплаты - ``PaymentResultNetworkModel/success``
+     */
     func showViewController(_ isSuccess: Bool) {
         let viewController = PaymentResultViewController(isSuccess, viewModel: viewModel)
         viewController.modalPresentationStyle = .overFullScreen
@@ -235,6 +264,10 @@ private extension PaymentViewController {
         navigationController?.present(viewController, animated: true)
     }
     
+    /**
+     Отображает диалоговое окно с сообщением об ошибке при запросе на оплату заказа, кнопками "Повторить" и "Отменить"
+     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
+     */
     func showPaymentErrorAlert(_ error: Error) {
         let errorData = NetworkErrorHandler.handleError(error)
         
@@ -251,10 +284,12 @@ private extension PaymentViewController {
         }
     }
     
+    /// Обрабатывает нажатие на шеврон в навигационном баре и возвращает на ``CartViewController``
     @objc func backToCart() {
         navigationController?.popViewController(animated: true)
     }
     
+    /// Обновляет список валют при смахивании вниз в начале коллекции
     @objc func refreshCurrencies() {
         refreshControl.beginRefreshing()
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
@@ -264,6 +299,11 @@ private extension PaymentViewController {
         }
     }
     
+    /**
+     Обрабатывает нажатие на ссылку пользовательского соглашения
+     
+     Показывает пользовательское соглашение в контроллере просмотра Safari
+     */
     @objc func userAgreementButtonTapped() {
         guard let url = URL(string: Constants.Cart.userAgreementURL) else {
             return
@@ -273,6 +313,14 @@ private extension PaymentViewController {
         navigationController?.present(safariViewController, animated: true)
     }
     
+    /**
+     Обрабатывает нажатие на кнопку оплаты заказа с выбранной валютой
+     
+     - Если пользователь уже выбрал валюту для оплаты, то метод получает результат оплаты заказа с помощью выбранной валюты:
+        - Если оплата прошла успешно, метод отображает ``PaymentResultViewController``
+        - Если произошла ошибка при оплате, метод отображает сообщение с информацией об ошибке
+     - Если пользователь не выбрал валюту для оплаты, метод отображает диалоговое окно с просьбой выбрать валюту
+     */
     @objc func paymentButtonTapped() {
         guard let selectedIndexPath = currencyCollectionView.selectedIndexPath else {
             showUnselectedCurrencyAlert()
