@@ -6,6 +6,7 @@ final class NFTCollectionViewController: UIViewController {
         static let navBarButtonSize: CGFloat = 42
         static let actionSheetTitle = "Сортировка"
         static let cancelAction = "Закрыть"
+        static let plugText = "У Вас ещё нет NFT"
     }
 
     private var viewModel = NFTCollectionViewModel()
@@ -52,9 +53,20 @@ final class NFTCollectionViewController: UIViewController {
         return button
     }()
 
+    private lazy var plugLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyBold
+        label.text = Constants.plugText
+        label.textAlignment = .center
+        label.isHidden = false
+        return label
+    }()
+
     // MARK: - Private functions
     private func bind() {
-        viewModel.$authorsNames.bind { [weak self] _ in
+        viewModel.$authorsNames.bind { [weak self] authors in
+            self?.plugLabel.isHidden = authors.isEmpty ? false : true
             self?.tableView.reloadData()
         }
 
@@ -111,11 +123,17 @@ final class NFTCollectionViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         view.addSubview(tableView)
+        view.addSubview(plugLabel)
+        let edge: CGFloat = 16
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            plugLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            plugLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: edge),
+            plugLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -edge)
         ])
     }
 
