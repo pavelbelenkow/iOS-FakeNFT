@@ -8,6 +8,7 @@ final class EditProfileViewController: UIViewController {
 
     private enum Constants {
         static let photoSize: CGFloat = 70
+        static let exitButtonSize: CGFloat = 60
     }
 
     // MARK: - UI objects
@@ -63,8 +64,14 @@ final class EditProfileViewController: UIViewController {
         EditScreenCustomLabel(frame: .zero, string: "Описание")
     }()
 
-    private lazy var descriptionTextField: EditScreenCustomTextField = {
-        EditScreenCustomTextField()
+    private lazy var descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .bodyRegular
+        textView.isScrollEnabled = false
+        textView.backgroundColor = UIColor.NFTColor.lightGray
+        textView.textContainerInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        return textView
     }()
 
     private lazy var websiteStackView: TitleAndTextFieldStackView = {
@@ -82,7 +89,6 @@ final class EditProfileViewController: UIViewController {
     private lazy var exitButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "ProfileCross"), for: .normal)
-        button.frame.size = CGSize(width: 42, height: 42)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(exitButttonTapped), for: .touchUpInside)
         return button
@@ -97,10 +103,9 @@ final class EditProfileViewController: UIViewController {
         activateConstraints()
 
         nameTextField.delegate = self
-        descriptionTextField.delegate = self
+        descriptionTextView.delegate = self
         websiteTextField.delegate = self
         nameTextField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
-        descriptionTextField.addTarget(self, action: #selector(descriptionTextFieldDidChange), for: .editingChanged)
         websiteTextField.addTarget(self, action: #selector(websiteTextFieldDidChange), for: .editingChanged)
     }
 
@@ -108,7 +113,7 @@ final class EditProfileViewController: UIViewController {
     private func setDataToTextFields() {
         guard let user = profileViewModel?.user else { return }
         self.nameTextField.text = user.name
-        self.descriptionTextField.text = user.description
+        self.descriptionTextView.text = user.description
         self.websiteTextField.text = user.website
         self.photoImageView.loadImage(url: user.avatar.toURL, cornerRadius: Constants.photoSize/2)
         editingViewModel.newName = user.name
@@ -137,12 +142,13 @@ final class EditProfileViewController: UIViewController {
 
     // MARK: - UI Functions
     private func setupView() {
-        self.navigationItem.rightBarButtonItem = .init(customView: exitButton)
+        navigationController?.navigationBar.isHidden = true
+        view.addSubview(exitButton)
         let stacks = [nameStackView, descriptionStackView, websiteStackView]
         nameStackView.addArrangedSubview(nameLabel)
         nameStackView.addArrangedSubview(nameTextField)
         descriptionStackView.addArrangedSubview(descriptionLabel)
-        descriptionStackView.addArrangedSubview(descriptionTextField)
+        descriptionStackView.addArrangedSubview(descriptionTextView)
         websiteStackView.addArrangedSubview(websiteLabel)
         websiteStackView.addArrangedSubview(websiteTextField)
         view.addSubview(containerStackView)
@@ -156,6 +162,11 @@ final class EditProfileViewController: UIViewController {
     private func activateConstraints() {
         let edge: CGFloat = 16
         NSLayoutConstraint.activate([
+            exitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4),
+            exitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: edge),
+            exitButton.heightAnchor.constraint(equalToConstant: Constants.exitButtonSize),
+            exitButton.widthAnchor.constraint(equalToConstant: Constants.exitButtonSize),
+
             photoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             photoImageView.heightAnchor.constraint(equalToConstant: Constants.photoSize),
             photoImageView.widthAnchor.constraint(equalToConstant: Constants.photoSize),
@@ -186,5 +197,15 @@ final class EditProfileViewController: UIViewController {
 extension EditProfileViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    }
+}
+
+extension EditProfileViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
 }
