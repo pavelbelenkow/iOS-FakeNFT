@@ -96,7 +96,7 @@ extension NFTCollectionViewModel: NFTCollectionViewModelFetchingProtocol {
 
 extension NFTCollectionViewModel: NFTCollectionViewModelSortingProtocol {
     func sortByPrice() {
-        nfts.sort { $0.price < $1.price }
+        nfts.sort { $0.price > $1.price }
         sortingType = .byPrice
     }
 
@@ -106,7 +106,7 @@ extension NFTCollectionViewModel: NFTCollectionViewModelSortingProtocol {
     }
 
     func sortByRating() {
-        nfts.sort { $0.rating < $1.rating}
+        nfts.sort { $0.rating > $1.rating}
         sortingType = .byRating
     }
 }
