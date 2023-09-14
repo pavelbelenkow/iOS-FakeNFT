@@ -71,6 +71,8 @@ final class EditProfileViewController: UIViewController {
         textView.isScrollEnabled = false
         textView.backgroundColor = UIColor.NFTColor.lightGray
         textView.textContainerInset = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        textView.layer.cornerRadius = 12
+        textView.layer.masksToBounds = true
         return textView
     }()
 
@@ -107,6 +109,11 @@ final class EditProfileViewController: UIViewController {
         websiteTextField.delegate = self
         nameTextField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
         websiteTextField.addTarget(self, action: #selector(websiteTextFieldDidChange), for: .editingChanged)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        profileViewModel?.getUserInfo()
     }
 
     // MARK: - Private functions
@@ -201,6 +208,10 @@ extension EditProfileViewController: UITextFieldDelegate {
 }
 
 extension EditProfileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        editingViewModel.descriptionChanged?(textView.text)
+    }
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
