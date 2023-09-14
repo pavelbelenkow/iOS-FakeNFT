@@ -8,6 +8,7 @@
 import UIKit
 
 final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+    private let analyticsService = AnalyticsService()
     private lazy var cardView: UIView = {
         let cardView = UIView()
         cardView.backgroundColor = UIColor.NFTColor.white
@@ -201,12 +202,22 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     @objc private func didCartButton() {
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .click,
+            param: .setAddDeleteCartNFTStatistic
+        )
         isAddCart.toggle()
         setCartButtonImage()
         print("id \(id) - \(isAddCart ? "addCart" : "deleteCart")")// передать через delegate???
     }
     
     @objc private func didLikedButton() {
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .click,
+            param: .setLikeNotLikeNFTStatistic
+        )
         isLiked.toggle()
         setLikeButtonImage()
         print("id \(id) - \(isLiked ? "like" : "notLike")")// передать через delegate???
