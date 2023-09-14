@@ -33,6 +33,8 @@
 		586AC6E22AB198FA001284E4 /* LikesEditedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E12AB198FA001284E4 /* LikesEditedRequest.swift */; };
 		586AC6E42AB199BD001284E4 /* LikesEdited.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E32AB199BD001284E4 /* LikesEdited.swift */; };
 		586AC6E62AB19A59001284E4 /* LikesEditedNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E52AB19A59001284E4 /* LikesEditedNetworkService.swift */; };
+		586AC6EA2AB32B92001284E4 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E92AB32B92001284E4 /* WebViewController.swift */; };
+		586AC6EC2AB3388C001284E4 /* CustomLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */; };
 		5897B1EA2A9CDFF2006ADC33 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */; };
 		5897B1EC2A9E1F35006ADC33 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */; };
 		5897B1EE2A9E292C006ADC33 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1ED2A9E292C006ADC33 /* Profile.swift */; };
@@ -114,6 +116,8 @@
 		586AC6E12AB198FA001284E4 /* LikesEditedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEditedRequest.swift; sourceTree = "<group>"; };
 		586AC6E32AB199BD001284E4 /* LikesEdited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEdited.swift; sourceTree = "<group>"; };
 		586AC6E52AB19A59001284E4 /* LikesEditedNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEditedNetworkService.swift; sourceTree = "<group>"; };
+		586AC6E92AB32B92001284E4 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLikeButton.swift; sourceTree = "<group>"; };
 		5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
 		5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5897B1ED2A9E292C006ADC33 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 				5897B2202AA09469006ADC33 /* EditScreenCustomLabel.swift */,
 				5897B2232AA0985D006ADC33 /* TitleAndTextFieldStackView.swift */,
 				586AC6D82AAE29C1001284E4 /* NavBarBackButton.swift */,
+				586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				59CAB7882A9AC16A00C4938D /* ProfileViewController.swift */,
 				5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */,
 				5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */,
+				586AC6E92AB32B92001284E4 /* WebViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -604,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
+				586AC6EA2AB32B92001284E4 /* WebViewController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				5897B2242AA0985D006ADC33 /* TitleAndTextFieldStackView.swift in Sources */,
@@ -637,6 +644,7 @@
 				5897B2282AA0A6C7006ADC33 /* UserEditing.swift in Sources */,
 				5897B22A2AA0B134006ADC33 /* UserEditingRequest.swift in Sources */,
 				5897B2302AA29899006ADC33 /* NFTCollectionViewController.swift in Sources */,
+				586AC6EC2AB3388C001284E4 /* CustomLikeButton.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				586AC6E22AB198FA001284E4 /* LikesEditedRequest.swift in Sources */,
 				5897B23E2AA87DA9006ADC33 /* UserInfoRequest.swift in Sources */,

@@ -32,8 +32,8 @@ final class FavoritesCell: UICollectionViewCell {
         return imageView
     }()
 
-    private lazy var likeButton: UIButton = {
-        let button = UIButton()
+    private lazy var likeButton: CustomLikeButton = {
+        let button = CustomLikeButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage.NFTIcon.liked, for: .normal)
         button.addTarget(

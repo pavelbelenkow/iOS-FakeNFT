@@ -1,4 +1,5 @@
 import UIKit
+import WebKit
 
 final class ProfileViewController: UIViewController {
 
@@ -153,6 +154,12 @@ final class ProfileViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func showWebView() {
+        guard let websiteURL = URL(string: websiteLabel.text ?? "") else { return }
+        let webViewController = WebViewController(url: websiteURL)
+        present(webViewController, animated: true)
+    }
+
     // MARK: - Setup view
     private func setupView() {
         setupNavBar()
@@ -235,6 +242,8 @@ extension ProfileViewController: UITableViewDelegate {
             showMyNFTs()
         case 1:
             showFavorites()
+        case 2:
+            showWebView()
         default:
             break
         }
