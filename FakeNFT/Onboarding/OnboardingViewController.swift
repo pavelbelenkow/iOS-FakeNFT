@@ -7,35 +7,33 @@
 
 import UIKit
 
-final class OnboardingViewController: UIPageViewController,
-                                      UIPageViewControllerDataSource,
-                                      UIPageViewControllerDelegate {
-    lazy var pages: [UIViewController] = {
+final class OnboardingViewController: UIPageViewController {
+    private lazy var pages: [UIViewController] = {
         let one = PageViewController(
             backgroundImage: UIImage.NFTImage.onboardingOne,
-            titlePage: "Исследуйте",
-            descriptionPage: "Присоединяйтесь и откройте новый мир\nуникальных NFT для коллекционеров",
-            isThreePage: false
+            titlePage: OnboardingTitlePage.onboardingTitleOne.rawValue,
+            descriptionPage: OnboardingDescriptionPage.onboardingDescriptionOne.rawValue,
+            isThirdPage: false
         )
         
         let two = PageViewController(
             backgroundImage: UIImage.NFTImage.onboardingTwo,
-            titlePage: "Коллекционируйте",
-            descriptionPage: "Пополняйте свою коллекцию эсклюзивными\nкартинками, созданными нейросетью!",
-            isThreePage: false
+            titlePage: OnboardingTitlePage.onboardingTitleTwo.rawValue,
+            descriptionPage: OnboardingDescriptionPage.onboardingDescriptionTwo.rawValue,
+            isThirdPage: false
         )
         
         let three = PageViewController(
             backgroundImage: UIImage.NFTImage.onboardingThree,
-            titlePage: "Состязайтесь",
-            descriptionPage: "Смотрите статистику других и покажите всем,\nчто у вас самая ценная коллекция",
-            isThreePage: true
+            titlePage: OnboardingTitlePage.onboardingTitleThree.rawValue,
+            descriptionPage: OnboardingDescriptionPage.onboardingDescriptionThree.rawValue,
+            isThirdPage: true
         )
         
         return [one, two, three]
     }()
     
-    lazy var pageControl: UIPageControl = {
+    private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
@@ -92,7 +90,9 @@ final class OnboardingViewController: UIPageViewController,
             pageControl.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
-    
+}
+
+extension OnboardingViewController: UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController
@@ -107,7 +107,7 @@ final class OnboardingViewController: UIPageViewController,
         
         return pages[previousIndex]
     }
-    
+
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
@@ -122,7 +122,9 @@ final class OnboardingViewController: UIPageViewController,
         
         return pages[nextIndex]
     }
-    
+}
+
+extension OnboardingViewController: UIPageViewControllerDelegate {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         didFinishAnimating finished: Bool,

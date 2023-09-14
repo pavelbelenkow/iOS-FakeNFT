@@ -11,9 +11,9 @@ final class PageViewController: UIViewController {
     private let backgroundImage: UIImage
     private let titlePage: String
     private let descriptionPage: String
-    private let isThreePage: Bool
+    private let isThirdPage: Bool
     
-    lazy var backgroundImageView: UIImageView = {
+    private lazy var backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
         backgroundImageView.image = backgroundImage
         backgroundImageView.contentMode = .scaleAspectFit
@@ -32,7 +32,7 @@ final class PageViewController: UIViewController {
         return backgroundImageView
     }()
     
-    lazy var closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.setImage(
             UIImage.NFTIcon.xmarkUniversal,
@@ -44,12 +44,12 @@ final class PageViewController: UIViewController {
             action: #selector(didTabBarStart),
             for: .touchUpInside
         )
-        closeButton.isHidden = isThreePage
+        closeButton.isHidden = isThirdPage
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         return closeButton
     }()
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = titlePage
         titleLabel.numberOfLines = 0
@@ -60,7 +60,7 @@ final class PageViewController: UIViewController {
         return titleLabel
     }()
     
-    lazy var descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.text = descriptionPage
         descriptionLabel.numberOfLines = 0
@@ -71,7 +71,7 @@ final class PageViewController: UIViewController {
         return descriptionLabel
     }()
     
-    lazy var startButton: UIButton = {
+    private lazy var startButton: UIButton = {
         let startButton = UIButton()
         startButton.setTitle(
             "Что внутри?",
@@ -91,7 +91,7 @@ final class PageViewController: UIViewController {
             action: #selector(didTabBarStart),
             for: .touchUpInside
         )
-        startButton.isHidden = !isThreePage
+        startButton.isHidden = !isThirdPage
         startButton.translatesAutoresizingMaskIntoConstraints = false
         return startButton
     }()
@@ -100,12 +100,12 @@ final class PageViewController: UIViewController {
         backgroundImage: UIImage,
         titlePage: String,
         descriptionPage: String,
-        isThreePage: Bool
+        isThirdPage: Bool
     ) {
         self.backgroundImage = backgroundImage
         self.titlePage = titlePage
         self.descriptionPage = descriptionPage
-        self.isThreePage = isThreePage
+        self.isThirdPage = isThirdPage
         
         super.init(
             nibName: nil,
