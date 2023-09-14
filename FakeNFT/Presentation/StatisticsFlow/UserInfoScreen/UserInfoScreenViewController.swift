@@ -10,6 +10,7 @@ import UIKit
 final class UserInfoScreenViewController: UIViewController {
     var userId: String?
     private let viewModel = UserInfoScreenViewModel()
+    private let analyticsService = AnalyticsService()
     private var website = ""
     private var navBar: UINavigationBar?
     private lazy var cardView: UIView = {
@@ -257,6 +258,11 @@ final class UserInfoScreenViewController: UIViewController {
     }
     
     @objc private func didGoToSiteUserButton() {
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .click,
+            param: .userSiteStatistic
+        )
         let webViewUserWebsiteVC = WebViewUserWebsiteViewController()
         webViewUserWebsiteVC.website = website
         navigationController?.pushViewController(
@@ -291,6 +297,11 @@ extension UserInfoScreenViewController: UITableViewDelegate {
         didSelectRowAt indexPath: IndexPath
     ) {
         guard let nfts = viewModel.getNFTs() else { return }
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .click,
+            param: .collectionUserNFTsStatistic
+        )
         let userCollectionScreenVC = UserCollectionScreenViewController()
         userCollectionScreenVC.nfts = nfts
         navigationController?.pushViewController(

@@ -3,6 +3,7 @@ import UIKit
 final class RatingScreenViewController: UIViewController {
     private let viewModel = RatingScreenViewModel()
     private let sortedAlert = SortedAlert()
+    private let analyticsService = AnalyticsService()
     private var navBar: UINavigationBar?
     private lazy var ratingTableView: UITableView = {
         let ratingTableView = UITableView()
@@ -29,9 +30,23 @@ final class RatingScreenViewController: UIViewController {
         viewModel.getListUsers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .open,
+            param: nil
+        )
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.dismissProgressHUD()
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .close,
+            param: nil
+        )
     }
     
     private func bind() {
@@ -88,6 +103,11 @@ final class RatingScreenViewController: UIViewController {
     }
     
     @objc private func didSortingButton() {
+        analyticsService.report(
+            screen: .screenStatistic,
+            event: .click,
+            param: .sortingNFTsStatistic
+        )
         self.present(
             sortedAlert.callAlert(
                 nameAction: viewModel.sortedByNameAlert,
