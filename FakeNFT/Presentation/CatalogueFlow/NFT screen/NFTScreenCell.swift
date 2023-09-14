@@ -18,14 +18,26 @@ final class NFTScreenCell: UICollectionViewCell {
 
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
+        view.isUserInteractionEnabled = true
 
         return view
     }()
 
-    private var likeButton = UIButton()
-    private var cartButton = UIButton()
+    private var likeButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(nil, action: #selector(likeButtonTap), for: .touchUpInside)
+        return button
+    }()
+
+    private var cartButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(nil, action: #selector(cartButtonTap), for: .touchUpInside)
+        return button
+    }()
+
     private var ratingImage = UIImageView()
     private let placeholder = ImagesPlaceholder()
+    private var nftID = String()
 
     private var nameLabel: UILabel = {
         let label = UILabel()
@@ -52,31 +64,7 @@ final class NFTScreenCell: UICollectionViewCell {
     }()
 
     //MARK: Internal Properties
-    var model: NFTModel? {
-        didSet {
-            guard let model else { return }
-
-            setRatingImage(rating: model.rating)
-            nameLabel.text = model.name
-            priceLabel.text = "\(model.price) ETH"
-            setLikeImage(isLiked: model.isLiked)
-            setOrderImage(isOrdered: model.isOrdered)
-
-            guard let encodedUrlString = model
-                .images[0]
-                .addingPercentEncoding(
-                    withAllowedCharacters: .urlQueryAllowed
-                ),
-                  let url = URL(
-                    string: encodedUrlString
-            ) else {
-                print("Invalid URL:", model.images[0])
-                return
-            }
-
-            NFTImageView.kf.setImage(with: url, placeholder: placeholder)
-        }
-    }
+    weak var delegate: NFTCellDelegate?
 
     //MARK: Initialisers
     override init(frame: CGRect) {
@@ -98,10 +86,66 @@ final class NFTScreenCell: UICollectionViewCell {
         nameLabel.text = nil
         priceLabel.text = nil
     }
+
+    //MARK: Internal Methods
+    func configCell(with model: NFTModel?, delegate: NFTCellDelegate) {
+        guard let model else { return }
+
+        setRatingImage(rating: model.rating)
+        nameLabel.text = model.name
+        priceLabel.text = "\(model.price) ETH"
+        setLikeImage(isLiked: model.isLiked)
+        setOrderImage(isOrdered: model.isOrdered)
+        nftID = model.id
+
+        guard let encodedUrlString = model
+            .images[0]
+            .addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ),
+              let url = URL(
+                string: encodedUrlString
+        ) else {
+            assertionFailure("Invalid URL: \(model.images[0])")
+            return
+        }
+
+        NFTImageView.kf.setImage(with: url, placeholder: placeholder)
+
+        self.delegate = delegate
+    }
 }
 
 //MARK: Private Extension
 private extension NFTScreenCell {
+    @objc
+    func likeButtonTap() {
+        delegate?.addNFTToFavourites(id: nftID) { result in
+            switch result {
+            case .success(()):
+                self.likeButton.layer.removeAllAnimations()
+            case .failure( _):
+                self.likeButton.layer.removeAllAnimations()
+                self.showError(button: self.likeButton)
+            }
+        }
+        animateButton(likeButton)
+    }
+
+    @objc
+    func cartButtonTap() {
+        delegate?.cartNFT(id: nftID) { result in
+            switch result {
+            case .success(()):
+                self.cartButton.layer.removeAllAnimations()
+            case .failure( _):
+                self.cartButton.layer.removeAllAnimations()
+                self.showError(button: self.cartButton)
+            }
+        }
+        animateButton(cartButton)
+    }
+
     func makeCell() {
         addSubviews()
         applyConstraints()
@@ -232,4 +276,35 @@ private extension NFTScreenCell {
 
         cartButton.setImage(UIImage(named: orderImageName), for: .normal)
     }
+
+    func animateButton(_ button: UIButton) {
+        UIView.animateKeyframes(withDuration: 0.4, delay: 0, options: [.repeat]) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                button.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                button.transform = .identity
+            }
+        }
+    }
+
+    func showError(button: UIButton) {
+        let originalPosition = button.center
+
+        let leftPosition = CGPoint(x: originalPosition.x - 10, y: originalPosition.y)
+        let rightPosition = CGPoint(x: originalPosition.x + 10, y: originalPosition.y)
+
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: [], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/3) {
+                button.center = leftPosition
+            }
+            UIView.addKeyframe(withRelativeStartTime: 1/3, relativeDuration: 1/3) {
+                button.center = rightPosition
+            }
+            UIView.addKeyframe(withRelativeStartTime: 2/3, relativeDuration: 1/3) {
+                button.center = originalPosition
+            }
+        }, completion: nil)
+    }
+
 }

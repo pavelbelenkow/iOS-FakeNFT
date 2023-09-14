@@ -40,6 +40,7 @@ final class CatalogueView: UIView {
 
     //MARK: Private Methods
     private func makeView() {
+        backgroundColor = UIColor.NFTColor.white
         addSubviews()
         applyConstraints()
     }

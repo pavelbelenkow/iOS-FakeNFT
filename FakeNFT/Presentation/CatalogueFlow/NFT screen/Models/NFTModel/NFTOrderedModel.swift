@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct NFTOrderedModel: Decodable {
-    let nfts: [String]
+struct NFTOrderedModel: Codable {
+    var nfts: [String]
+    let id: String
 }

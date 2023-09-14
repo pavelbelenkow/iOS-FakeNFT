@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class NFTScreenVC: UIViewController {
+    //MARK: Private Properties
+    private var catalogueCell: CatalogueCellModel
+
     //MARK: Internal Properties
     lazy var NFTView = NFTScreenView(
         dataSource: self,
@@ -24,8 +28,8 @@ final class NFTScreenVC: UIViewController {
     //MARK: Initialisers
     init(catalogueCell: CatalogueCellModel) {
         nftScreenViewModel = NFTScreenViewModel(author: catalogueCell.author)
+        self.catalogueCell = catalogueCell
         super.init(nibName: nil, bundle: nil)
-        NFTView.configView(with: catalogueCell)
     }
 
     required init?(coder: NSCoder) {
@@ -40,7 +44,7 @@ final class NFTScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-        nftScreenViewModel.getNFTCollection()
+        getData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +91,33 @@ final class NFTScreenVC: UIViewController {
             guard let self else { return }
             self.NFTView.updateCollectionView()
         }
+
+        nftScreenViewModel.$authorName.bind { [weak self] _ in
+            guard let self else { return }
+            self.catalogueCell.author = self.nftScreenViewModel.authorName
+            self.NFTView.configView(with: self.catalogueCell)
+        }
+    }
+
+    private func getData() {
+        ProgressHUD.show()
+        nftScreenViewModel.getAuthorName(withID: catalogueCell.id) { result in
+            switch result {
+            case .success( _):
+                break
+            case .failure( _):
+                self.NFTView.showErrorAuthorName()
+            }
+        }
+        nftScreenViewModel.getNFTCollection() { result in
+            switch result {
+            case .success(()):
+                ProgressHUD.dismiss()
+            case .failure( _):
+                ProgressHUD.showFailed()
+                self.NFTView.showErrorView()
+            }
+        }
     }
 }
 
@@ -103,5 +134,30 @@ extension NFTScreenVC: UITextViewDelegate {
 
         navigationController?.pushViewController(webViewVC, animated: true)
         return false
+    }
+}
+
+//MARK: - NFTCellDelegate
+extension NFTScreenVC: NFTCellDelegate {
+    func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        nftScreenViewModel.addNFTToFavourites(id: id) { result in
+            switch result {
+            case .success(()):
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        nftScreenViewModel.cartNFT(id: id) { result in
+            switch result {
+            case .success(()):
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

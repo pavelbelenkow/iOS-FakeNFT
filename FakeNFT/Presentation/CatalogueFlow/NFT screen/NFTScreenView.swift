@@ -36,7 +36,6 @@ final class NFTScreenView: UIView {
     private let authorLabel: UILabel = {
         let label = UILabel()
 
-        label.text = "Автор коллекции:"
         label.font = UIFont(
             name: "SF Pro Text Regular",
             size: 13
@@ -91,6 +90,8 @@ final class NFTScreenView: UIView {
 
         return view
     }()
+
+    private let placeholder = ImagesPlaceholder()
 
     //MARK: Initialisers
     override init(frame: CGRect) {
@@ -231,10 +232,10 @@ final class NFTScreenView: UIView {
               let url = URL(
                 string: encodedUrlString
         ) else {
-            print("Invalid URL:", url)
+            assertionFailure("Invalid URL: \(url)")
             return
         }
-        coverImage.kf.setImage(with: url)
+        coverImage.kf.setImage(with: url, placeholder: placeholder)
     }
 
     //MARK: Internal Methods
@@ -249,5 +250,63 @@ final class NFTScreenView: UIView {
         headerLabel.text = model.name
         descriptionLabel.text = model.description
         setAuthorLinkName(with: model.author)
+        authorLabel.text = "Автор коллекции:"
+    }
+
+    func showErrorView() {
+        let label: UILabel = {
+            let label = UILabel()
+            label.text = "Не удалось загрузить NFT"
+            label.font = UIFont(
+                name: "SF Pro Text Bold",
+                size: 17
+            )
+            label.textColor = UIColor.NFTColor.black
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
+
+        collectionView.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.centerYAnchor.constraint(
+                equalTo: collectionView.centerYAnchor
+            ),
+            label.centerXAnchor.constraint(
+                equalTo: collectionView.centerXAnchor
+            )
+        ])
+    }
+
+    func showErrorAuthorName() {
+        let label: UILabel = {
+            let label = UILabel()
+            label.text = "Не удалось загрузить информацию об авторе"
+            label.font = UIFont(
+                name: "SF Pro Text Bold",
+                size: 17
+            )
+            label.textColor = UIColor.NFTColor.black
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.numberOfLines = 2
+            label.textAlignment = .center
+            return label
+        }()
+
+        coverImage.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.centerYAnchor.constraint(
+                equalTo: coverImage.centerYAnchor
+            ),
+            label.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: -16
+            ),
+            label.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: 16
+            )
+        ])
     }
 }

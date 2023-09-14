@@ -18,7 +18,7 @@ final class CatalogueViewModel {
     private let mainQueue = DispatchQueue.main
 
     //MARK: Internal Methods
-    func getCatalogue() {
+    func getCatalogue(completion: @escaping (Result<Void, Error>) -> Void) {
         catalogueQueue.async {
             self.networkClient.send(
                 request: self.catalogueRequest,
@@ -28,12 +28,20 @@ final class CatalogueViewModel {
                     switch result {
                     case .success(let model):
                         self.catalogue = model
+                        completion(.success(()))
                     case .failure(let error):
-                        preconditionFailure("Error - \(error)")
+                        completion(.failure(error))
                     }
                 }
             }
         }
+    }
 
+    func sortByName() {
+        catalogue.sort { $0.name < $1.name }
+    }
+
+    func sortByCount() {
+        catalogue.sort { $0.nfts.count > $1.nfts.count }
     }
 }
