@@ -13,7 +13,7 @@ final class EditProfileViewController: UIViewController {
         static let exitButtonSize: CGFloat = 60
 
         static let changePhotoLabelText = "Сменить фото"
-        static let photoLinkPlaceholder = "Вставьте ссылку на изображение"
+        static let photoLinkPlaceholder = "Загрузить изображение"
         static let nameLabelText = "Имя"
         static let descriptionLabelText = "Описание"
         static let websiteLabelText  = "Сайт"
@@ -145,7 +145,7 @@ final class EditProfileViewController: UIViewController {
         profileViewModel?.getUserInfo()
     }
 
-    //MARK: - Initializer
+    // MARK: - Initializer
     init(viewModel: EditProfileViewModel) {
         self.editingViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
