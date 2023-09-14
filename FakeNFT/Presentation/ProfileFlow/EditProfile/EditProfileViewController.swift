@@ -8,15 +8,6 @@ final class EditProfileViewController: UIViewController {
 
     private var editingViewModel: EditProfileViewModel
 
-    init(viewModel: EditProfileViewModel) {
-        self.editingViewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private enum Constants {
         static let photoSize: CGFloat = 70
         static let exitButtonSize: CGFloat = 60
@@ -152,6 +143,16 @@ final class EditProfileViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         profileViewModel?.getUserInfo()
+    }
+
+    //MARK: - Initializer
+    init(viewModel: EditProfileViewModel) {
+        self.editingViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Private functions

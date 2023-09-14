@@ -11,15 +11,6 @@ final class NFTCollectionViewController: UIViewController {
 
     private var viewModel: NFTCollectionViewModel
 
-    init(viewModel: NFTCollectionViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     var idCollection = [Int]()
     var idLikesCollection = [Int]()
 
@@ -31,6 +22,16 @@ final class NFTCollectionViewController: UIViewController {
         viewModel.ids = idCollection
         viewModel.loadUsersNFT()
         bind()
+    }
+
+    //MARK: - Initializer
+    init(viewModel: NFTCollectionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - UI Objects

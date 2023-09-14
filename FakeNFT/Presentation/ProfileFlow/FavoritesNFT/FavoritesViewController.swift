@@ -6,15 +6,6 @@ final class FavoritesViewController: UIViewController {
 
     private var viewModel: FavoritesViewModel
 
-    init(viewModel: FavoritesViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private enum Constants {
         static let plugText = "У Вас еще нет избранных  NFT"
         static let title = "Избранные NFT"
@@ -63,6 +54,17 @@ final class FavoritesViewController: UIViewController {
         bind()
     }
 
+    //MARK: - Initializer
+    init(viewModel: FavoritesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    //MARK: - Objc methods
     @objc
     private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
