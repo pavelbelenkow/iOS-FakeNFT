@@ -7,7 +7,7 @@
 import UIKit
 
 class CustomLikeButton: UIButton {
-    private let activeAreaSize: CGFloat = 21
+    private let activeAreaSize: CGFloat = 18
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let hitFrame = bounds.insetBy(
