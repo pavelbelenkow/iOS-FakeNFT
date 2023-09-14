@@ -21,7 +21,7 @@ final class RateManager {
     
     static func showRatesController () {
         //Если надо обнулить для тестирования
-        userDefaults.set(0, forKey: nameKey)
+//        userDefaults.set(0, forKey: nameKey)
         let count = userDefaults.integer(forKey: nameKey)
         //Сработает после 5го запуска приложения
         if count == 5 {
