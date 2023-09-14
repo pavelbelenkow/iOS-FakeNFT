@@ -42,10 +42,7 @@ final class NFTScreenCell: UICollectionViewCell {
     private var nameLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(
-            name: "SF Pro Text Bold",
-            size: 17
-        )
+        label.font = UIFont.NFTFont.bold17
         label.textColor = UIColor.NFTColor.black
 
         return label
@@ -54,10 +51,7 @@ final class NFTScreenCell: UICollectionViewCell {
     private var priceLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(
-            name: "SF Pro Text Regular",
-            size: 10
-        )
+        label.font = UIFont.NFTFont.medium10
         label.textColor = UIColor.NFTColor.black
 
         return label

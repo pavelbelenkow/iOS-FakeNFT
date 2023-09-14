@@ -21,11 +21,11 @@ final class CatalogueViewController: UIViewController {
 
     //MARK: Private Methods
     private func setNavigationBar() {
-        let image = UIImage(named: "Sorting")
+        let image = UIImage.NFTIcon.sorting
         let imageConfig = UIImage.SymbolConfiguration(
             pointSize: 21, weight: .semibold
         )
-        let largeImage = image?.withConfiguration(imageConfig)
+        let largeImage = image.withConfiguration(imageConfig)
 
         let rightBarButton = UIBarButtonItem(
             image: largeImage,
@@ -34,9 +34,9 @@ final class CatalogueViewController: UIViewController {
             action: #selector(showBottomSheet)
         )
         navigationItem.rightBarButtonItem = rightBarButton
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.NFTColor.black
 
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barTintColor = UIColor.NFTColor.white
     }
 
     private func bind() {

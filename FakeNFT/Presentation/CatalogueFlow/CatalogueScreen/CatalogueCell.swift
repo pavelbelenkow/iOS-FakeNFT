@@ -28,12 +28,9 @@ final class CatalogueCell: UITableViewCell {
     private var nameLabel: UILabel = {
         let label = UILabel()
 
-        label.textColor = .black
+        label.textColor = UIColor.NFTColor.black
         label.text = "Peach (10)"
-        label.font = UIFont(
-            name: "SF Pro Text Bold",
-            size: 17
-        )
+        label.font = UIFont.NFTFont.bold17
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label

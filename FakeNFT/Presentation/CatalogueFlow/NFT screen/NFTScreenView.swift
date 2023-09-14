@@ -23,10 +23,7 @@ final class NFTScreenView: UIView {
     private var headerLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(
-            name: "SF Pro Text Bold",
-            size: 22
-        )
+        label.font = UIFont.NFTFont.bold22
         label.textColor = UIColor.NFTColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -36,10 +33,7 @@ final class NFTScreenView: UIView {
     private let authorLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(
-            name: "SF Pro Text Regular",
-            size: 13
-        )
+        label.font = UIFont.NFTFont.regular13
         label.textColor = UIColor.NFTColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -49,10 +43,7 @@ final class NFTScreenView: UIView {
     private var descriptionLabel: UILabel = {
         let label = UILabel()
 
-        label.font = UIFont(
-            name: "SF Pro Text Regular",
-            size: 13
-        )
+        label.font = UIFont.NFTFont.regular13
         label.numberOfLines = 4
         label.textColor = UIColor.NFTColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -74,6 +65,7 @@ final class NFTScreenView: UIView {
         textView.isUserInteractionEnabled = true
         textView.dataDetectorTypes = [.link]
         textView.isScrollEnabled = false
+        textView.backgroundColor = UIColor.NFTColor.white
         textView.translatesAutoresizingMaskIntoConstraints = false
 
         return textView
@@ -214,10 +206,7 @@ final class NFTScreenView: UIView {
         let linkAttributes: [NSAttributedString.Key: Any] = [
             .link: URL(string: "https://example.com")!,
             .foregroundColor: UIColor.red,
-            .font: UIFont(
-                name: "SF Pro Text Regular",
-                size: 15
-            )
+            .font: UIFont.NFTFont.regular15
         ]
         let linkString = NSAttributedString(string: name, attributes: linkAttributes)
         attributedString.append(linkString)
@@ -257,10 +246,7 @@ final class NFTScreenView: UIView {
         let label: UILabel = {
             let label = UILabel()
             label.text = "Не удалось загрузить NFT"
-            label.font = UIFont(
-                name: "SF Pro Text Bold",
-                size: 17
-            )
+            label.font = UIFont.NFTFont.bold17
             label.textColor = UIColor.NFTColor.black
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
@@ -282,10 +268,7 @@ final class NFTScreenView: UIView {
         let label: UILabel = {
             let label = UILabel()
             label.text = "Не удалось загрузить информацию об авторе"
-            label.font = UIFont(
-                name: "SF Pro Text Bold",
-                size: 17
-            )
+            label.font = UIFont.NFTFont.bold17
             label.textColor = UIColor.NFTColor.black
             label.translatesAutoresizingMaskIntoConstraints = false
             label.numberOfLines = 2

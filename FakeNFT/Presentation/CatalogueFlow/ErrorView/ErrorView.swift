@@ -12,10 +12,7 @@ final class ErrorView: UIView {
     private let label: UILabel = {
         let label = UILabel()
         label.text = "Нет интернета"
-        label.font = UIFont(
-            name: "SF Pro Text Bold",
-            size: 17
-        )
+        label.font = UIFont.NFTFont.bold17
         label.textColor = UIColor.NFTColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
