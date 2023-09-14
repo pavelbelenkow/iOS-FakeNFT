@@ -128,14 +128,16 @@ final class ProfileViewController: UIViewController {
 
     // MARK: - Transtitions to other VC
     private func showEditProfile() {
-        let viewController = EditProfileViewController()
+        let viewModel = EditProfileViewModel()
+        let viewController = EditProfileViewController(viewModel: viewModel)
         viewController.profileViewModel = profileViewModel
         let nvc = UINavigationController(rootViewController: viewController)
         present(nvc, animated: true)
     }
 
     private func showMyNFTs() {
-        let viewController = NFTCollectionViewController()
+        let viewModel = NFTCollectionViewModel()
+        let viewController = NFTCollectionViewController(viewModel: viewModel)
         viewController.hidesBottomBarWhenPushed = true
         guard let user = profileViewModel.user else { return }
         idCollectionNFT = user.nfts.compactMap {Int($0)}
@@ -146,7 +148,8 @@ final class ProfileViewController: UIViewController {
     }
 
     private func showFavorites() {
-        let viewController = FavoritesViewController()
+        let viewModel = FavoritesViewModel()
+        let viewController = FavoritesViewController(viewModel: viewModel)
         viewController.hidesBottomBarWhenPushed = true
         guard let user = profileViewModel.user else { return }
         idLikesNFT = user.likes.compactMap {Int($0)}

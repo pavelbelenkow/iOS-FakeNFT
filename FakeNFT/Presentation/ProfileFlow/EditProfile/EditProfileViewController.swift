@@ -4,9 +4,18 @@ final class EditProfileViewController: UIViewController {
 
     var profileViewModel: ProfileViewModel?
 
-    private var editingViewModel = EditProfileViewModel()
-
     private var isPhotoLinkTextFieldVisible = false
+
+    private var editingViewModel: EditProfileViewModel
+
+    init(viewModel: EditProfileViewModel) {
+        self.editingViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private enum Constants {
         static let photoSize: CGFloat = 70

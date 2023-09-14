@@ -9,7 +9,16 @@ final class NFTCollectionViewController: UIViewController {
         static let plugText = "У Вас ещё нет NFT"
     }
 
-    private var viewModel = NFTCollectionViewModel()
+    private var viewModel: NFTCollectionViewModel
+
+    init(viewModel: NFTCollectionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     var idCollection = [Int]()
     var idLikesCollection = [Int]()

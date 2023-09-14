@@ -4,7 +4,16 @@ final class FavoritesViewController: UIViewController {
 
     var idLikesCollection = [Int]()
 
-    private var viewModel = FavoritesViewModel()
+    private var viewModel: FavoritesViewModel
+
+    init(viewModel: FavoritesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private enum Constants {
         static let plugText = "У Вас еще нет избранных  NFT"
