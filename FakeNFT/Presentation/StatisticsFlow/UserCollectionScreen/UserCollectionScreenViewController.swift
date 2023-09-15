@@ -39,7 +39,8 @@ final class UserCollectionScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
-            title: "Коллекция NFT"
+            title: "Коллекция NFT",
+            isBackedToScreenWithHiddenTabBar: true
         )
         addSubviews()
         makeConstraints()
@@ -80,7 +81,7 @@ final class UserCollectionScreenViewController: UIViewController {
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor
             ),
             userNFTsCollectionView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+                equalTo: view.bottomAnchor
             )
         ])
     }

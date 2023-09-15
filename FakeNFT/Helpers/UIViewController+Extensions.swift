@@ -10,7 +10,8 @@ import ProgressHUD
 
 extension UIViewController {
     func makeNavBarWithBackButtonAndTitle(
-        title: String
+        title: String,
+        isBackedToScreenWithHiddenTabBar: Bool
     ) {
         let backButton = UIButton(type: .custom)
         backButton.setImage(
@@ -19,7 +20,9 @@ extension UIViewController {
         )
         backButton.addTarget(
             self,
-            action: #selector(didBackButton),
+            action: setSelectorBackButton(
+                isBackedToScreenWithHiddenTabBar: isBackedToScreenWithHiddenTabBar
+            ),
             for: .touchUpInside
         )
         let leftNavBarItem = UIBarButtonItem(customView: backButton)
@@ -28,7 +31,12 @@ extension UIViewController {
         self.title = title
     }
     
-    @objc private func didBackButton() {
+    @objc private func didBackButtonToScreenWithHiddenTabBar() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func didBackButtonToScreenWithNotHiddenTabBar() {
+        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -46,5 +54,51 @@ extension UIViewController {
     
     func showProgressHUD() {
         ProgressHUD.show()
+    }
+    
+    func hideTabBar() {
+        if let tabBarController = self.tabBarController {
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                options: [.curveEaseOut],
+                animations: {
+                    tabBarController.tabBar.frame = CGRect(
+                        x: tabBarController.tabBar.frame.origin.x,
+                        y: UIScreen.main.bounds.height,
+                        width: tabBarController.tabBar.frame.width,
+                        height: tabBarController.tabBar.frame.height
+                    )
+                }) { _ in
+                    tabBarController.tabBar.isHidden = true
+                }
+        }
+    }
+    
+    func showTabBar() {
+        if let tabBarController = self.tabBarController {
+            if !tabBarController.tabBar.isHidden {
+                UIView.animate(
+                    withDuration: 0.3,
+                    delay: 0,
+                    options: [.curveEaseOut],
+                    animations: {
+                        tabBarController.tabBar.frame = CGRect(
+                            x: tabBarController.tabBar.frame.origin.x,
+                            y: UIScreen.main.bounds.height - tabBarController.tabBar.frame.height,
+                            width: tabBarController.tabBar.frame.width,
+                            height: tabBarController.tabBar.frame.height
+                        )
+                    })
+            }
+        }
+    }
+    
+    private func setSelectorBackButton(isBackedToScreenWithHiddenTabBar: Bool) -> Selector {
+        if isBackedToScreenWithHiddenTabBar {
+            return #selector(didBackButtonToScreenWithHiddenTabBar)
+        } else {
+            return #selector(didBackButtonToScreenWithNotHiddenTabBar)
+        }
     }
 }

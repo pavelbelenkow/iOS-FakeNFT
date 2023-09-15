@@ -101,7 +101,8 @@ final class UserInfoScreenViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
-            title: ""
+            title: "",
+            isBackedToScreenWithHiddenTabBar: false
         )
         addSubviews()
         makeConstraints()
@@ -111,12 +112,12 @@ final class UserInfoScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
+        self.hideTabBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
+        self.showTabBar()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

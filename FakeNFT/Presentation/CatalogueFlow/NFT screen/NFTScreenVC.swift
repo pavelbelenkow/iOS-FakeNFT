@@ -45,7 +45,8 @@ final class NFTScreenVC: UIViewController {
         super.viewDidLoad()
         // добавил
         self.makeNavBarWithBackButtonAndTitle(
-            title: ""
+            title: "",
+            isBackedToScreenWithHiddenTabBar: false
         )
         bind()
         getData()
@@ -53,42 +54,43 @@ final class NFTScreenVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hideTabBar()
+        self.hideTabBar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        showTabBar()
+        self.showTabBar()
     }
 
     //MARK: Private Methods
-    private func hideTabBar() {
-        if let tabBarController = self.tabBarController {
-            UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut]) {
-                tabBarController.tabBar.frame = CGRect(
-                    x: tabBarController.tabBar.frame.origin.x,
-                    y: UIScreen.main.bounds.height,
-                    width: tabBarController.tabBar.frame.width,
-                    height: tabBarController.tabBar.frame.height
-                )
-            }
-        }
-
-        navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
-    }
-
-    private func showTabBar() {
-        if let tabBarController = self.tabBarController {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
-                tabBarController.tabBar.frame = CGRect(
-                    x: tabBarController.tabBar.frame.origin.x,
-                    y: UIScreen.main.bounds.height - tabBarController.tabBar.frame.height,
-                    width: tabBarController.tabBar.frame.width,
-                    height: tabBarController.tabBar.frame.height
-                )
-            }
-        }
-    }
+    //В расширение для всех
+//    private func hideTabBar() {
+//        if let tabBarController = self.tabBarController {
+//            UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut]) {
+//                tabBarController.tabBar.frame = CGRect(
+//                    x: tabBarController.tabBar.frame.origin.x,
+//                    y: UIScreen.main.bounds.height,
+//                    width: tabBarController.tabBar.frame.width,
+//                    height: tabBarController.tabBar.frame.height
+//                )
+//            }
+//        }
+//
+//        navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
+//    }
+//
+//    private func showTabBar() {
+//        if let tabBarController = self.tabBarController {
+//            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) {
+//                tabBarController.tabBar.frame = CGRect(
+//                    x: tabBarController.tabBar.frame.origin.x,
+//                    y: UIScreen.main.bounds.height - tabBarController.tabBar.frame.height,
+//                    width: tabBarController.tabBar.frame.width,
+//                    height: tabBarController.tabBar.frame.height
+//                )
+//            }
+//        }
+//    }
 
     private func bind() {
         nftScreenViewModel.$nftCollection.bind { [weak self] _ in

@@ -45,7 +45,8 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
         // добавил
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
-            title: ""
+            title: "",
+            isBackedToScreenWithHiddenTabBar: true
         )
         makeView()
         loadPage()
@@ -80,7 +81,6 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
             self.progressView.progress = 1.0
         }
 
-        print(abs(progressView.progress - 1.0))
         progressView.isHidden = abs(progressView.progress - 1.0) <= 0.001
     }
 
@@ -114,7 +114,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor
             ),
             webView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+                equalTo: view.bottomAnchor
             )
         ])
         
