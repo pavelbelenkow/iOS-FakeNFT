@@ -263,8 +263,8 @@ final class UserInfoScreenViewController: UIViewController {
             event: .click,
             param: .userSiteStatistic
         )
-        let webViewUserWebsiteVC = WebViewUserWebsiteViewController()
-        webViewUserWebsiteVC.website = website
+        let webViewUserWebsiteVC = WebViewVC()
+        webViewUserWebsiteVC.urlString = website
         navigationController?.pushViewController(
             webViewUserWebsiteVC,
             animated: true

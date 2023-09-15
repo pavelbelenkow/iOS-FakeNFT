@@ -10,13 +10,20 @@ import WebKit
 
 final class WebViewVC: UIViewController, WKNavigationDelegate {
     //MARK: Private Properties
-    private var webView: WKWebView!
+//    private var webView: WKWebView!
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
+    }()
+    
     var urlString: String?
 
     private let progressView: UIProgressView = {
         let progressView = UIProgressView()
-
-        progressView.tintColor = UIColor.NFTColor.black
+        //поменял на синий
+        progressView.tintColor = UIColor.NFTColor.blue
         progressView.progress = 0.0
         progressView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -26,16 +33,20 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
     private var observer: NSKeyValueObservation?
 
     //MARK: View Controller Life Cycle
-    override func loadView() {
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.navigationDelegate = self
-        view = webView
-    }
+//    override func loadView() {
+//        let webConfiguration = WKWebViewConfiguration()
+//        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+//        webView.navigationDelegate = self
+//        view = webView
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // добавил
+        view.backgroundColor = UIColor.NFTColor.white
+        self.makeNavBarWithBackButtonAndTitle(
+            title: ""
+        )
         makeView()
         loadPage()
     }
@@ -69,6 +80,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
             self.progressView.progress = 1.0
         }
 
+        print(abs(progressView.progress - 1.0))
         progressView.isHidden = abs(progressView.progress - 1.0) <= 0.001
     }
 
@@ -86,19 +98,35 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
     }
 
     private func addSubviews() {
+        view.addSubview(webView)
         webView.addSubview(progressView)
     }
 
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            progressView.topAnchor.constraint(
-                equalTo: self.view.safeAreaLayoutGuide.topAnchor
+            webView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
+            webView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor
+            ),
+            webView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor
+            ),
+            webView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+            )
+        ])
+        
+        NSLayoutConstraint.activate([
+            progressView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
             ),
             progressView.leadingAnchor.constraint(
-                equalTo: self.view.leadingAnchor
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor
             ),
             progressView.trailingAnchor.constraint(
-                equalTo: self.view.trailingAnchor
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor
             )
         ])
     }

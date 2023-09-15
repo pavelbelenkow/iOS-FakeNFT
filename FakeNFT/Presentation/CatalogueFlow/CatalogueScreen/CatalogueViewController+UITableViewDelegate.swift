@@ -14,9 +14,9 @@ extension CatalogueViewController: UITableViewDelegate {
         didSelectRowAt indexPath: IndexPath
     ) {
         let NFTScreenVC = NFTScreenVC(catalogueCell: catalogueViewModel.catalogue[indexPath.row])
-        let backItem = UIBarButtonItem()
-        backItem.title = String()
-        NFTScreenVC.navigationItem.backBarButtonItem = backItem
+//        let backItem = UIBarButtonItem()
+//        backItem.title = String()
+//        NFTScreenVC.navigationItem.backBarButtonItem = backItem
         navigationController?.pushViewController(NFTScreenVC, animated: true)
     }
 }

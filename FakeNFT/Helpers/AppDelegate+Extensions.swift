@@ -11,7 +11,7 @@ extension AppDelegate {
         if #available(iOS 15, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = UIColor.NFTColor.white
+            navigationBarAppearance.backgroundColor = .clear
             navigationBarAppearance.shadowColor = .clear
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().compactAppearance = navigationBarAppearance
@@ -37,11 +37,11 @@ extension AppDelegate {
                 barMetrics: UIBarMetrics.default
             )
             UINavigationBar.appearance().shadowImage = UIImage()
-            UINavigationBar.appearance().tintColor = UIColor.NFTColor.white
+            UINavigationBar.appearance().tintColor = .clear
             UINavigationBar.appearance().barTintColor = UIColor.NFTColor.white
             UINavigationBar.appearance().isTranslucent = false
             UINavigationBar.appearance().clipsToBounds = false
-            UINavigationBar.appearance().backgroundColor = UIColor.NFTColor.white
+            UINavigationBar.appearance().backgroundColor = .clear
             UITabBar.appearance().backgroundImage = UIImage.colorForTabBar(
                 color: UIColor(
                     red: 0.0,

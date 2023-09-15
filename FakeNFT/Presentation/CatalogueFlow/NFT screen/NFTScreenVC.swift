@@ -43,6 +43,10 @@ final class NFTScreenVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // добавил
+        self.makeNavBarWithBackButtonAndTitle(
+            title: ""
+        )
         bind()
         getData()
     }
