@@ -8,13 +8,13 @@ import Foundation
  ``OrderPaymentServiceProtocol`` содержит методы для получения списка валют и результата оплаты заказа
  */
 protocol OrderPaymentServiceProtocol {
-    
+
     /**
      Получает список валют для оплаты
      - Parameter completion: Блок кода, который будет выполнен после получения списка валют
      */
     func fetchCurrencies(_ completion: @escaping (Result<[Currency], Error>) -> Void)
-    
+
     /**
      Проверка результатов оплаты заказа
      - Parameters:
@@ -32,17 +32,17 @@ protocol OrderPaymentServiceProtocol {
  ``OrderPaymentService`` содержит методы для получения списка валют и результата оплаты заказа с помощью сетевых запросов
  */
 final class OrderPaymentService {
-    
+
     // MARK: - Properties
-    
+
     /// Декодер для декодирования данных в формате JSON
     private let decoder = JSONDecoder()
-    
+
     /// Сетевой клиент для отправки сетевых запросов
     private let networkClient: NetworkClient
-    
+
     // MARK: - Initializers
-    
+
     /**
      Инициализирует объект ``OrderPaymentService``
      - Parameter networkClient: Сетевой клиент для отправки сетевых запросов (необязательный параметр, по умолчанию - ``DefaultNetworkClient``)
@@ -55,7 +55,7 @@ final class OrderPaymentService {
 // MARK: - Private methods
 
 private extension OrderPaymentService {
-    
+
     /**
      Конвертирует сетевую модель ``CurrencyNetworkModel`` в модель приложения ``Currency``
      - Parameter model: Сетевая модель валюты
@@ -74,13 +74,13 @@ private extension OrderPaymentService {
 // MARK: - Methods
 
 extension OrderPaymentService: OrderPaymentServiceProtocol {
-    
+
     func fetchCurrencies(_ completion: @escaping (Result<[Currency], Error>) -> Void) {
         let request = CurrenciesRequest()
-        
+
         networkClient.send(request: request) { [weak self] result in
             guard let self else { return }
-            
+
             switch result {
             case .success(let data):
                 do {
@@ -95,13 +95,13 @@ extension OrderPaymentService: OrderPaymentServiceProtocol {
             }
         }
     }
-    
+
     func fetchOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         let request = OrderPaymentResultRequest(id: currencyId)
-        
+
         networkClient.send(request: request) { [weak self] result in
             guard let self else { return }
-            
+
             switch result {
             case .success(let data):
                 do {

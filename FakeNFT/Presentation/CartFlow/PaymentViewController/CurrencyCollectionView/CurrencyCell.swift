@@ -8,12 +8,12 @@ import UIKit
  Содержит набор представлений для отображения информации о валюте
  */
 final class CurrencyCell: UICollectionViewCell {
-    
+
     // MARK: - Properties
-    
+
     /// Идентификатор ячейки валюты в коллекции
     static let reuseIdentifier = Constants.Cart.currencyReuseIdentifier
-    
+
     /// Горизонтальный стек-контейнер, содержащий изображение валюты и вертикальный стек с описанием валюты
     private lazy var contentStackView: UIStackView = {
         let view = UIStackView()
@@ -23,7 +23,7 @@ final class CurrencyCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     /// Изображение валюты
     private lazy var currencyImageView: UIImageView = {
         let view = UIImageView()
@@ -34,7 +34,7 @@ final class CurrencyCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     /// Вертикальный стек, содержащий надпись названия и аббревиатуры валюты
     private lazy var descriptionCurrencyStackView: UIStackView = {
         let view = UIStackView()
@@ -42,7 +42,7 @@ final class CurrencyCell: UICollectionViewCell {
         view.distribution = .equalSpacing
         return view
     }()
-    
+
     /// Надпись названия валюты
     private lazy var currencyTitleLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +50,7 @@ final class CurrencyCell: UICollectionViewCell {
         label.font = UIFont.NFTFont.regular13
         return label
     }()
-    
+
     /// Надпись аббревиатуры валюты
     private lazy var currencyAbbreviationLabel: UILabel = {
         let label = UILabel()
@@ -58,7 +58,7 @@ final class CurrencyCell: UICollectionViewCell {
         label.font = UIFont.NFTFont.regular13
         return label
     }()
-    
+
     /// Обработчик нажатия на ячейку. Если ячейка выбрана, то отображается рамка вокруг ячейки, иначе рамка скрывается
     override var isSelected: Bool {
         didSet {
@@ -71,16 +71,16 @@ final class CurrencyCell: UICollectionViewCell {
 // MARK: - Add Subviews
 
 private extension CurrencyCell {
-    
+
     func addSubviews() {
         addContentStackView()
         addCurrencyImageView()
         addDescriptionCurrencyStackView()
     }
-    
+
     func addContentStackView() {
         contentView.addSubview(contentStackView)
-        
+
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
@@ -88,19 +88,19 @@ private extension CurrencyCell {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
         ])
     }
-    
+
     func addCurrencyImageView() {
         contentStackView.addArrangedSubview(currencyImageView)
-        
+
         NSLayoutConstraint.activate([
             currencyImageView.heightAnchor.constraint(equalToConstant: 36),
             currencyImageView.widthAnchor.constraint(equalToConstant: 36)
         ])
     }
-    
+
     func addDescriptionCurrencyStackView() {
         contentStackView.addArrangedSubview(descriptionCurrencyStackView)
-        
+
         descriptionCurrencyStackView.addArrangedSubview(currencyTitleLabel)
         descriptionCurrencyStackView.addArrangedSubview(currencyAbbreviationLabel)
     }
@@ -109,7 +109,7 @@ private extension CurrencyCell {
 // MARK: - Private methods
 
 private extension CurrencyCell {
-    
+
     /**
      Устанавливает изображение валюты в `currencyImageView`
      - Parameter image: `Ссылка` на ``Currency/image`` валюты
@@ -123,7 +123,7 @@ private extension CurrencyCell {
 // MARK: - Methods
 
 extension CurrencyCell {
-    
+
     /**
      Настраивает отображение ячейки коллекции с информацией о валюте
      - Parameter currency: ``Currency`` для которой необходимо настроить отображение ячейки коллекции
@@ -132,10 +132,10 @@ extension CurrencyCell {
         backgroundColor = UIColor.NFTColor.lightGray
         layer.cornerRadius = Constants.Cart.radius
         clipsToBounds = true
-        
+
         currencyTitleLabel.text = currency.title
         currencyAbbreviationLabel.text = currency.name
-        
+
         addSubviews()
         setCurrencyImage(from: currency.image)
     }

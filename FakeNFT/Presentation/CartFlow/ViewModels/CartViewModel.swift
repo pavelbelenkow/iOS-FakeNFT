@@ -8,16 +8,16 @@ import Foundation
 Содержит свойства и методы для получения списка ``NFT``, удаления ``NFT``, очистки корзины и т.д.
 */
 protocol CartViewModelProtocol {
-    
+
     /// Вычисляемое свойство с актуальными ``NFT`` в заказе
     var listNfts: [NFT] { get }
-    
+
     /**
      Привязывает замыкание к изменению списка ``NFT`` в корзине
      - Parameter completion: Замыкание, которое вызывается при изменении списка ``NFT`` в корзине
      */
     func bindNfts(_ completion: @escaping ([NFT]) -> Void)
-    
+
     /**
      Получает заказ
      - Parameters:
@@ -26,13 +26,13 @@ protocol CartViewModelProtocol {
             - Если запрос завершился неудачно, возвращает ошибку
      */
     func getOrder(_ completion: @escaping (Error) -> Void)
-    
+
     /**
      Получает общую стоимость ``NFT`` в корзине
      - Returns: Общая стоимость ``NFT`` в корзине
      */
     func getNftsTotalValue() -> Float
-    
+
     /**
      Удаляет ``NFT`` из корзины
      - Parameters:
@@ -42,10 +42,10 @@ protocol CartViewModelProtocol {
             - Если удаление завершилось неудачно, возвращает ошибку
      */
     func removeNft(by id: String, _ completion: @escaping (Error?) -> Void)
-    
+
     /// Очищает корзину c заказом
     func clearCart()
-    
+
     /**
      Сортирует ``NFT`` в корзине
      - Parameter option: Тип ``SortOption`` сортировки
@@ -61,20 +61,20 @@ protocol CartViewModelProtocol {
 Cодержит методы для работы с корзиной, такие как получение заказа, удаление ``NFT`` из корзины, очистка корзины и т.д.
 */
 final class CartViewModel {
-    
+
     // MARK: - Properties
-    
+
     /// Наблюдаемое свойство списка ``NFT`` в корзине
     @Observable var nfts: [NFT]
-    
+
     /// Сетевой сервис корзины
     private let cartService: CartServiceProtocol
-    
+
     /// Менеджер хранения ``SortOption`` и ``SortDirection`` сортировки
     private let sortStorageManager: SortStorageManager
-    
+
     // MARK: - Initializers
-    
+
     /**
      Создает новый объект ``CartViewModel`` с указанным сервисом корзины
      - Parameter cartService: Сетевой сервис корзины (необязательный параметр, по умолчанию - ``CartService``)
@@ -89,7 +89,7 @@ final class CartViewModel {
 // MARK: - Private methods
 
 private extension CartViewModel {
-    
+
     /**
      Сортирует ``NFT`` в соответствии с текущим типом и направлением сортировки
      
@@ -100,7 +100,7 @@ private extension CartViewModel {
     func sortNfts(_ nfts: [NFT]) -> [NFT] {
         let sortOption = sortStorageManager.sortOption
         let sortDirection = sortStorageManager.sortDirection
-        
+
         return nfts.sorted(by: sortOption.compareFunction(sortDirection: sortDirection))
     }
 }
@@ -108,22 +108,22 @@ private extension CartViewModel {
 // MARK: - Methods
 
 extension CartViewModel: CartViewModelProtocol {
-    
+
     var listNfts: [NFT] { nfts }
-    
+
     func bindNfts(_ completion: @escaping ([NFT]) -> Void) {
         $nfts.bind(action: completion)
     }
-    
+
     func getOrder(_ completion: @escaping (Error) -> Void) {
         UIBlockingProgressHUD.show()
-        
+
         cartService.fetchOrder { [weak self] result in
             guard let self else { return }
-            
+
             DispatchQueue.main.async {
                 UIBlockingProgressHUD.dismiss()
-                
+
                 switch result {
                 case .success(let nfts):
                     let sortedNfts = self.sortNfts(nfts)
@@ -134,18 +134,18 @@ extension CartViewModel: CartViewModelProtocol {
             }
         }
     }
-    
+
     func getNftsTotalValue() -> Float {
         var totalValue: Float = 0
-        
+
         nfts.forEach { nft in
             let price = nft.price
             totalValue += price
         }
-        
+
         return totalValue
     }
-    
+
     func removeNft(by id: String, _ completion: @escaping (Error?) -> Void) {
         if let index = nfts.firstIndex(where: { $0.id == id }) {
             nfts.remove(at: index)
@@ -155,19 +155,19 @@ extension CartViewModel: CartViewModelProtocol {
             }
         }
     }
-    
+
     func clearCart() {
         nfts.removeAll()
         cartService.putOrder(with: []) { _ in }
     }
-    
+
     func sortBy(option: SortOption) {
         if sortStorageManager.sortOption == option {
             sortStorageManager.sortDirection = (sortStorageManager.sortDirection == .ascending) ? .descending : .ascending
         } else {
             sortStorageManager.sortDirection = .ascending
         }
-        
+
         nfts.sort(by: option.compareFunction(sortDirection: sortStorageManager.sortDirection))
         sortStorageManager.sortOption = option
     }

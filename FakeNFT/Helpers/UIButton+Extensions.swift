@@ -1,12 +1,12 @@
 import UIKit
 
 extension UIButton {
-    
+
     /// Тип кнопки
     enum NFTButton {
         case payment
         case other
-        
+
         /// Шрифт кнопки в зависимости от типа
         var font: UIFont {
             switch self {
@@ -16,7 +16,7 @@ extension UIButton {
                 return UIFont.NFTFont.regular17
             }
         }
-        
+
         /// Радиус закругления кнопки в зависимости от типа
         var cornerRadius: CGFloat {
             switch self {
@@ -27,7 +27,7 @@ extension UIButton {
             }
         }
     }
-    
+
     /**
      Конфигурирует кнопку
      - Parameters:
@@ -43,14 +43,14 @@ extension UIButton {
         height: CGFloat? = 44
     ) {
         backgroundColor = UIColor.NFTColor.black
-        
+
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
         titleLabel?.font = button.font
-        
+
         layer.cornerRadius = button.cornerRadius
         layer.masksToBounds = true
-        
+
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height ?? 44).isActive = true
     }

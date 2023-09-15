@@ -6,19 +6,19 @@ import Foundation
  Содержит свойства для хранения информации об NFT
  */
 struct NFT {
-    
+
     /// Название NFT
     let name: String
-    
+
     /// Ссылка на изображение NFT
     let image: String
-    
+
     /// Рейтинг NFT (от 1 до 5)
     let rating: Int
-    
+
     /// Цена NFT (в ETH - эфире)
     let price: Float
-    
+
     /// Идентификатор NFT
     let id: String
 }

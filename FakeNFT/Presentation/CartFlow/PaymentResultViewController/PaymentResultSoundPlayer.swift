@@ -6,10 +6,10 @@ import AVFoundation
  - Содержит метод для проигрывания звукового эффекта из переданного файла
  */
 struct PaymentResultSoundPlayer {
-    
+
     /// Экземпляр класса `AVAudioPlayer`, отвечающий за воспроизведение звука
     private var player: AVAudioPlayer?
-    
+
     /**
      Создает новый объект ``PaymentResultSoundPlayer`` с указанным названием файла в проекте
      - Warning: Если файл не может быть загружен, объект не будет создан
@@ -20,14 +20,14 @@ struct PaymentResultSoundPlayer {
             print("Failed to load sound file")
             return
         }
-        
+
         do {
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
         } catch let error {
             print("Failed to create audio player with error: \(error.localizedDescription)")
         }
     }
-    
+
     /// Запускает воспроизведение звукового эффекта
     func play() {
         player?.play()

@@ -7,7 +7,7 @@ enum SortOption: String {
     case price
     case rating
     case name
-    
+
     /**
      Сравнительная функция для сортировки
      - Parameter sortDirection: Направление сортировки

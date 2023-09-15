@@ -6,7 +6,7 @@ import Foundation
 Содержит методы для обработки различных ошибок сетевого клиента и возвращает соответствующие сообщения об ошибках с заголовком и сообщением
 */
 struct NetworkErrorHandler {
-    
+
     /**
      Обрабатывает ошибку сетевого клиента и возвращает сообщение об ошибке с заголовком и сообщением
      
@@ -16,12 +16,9 @@ struct NetworkErrorHandler {
     static func handleError(_ error: Error) -> (title: String, message: String) {
         var title = ""
         var message = ""
-        
+
         switch error {
-        case NetworkClientError.httpStatusCode(429):
-            title = Constants.ErrorMessage.serverErrorTitle
-            message = Constants.ErrorMessage.serverErrorMessage
-        case NetworkClientError.httpStatusCode(500):
+        case NetworkClientError.httpStatusCode(429), NetworkClientError.httpStatusCode(500):
             title = Constants.ErrorMessage.serverErrorTitle
             message = Constants.ErrorMessage.serverErrorMessage
         case NetworkClientError.urlSessionError:
@@ -31,7 +28,7 @@ struct NetworkErrorHandler {
             title = Constants.ErrorMessage.unknownErrorTitle
             message = Constants.ErrorMessage.unknownErrorMessage
         }
-        
+
         return (title: title, message: message)
     }
 }

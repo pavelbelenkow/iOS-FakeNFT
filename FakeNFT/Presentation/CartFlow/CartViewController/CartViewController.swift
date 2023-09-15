@@ -8,9 +8,9 @@ import UIKit
 Cодержит ``CartTableView`` с ``NFT``, кнопку сортировки, информацию о количестве ``NFT`` и их общей стоимости, а также кнопку для перехода на экран оплаты заказа и т.д.
 */
 final class CartViewController: UIViewController {
-    
+
     // MARK: - Properties
-    
+
     /// Кнопка сортировки ``NFT``
     private lazy var sortingButton: UIButton = {
         let button = UIButton()
@@ -23,7 +23,7 @@ final class CartViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     /// Элемент управления для обновления заказа с ``NFT``
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -34,14 +34,14 @@ final class CartViewController: UIViewController {
         )
         return control
     }()
-    
+
     /// Таблица со списком ``NFT`` в заказе
     private lazy var cartTableView: UITableView = {
         let view = CartTableView(viewModel: viewModel, viewController: self)
         view.refreshControl = refreshControl
         return view
     }()
-    
+
     /// Надпись для пустой корзины
     private lazy var emptyCartLabel: UILabel = {
         let label = UILabel()
@@ -52,7 +52,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     /// Контейнер для информации о заказе и кнопки оплаты
     private lazy var paymentContainerView: UIView = {
         let view = UIView()
@@ -62,7 +62,7 @@ final class CartViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     /// Вертикальный стек внутри контейнера для размещения информации о заказе
     private lazy var detailStackView: UIStackView = {
         let view = UIStackView()
@@ -72,7 +72,7 @@ final class CartViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     /// Надпись о количестве ``NFT`` в корзине
     private lazy var nftAmountLabel: UILabel = {
         let label = UILabel()
@@ -82,7 +82,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     /// Надпись об общей стоимости ``NFT`` в корзине
     private lazy var totalValueLabel: UILabel = {
         let label = UILabel()
@@ -92,7 +92,7 @@ final class CartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     /// Кнопка для перехода на ``PaymentViewController`` для оплаты заказа
     private lazy var paymentButton: UIButton = {
         let button = UIButton(type: .system)
@@ -104,12 +104,12 @@ final class CartViewController: UIViewController {
         )
         return button
     }()
-    
+
     /// Вью-модель корзины
     private let viewModel: CartViewModelProtocol
-    
+
     // MARK: - Initializers
-    
+
     /**
      Создает новый объект ``CartViewController`` с указанной вью-моделью корзины
      - Parameter viewModel: ``CartViewModelProtocol`` корзины
@@ -118,13 +118,13 @@ final class CartViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -132,7 +132,7 @@ final class CartViewController: UIViewController {
         bindViewModel()
         updateUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateCart()
@@ -142,7 +142,7 @@ final class CartViewController: UIViewController {
 // MARK: - Add Subviews
 
 private extension CartViewController {
-    
+
     func addSubviews() {
         addSortingButton()
         addCartTableView()
@@ -151,33 +151,33 @@ private extension CartViewController {
         addDetailStackView()
         addPaymentButton()
     }
-    
+
     func addSortingButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
     }
-    
+
     func addCartTableView() {
         view.addSubview(cartTableView)
-        
+
         NSLayoutConstraint.activate([
             cartTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             cartTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             cartTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-    
+
     func addEmptyCartLabel() {
         view.addSubview(emptyCartLabel)
-        
+
         NSLayoutConstraint.activate([
             emptyCartLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             emptyCartLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
-    
+
     func addPaymentContainerView() {
         view.addSubview(paymentContainerView)
-        
+
         NSLayoutConstraint.activate([
             paymentContainerView.heightAnchor.constraint(equalToConstant: 76),
             paymentContainerView.topAnchor.constraint(equalTo: cartTableView.bottomAnchor),
@@ -186,21 +186,21 @@ private extension CartViewController {
             paymentContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-    
+
     func addDetailStackView() {
         paymentContainerView.addSubview(detailStackView)
         detailStackView.addArrangedSubview(nftAmountLabel)
         detailStackView.addArrangedSubview(totalValueLabel)
-        
+
         NSLayoutConstraint.activate([
             detailStackView.centerYAnchor.constraint(equalTo: paymentContainerView.centerYAnchor),
             detailStackView.leadingAnchor.constraint(equalTo: paymentContainerView.leadingAnchor, constant: 16)
         ])
     }
-    
+
     func addPaymentButton() {
         paymentContainerView.addSubview(paymentButton)
-        
+
         NSLayoutConstraint.activate([
             paymentButton.centerYAnchor.constraint(equalTo: paymentContainerView.centerYAnchor),
             paymentButton.leadingAnchor.constraint(equalTo: detailStackView.trailingAnchor, constant: 24),
@@ -212,40 +212,40 @@ private extension CartViewController {
 // MARK: - Private methods
 
 private extension CartViewController {
-    
+
     /**
      Отображает диалоговое окно с сообщением об ошибке при получении заказа с ``NFT``, кнопками "Повторить" и "Отменить"
      - Parameter error: Ошибка, которая будет отображена в диалоговом окне
      */
     func showErrorAlert(_ error: Error) {
         let errorData = NetworkErrorHandler.handleError(error)
-        
+
         showAlert(
             title: errorData.title,
             message: errorData.message
         ) { [weak self] in
             UIBlockingProgressHUD.show()
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
                 self?.updateCart()
                 UIBlockingProgressHUD.dismiss()
             }
         }
     }
-    
+
     /// Обновляет данные корзины, получая актуальный заказ с помощью ``CartViewModel/getOrder(_:)``
     func updateCart() {
         viewModel.getOrder { [weak self] error in
             self?.showErrorAlert(error)
         }
     }
-    
+
     /// Обновляет надпись с количеством ``NFT`` в корзине
     func updateNftAmountLabel() {
         let nftCount = viewModel.listNfts.count
         nftAmountLabel.text = "\(nftCount) " + Constants.Cart.nftText
     }
-    
+
     /**
      Форматирует значение общей стоимости ``NFT`` в корзине
      - Parameter value: Общая стоимость ``NFT`` в корзине
@@ -257,48 +257,48 @@ private extension CartViewController {
             .string(from: value as NSNumber) ?? ""
         return valueString + " " + Constants.Cart.currency
     }
-    
+
     /// Обновляет надпись с общей стоимостью ``NFT`` в корзине
     func updateTotalValueLabel() {
         let totalValue = viewModel.getNftsTotalValue()
         let formattedTotalValue = formatTotalValue(totalValue)
         totalValueLabel.text = formattedTotalValue
     }
-    
+
     /// Обновляет интерфейс в зависимости от того,  пустой массив ``CartViewModel/listNfts`` или нет
     func updateUI() {
         let isCartEmpty = viewModel.listNfts.isEmpty
-        
+
         emptyCartLabel.isHidden = !isCartEmpty
         sortingButton.isHidden = isCartEmpty
         cartTableView.isHidden = isCartEmpty
         paymentContainerView.isHidden = isCartEmpty
-        
+
         updateNftAmountLabel()
         updateTotalValueLabel()
     }
-    
+
     /// Обновляет интерфейс после привязки списка ``NFT`` в корзине к вью-модели
     func updateUIAfterBindingNfts() {
         UIBlockingProgressHUD.dismiss()
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.cartTableView.reloadData()
             self.updateUI()
         }
     }
-    
+
     /// Связывает ``CartViewModel`` с ``CartViewController``, обновляя ``CartTableView`` и интерфейс ``CartViewController``
     func bindViewModel() {
         UIBlockingProgressHUD.show()
-        
+
         viewModel.bindNfts { [weak self] _ in
             guard let self else { return }
             self.updateUIAfterBindingNfts()
         }
     }
-    
+
     /// Скроллит ``CartTableView`` в начало списка ``NFT`` в корзине, если она не находится там уже
     func scrollToTopIfNeeded() {
         let topIndexPath = IndexPath(row: 0, section: 0)
@@ -316,7 +316,7 @@ private extension CartViewController {
         let rateSortTitle = Constants.Cart.byRating
         let nameSortTitle = Constants.Cart.byTitle
         let closeSheetTitle = Constants.Cart.closeText
-        
+
         let priceSortAction = UIAlertAction(
             title: priceSortTitle,
             style: .default
@@ -342,7 +342,7 @@ private extension CartViewController {
             title: closeSheetTitle,
             style: .cancel
         )
-        
+
         let actionSheet = UIAlertController(
             title: sheetTitle,
             message: nil,
@@ -352,13 +352,13 @@ private extension CartViewController {
             priceSortAction, rateSortAction,
             nameSortAction, closeSheetAction
         ]
-        
+
         actions.forEach { action in
             actionSheet.addAction(action)
         }
         present(actionSheet, animated: true)
     }
-    
+
     /**
      Обрабатывает результат оплаты заказа
      
@@ -379,7 +379,7 @@ private extension CartViewController {
             }
         }
     }
-    
+
     /// Обновляет данные корзины при смахивании вниз в начале таблицы
     @objc func refreshOrder() {
         refreshControl.beginRefreshing()
@@ -389,7 +389,7 @@ private extension CartViewController {
             self.updateCart()
         }
     }
-    
+
     /**
      Обрабатывает нажатие на кнопку сортировки в корзине
      
@@ -398,15 +398,15 @@ private extension CartViewController {
     @objc func sortingButtonTapped() {
         presentSheetOfSortTypes()
     }
-    
+
     /// Обрабатывает нажатие на кнопку перехода на ``PaymentViewController``
     @objc func paymentButtonTapped() {
         let paymentViewModel = OrderPaymentViewModel()
         let paymentViewController = PaymentViewController(viewModel: paymentViewModel)
-        
+
         paymentViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(paymentViewController, animated: true)
-        
+
         handlePaymentResult(viewModel: paymentViewModel)
     }
 }
@@ -414,7 +414,7 @@ private extension CartViewController {
 // MARK: - Delegate methods
 
 extension CartViewController: CartCellDelegate {
-    
+
     func cartCellDidTapRemoveButton(by nft: NFT) {
         let viewController = RemoveNftViewController(viewModel: viewModel, nft: nft)
         viewController.modalPresentationStyle = .overFullScreen
