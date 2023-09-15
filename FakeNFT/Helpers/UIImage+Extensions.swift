@@ -24,4 +24,9 @@ extension UIImage {
         static let fourStars = UIImage(named: "FourStars") ?? UIImage(systemName: "star")!
         static let fiveStars = UIImage(named: "FiveStars") ?? UIImage(systemName: "star")!
     }
+    
+    enum NFTImage {
+        static let successPaymentResult = UIImage(named: "SuccessPaymentResult") ?? UIImage(systemName: "checkmark.circle")!
+        static let failurePaymentResult = UIImage(named: "FailurePaymentResult") ?? UIImage(systemName: "xmark.circle")!
+    }
 }
