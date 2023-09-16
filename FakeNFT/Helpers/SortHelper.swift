@@ -13,7 +13,7 @@ enum SortOption: String {
      - Parameter sortDirection: Направление сортировки
      - Returns: Функция, которая принимает два ``NFT`` и возвращает **true**, если первый элемент должен быть раньше в отсортированном массиве
      */
-    func compareFunction(sortDirection: SortDirection) -> (NFT, NFT) -> Bool {
+    func compareFunction(sortDirection: SortDirection) -> (MyNFT, MyNFT) -> Bool {
         switch self {
         case .price:
             return { nft1, nft2 in

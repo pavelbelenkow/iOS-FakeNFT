@@ -10,13 +10,13 @@ import Foundation
 protocol CartViewModelProtocol {
 
     /// Вычисляемое свойство с актуальными ``NFT`` в заказе
-    var listNfts: [NFT] { get }
+    var listNfts: [MyNFT] { get }
 
     /**
      Привязывает замыкание к изменению списка ``NFT`` в корзине
      - Parameter completion: Замыкание, которое вызывается при изменении списка ``NFT`` в корзине
      */
-    func bindNfts(_ completion: @escaping ([NFT]) -> Void)
+    func bindNfts(_ completion: @escaping ([MyNFT]) -> Void)
 
     /**
      Получает заказ
@@ -65,7 +65,7 @@ final class CartViewModel {
     // MARK: - Properties
 
     /// Наблюдаемое свойство списка ``NFT`` в корзине
-    @Observable var nfts: [NFT]
+    @Observable var nfts: [MyNFT]
 
     /// Сетевой сервис корзины
     private let cartService: CartServiceProtocol
@@ -97,7 +97,7 @@ private extension CartViewModel {
      - Parameter nfts: Список ``NFT``, который нужно отсортировать
      - Returns: Отсортированный список ``NFT``
      */
-    func sortNfts(_ nfts: [NFT]) -> [NFT] {
+    func sortNfts(_ nfts: [MyNFT]) -> [MyNFT] {
         let sortOption = sortStorageManager.sortOption
         let sortDirection = sortStorageManager.sortDirection
 
@@ -109,9 +109,9 @@ private extension CartViewModel {
 
 extension CartViewModel: CartViewModelProtocol {
 
-    var listNfts: [NFT] { nfts }
+    var listNfts: [MyNFT] { nfts }
 
-    func bindNfts(_ completion: @escaping ([NFT]) -> Void) {
+    func bindNfts(_ completion: @escaping ([MyNFT]) -> Void) {
         $nfts.bind(action: completion)
     }
 

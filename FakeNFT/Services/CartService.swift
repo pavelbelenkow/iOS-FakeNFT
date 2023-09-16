@@ -12,7 +12,7 @@ protocol CartServiceProtocol {
      Получает список ``NFT``, необходимых для оформления заказа
      - Parameter completion: Блок кода, который будет выполнен после получения списка ``NFT``
      */
-    func fetchOrder(_ completion: @escaping (Result<[NFT], Error>) -> Void)
+    func fetchOrder(_ completion: @escaping (Result<[MyNFT], Error>) -> Void)
 
     /**
      Отправляет заказ на сервер
@@ -38,10 +38,10 @@ final class CartService {
     private let decoder = JSONDecoder()
 
     /// Массив ``NFT``, полученных в результате запроса
-    private var nfts: [NFT] = []
+    private var nfts: [MyNFT] = []
 
     /// Кэш для хранения полученных ``NFT``
-    private var nftsCache: [String: NFT] = [:]
+    private var nftsCache: [String: MyNFT] = [:]
 
     /// Сетевой клиент для отправки сетевых запросов
     private let networkClient: NetworkClient
@@ -66,8 +66,8 @@ private extension CartService {
      - Parameter model: Сетевая модель
      - Returns: Модель ``NFT`` приложения
      */
-    func convert(from model: NFTNetworkModel) -> NFT {
-        NFT(
+    func convert(from model: NFTNetworkModel) -> MyNFT {
+        MyNFT(
             name: model.name,
             image: model.images[0],
             rating: model.rating,
@@ -82,7 +82,7 @@ private extension CartService {
         - ids: Массив строк, содержащий ``NFT/id``, которые необходимо получить
         - completion: Блок кода, который будет выполнен после получения массива ``NFT``
      */
-    func fetchNfts(by ids: [String], completion: @escaping (Result<[NFT], Error>) -> Void) {
+    func fetchNfts(by ids: [String], completion: @escaping (Result<[MyNFT], Error>) -> Void) {
         nfts.removeAll()
 
         let dispatchGroup = DispatchGroup()
@@ -130,7 +130,7 @@ private extension CartService {
 
 extension CartService: CartServiceProtocol {
 
-    func fetchOrder(_ completion: @escaping (Result<[NFT], Error>) -> Void) {
+    func fetchOrder(_ completion: @escaping (Result<[MyNFT], Error>) -> Void) {
         let request = GetOrderRequest()
 
         networkClient.send(request: request) { [weak self] result in

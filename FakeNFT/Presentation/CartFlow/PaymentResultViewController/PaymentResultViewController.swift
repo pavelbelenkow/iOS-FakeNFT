@@ -5,7 +5,8 @@ import UIKit
 /**
  ``PaymentResultViewController`` - это контроллер, который отображает результат оплаты заказа и позволяет пользователю вернуться в корзину или перейти в каталог
  
- В зависимости от результата оплаты, на экране отображается изображение, лейбл и кнопка для перехода к каталогу или повторной оплаты. Также класс обрабатывает нажатие на кнопку и передает результат оплаты в ``OrderPaymentViewModel``.
+ В зависимости от результата оплаты, на экране отображается изображение, лейбл и кнопка для перехода к каталогу или повторной оплаты.
+ Также класс обрабатывает нажатие на кнопку и передает результат оплаты в ``OrderPaymentViewModel``.
  */
 final class PaymentResultViewController: UIViewController {
 
@@ -211,7 +212,8 @@ private extension PaymentResultViewController {
     /**
      Обрабатывает нажатие на кнопку возврата к каталогу или повторной оплате через корзину
      - Вызывает метод ``OrderPaymentViewModelProtocol/handlePaymentResult(_:)`` и передает туда результат оплаты
-        - В зависимости от результата оплаты, метод ``OrderPaymentViewModelProtocol/handlePaymentResult(_:)`` вызовет обработчик ``OrderPaymentViewModel/paymentResultHandler`` и передаст туда результат оплаты
+        - В зависимости от результата оплаты, метод ``OrderPaymentViewModelProtocol/handlePaymentResult(_:)``
+     вызовет обработчик ``OrderPaymentViewModel/paymentResultHandler`` и передаст туда результат оплаты
      - Скрывает экран ``PaymentResultViewController``
      */
     @objc func resultButtonTapped() {

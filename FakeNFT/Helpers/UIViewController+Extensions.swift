@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 //  UIViewController+Extensions.swift
 //  FakeNFT
@@ -101,11 +100,8 @@ extension UIViewController {
         } else {
             return #selector(didBackButtonToScreenWithNotHiddenTabBar)
         }
-=======
-import UIKit
-
-extension UIViewController {
-
+    }
+    
     /**
      Отображает предупреждающее диалоговое окно
      - Parameters:
@@ -141,6 +137,5 @@ extension UIViewController {
         retryAction == nil ? () : alertController.addAction(cancelAlertAction)
         alertController.addAction(retryAlertAction)
         present(alertController, animated: true, completion: nil)
->>>>>>> epic_cart
     }
 }

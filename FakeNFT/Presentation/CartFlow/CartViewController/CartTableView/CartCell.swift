@@ -9,7 +9,7 @@ protocol CartCellDelegate: AnyObject {
      Метод, который обрабатывает нажатие на кнопку удаления ``NFT`` из корзины
      - Parameter nft: ``NFT``, который необходимо удалить
      */
-    func cartCellDidTapRemoveButton(by nft: NFT)
+    func cartCellDidTapRemoveButton(by nft: MyNFT)
 }
 
 // MARK: - CartCell class
@@ -95,7 +95,7 @@ final class CartCell: UITableViewCell {
     }()
 
     /// ``NFT``, отображаемый в ячейке
-    var nft: NFT?
+    var nft: MyNFT?
 
     /// ``delegate`` ячейки корзины
     weak var delegate: CartCellDelegate?
@@ -252,7 +252,7 @@ extension CartCell {
      Настраивает отображение ячейки корзины с информацией о ``NFT``
      - Parameter nft: ``NFT``, для которого необходимо настроить отображение ячейки корзины
      */
-    func configure(from nft: NFT) {
+    func configure(from nft: MyNFT) {
         backgroundColor = .clear
         addSubviews()
 

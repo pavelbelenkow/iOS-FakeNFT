@@ -33,6 +33,9 @@ extension UIImage {
         static let onboardingOne = UIImage(named: "Onboarding_1") ?? UIImage(systemName: "photo")!
         static let onboardingTwo = UIImage(named: "Onboarding_2") ?? UIImage(systemName: "photo")!
         static let onboardingThree = UIImage(named: "Onboarding_3") ?? UIImage(systemName: "photo")!
+
+        static let successPaymentResult = UIImage(named: "SuccessPaymentResult") ?? UIImage(systemName: "checkmark.circle")!
+        static let failurePaymentResult = UIImage(named: "FailurePaymentResult") ?? UIImage(systemName: "xmark.circle")!
     }
     
     class func colorForTabBar(color: UIColor) -> UIImage {
@@ -50,10 +53,5 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return image
-    }
-    
-    enum NFTImage {
-        static let successPaymentResult = UIImage(named: "SuccessPaymentResult") ?? UIImage(systemName: "checkmark.circle")!
-        static let failurePaymentResult = UIImage(named: "FailurePaymentResult") ?? UIImage(systemName: "xmark.circle")!
     }
 }

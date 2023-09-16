@@ -415,7 +415,7 @@ private extension CartViewController {
 
 extension CartViewController: CartCellDelegate {
 
-    func cartCellDidTapRemoveButton(by nft: NFT) {
+    func cartCellDidTapRemoveButton(by nft: MyNFT) {
         let viewController = RemoveNftViewController(viewModel: viewModel, nft: nft)
         viewController.modalPresentationStyle = .overFullScreen
         navigationController?.present(viewController, animated: true)

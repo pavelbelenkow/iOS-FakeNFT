@@ -101,7 +101,7 @@ final class RemoveNftViewController: UIViewController {
     private let viewModel: CartViewModelProtocol
 
     /// Удаляемый ``NFT``
-    private var nft: NFT?
+    private var nft: MyNFT?
 
     // MARK: - Initializers
 
@@ -111,7 +111,7 @@ final class RemoveNftViewController: UIViewController {
         - viewModel: ``CartViewModelProtocol`` корзины
         - nft: ``NFT``, который нужно удалить
      */
-    init(viewModel: CartViewModelProtocol, nft: NFT) {
+    init(viewModel: CartViewModelProtocol, nft: MyNFT) {
         self.viewModel = viewModel
         self.nft = nft
         super.init(nibName: nil, bundle: nil)

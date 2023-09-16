@@ -5,7 +5,7 @@ import Foundation
  
  Содержит свойства для хранения информации об NFT
  */
-struct NFT {
+struct MyNFT {
 
     /// Название NFT
     let name: String
