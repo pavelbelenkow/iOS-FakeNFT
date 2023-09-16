@@ -16,6 +16,8 @@ extension UIImage {
         static let statistics = UIImage(named: "Statistics") ?? UIImage(systemName: "flag.2.crossed.fill")!
         static let xmark = UIImage(named: "Xmark") ?? UIImage(systemName: "xmark")!
         
+        static let starActive = UIImage(named: "StarActive") ?? UIImage(systemName: "star")!
+        static let starNoActive = UIImage(named: "StarNoActive") ?? UIImage(systemName: "star")!
         static let zeroStars = UIImage(named: "ZeroStars") ?? UIImage(systemName: "star")!
         static let oneStar = UIImage(named: "OneStar") ?? UIImage(systemName: "star")!
         static let twoStars = UIImage(named: "TwoStars") ?? UIImage(systemName: "star")!
@@ -48,5 +50,10 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return image
+    }
+    
+    enum NFTImage {
+        static let successPaymentResult = UIImage(named: "SuccessPaymentResult") ?? UIImage(systemName: "checkmark.circle")!
+        static let failurePaymentResult = UIImage(named: "FailurePaymentResult") ?? UIImage(systemName: "xmark.circle")!
     }
 }
