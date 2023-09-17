@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 //  Profile.swift
 //  FakeNFT
@@ -21,5 +22,16 @@ struct Profile: Codable {
     /// Список лайкнутых NFT профиля
     let likes: [String]
     /// Id профиля
+=======
+import Foundation
+
+struct Profile: Codable {
+    let name: String
+    let avatar: String
+    let description: String
+    let website: String
+    let nfts: [String]
+    let likes: [String]
+>>>>>>> epic_profile
     let id: String
 }
