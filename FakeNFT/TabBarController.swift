@@ -1,21 +1,23 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.unselectedItemTintColor = UIColor.NFTColor.black
-        
+
+        let cartViewModel = CartViewModel()
+
         let profileViewController = ProfileViewController()
         let catalogueViewController = CatalogueViewController()
-        let cartViewController = CartViewController()
-        let statisticsViewController = StatisticsViewController()
-        
+        let cartViewController = CartViewController(viewModel: cartViewModel)
+        let statisticsViewController = RatingScreenViewController()
+
         let profileNavigationController = UINavigationController(rootViewController: profileViewController)
         let catalogueNavigationController = UINavigationController(rootViewController: catalogueViewController)
         let cartNavigationController = UINavigationController(rootViewController: cartViewController)
         let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        
+
         profileNavigationController.tabBarItem = UITabBarItem(
             title: "Профиль",
             image: UIImage.NFTIcon.profile,
@@ -36,10 +38,14 @@ final class TabBarController: UITabBarController {
             image: UIImage.NFTIcon.statistics,
             tag: 3
         )
-        
+
         self.viewControllers = [
             profileNavigationController, catalogueNavigationController,
             cartNavigationController, statisticsNavigationController
         ]
+
+        let backItem = UIBarButtonItem()
+        backItem.title = String()
+        catalogueViewController.navigationItem.backBarButtonItem = backItem
     }
 }
