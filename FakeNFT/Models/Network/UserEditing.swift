@@ -5,5 +5,4 @@ struct UserEditing: Codable {
     let description: String
     let website: String
     let avatar: String
-    
 }
