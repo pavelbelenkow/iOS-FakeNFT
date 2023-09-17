@@ -59,6 +59,7 @@ enum Constants {
             self.cellSpacing = cellSpacing
             self.paddingWidth = leftInset + rightInset + CGFloat(cellCount - 1) * cellSpacing
         }
+        
     }
 
     struct ErrorMessage {
