@@ -12,3 +12,9 @@ extension String {
         return Int(self) ?? .zero
     }
 }
+
+extension String {
+    var toURL: URL {
+        URL(string: self) ?? URL(fileURLWithPath: "")
+    }
+}
