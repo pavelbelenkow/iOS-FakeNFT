@@ -1,4 +1,5 @@
 import UIKit
+import WebKit
 
 final class ProfileViewController: UIViewController {
 
@@ -100,6 +101,11 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        profileViewModel.getUserInfo()
+    }
+
     // MARK: - Private functions
     private func bind() {
         profileViewModel.$user.bind { [weak self] user in
@@ -120,15 +126,18 @@ final class ProfileViewController: UIViewController {
         showEditProfile()
     }
 
+    // MARK: - Transtitions to other VC
     private func showEditProfile() {
-        let viewController = EditProfileViewController()
+        let viewModel = EditProfileViewModel()
+        let viewController = EditProfileViewController(viewModel: viewModel)
         viewController.profileViewModel = profileViewModel
         let nvc = UINavigationController(rootViewController: viewController)
         present(nvc, animated: true)
     }
 
     private func showMyNFTs() {
-        let viewController = NFTCollectionViewController()
+        let viewModel = NFTCollectionViewModel()
+        let viewController = NFTCollectionViewController(viewModel: viewModel)
         viewController.hidesBottomBarWhenPushed = true
         guard let user = profileViewModel.user else { return }
         idCollectionNFT = user.nfts.compactMap {Int($0)}
@@ -138,6 +147,23 @@ final class ProfileViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func showFavorites() {
+        let viewModel = FavoritesViewModel()
+        let viewController = FavoritesViewController(viewModel: viewModel)
+        viewController.hidesBottomBarWhenPushed = true
+        guard let user = profileViewModel.user else { return }
+        idLikesNFT = user.likes.compactMap {Int($0)}
+        viewController.idLikesCollection = idLikesNFT
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func showWebView() {
+        guard let websiteURL = URL(string: websiteLabel.text ?? "") else { return }
+        let webViewController = WebViewController(url: websiteURL)
+        present(webViewController, animated: true)
+    }
+
+    // MARK: - Setup view
     private func setupView() {
         setupNavBar()
         view.addSubview(avatarAndNameStackView)
@@ -218,7 +244,9 @@ extension ProfileViewController: UITableViewDelegate {
         case 0:
             showMyNFTs()
         case 1:
-            break
+            showFavorites()
+        case 2:
+            showWebView()
         default:
             break
         }

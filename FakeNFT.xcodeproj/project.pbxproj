@@ -26,6 +26,15 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		586AC6D32AAE2674001284E4 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6D22AAE2674001284E4 /* FavoritesViewController.swift */; };
+		586AC6D52AAE2688001284E4 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6D42AAE2688001284E4 /* FavoritesViewModel.swift */; };
+		586AC6D72AAE2691001284E4 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6D62AAE2691001284E4 /* FavoritesCell.swift */; };
+		586AC6D92AAE29C2001284E4 /* NavBarBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6D82AAE29C1001284E4 /* NavBarBackButton.swift */; };
+		586AC6E22AB198FA001284E4 /* LikesEditedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E12AB198FA001284E4 /* LikesEditedRequest.swift */; };
+		586AC6E42AB199BD001284E4 /* LikesEdited.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E32AB199BD001284E4 /* LikesEdited.swift */; };
+		586AC6E62AB19A59001284E4 /* LikesEditedNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E52AB19A59001284E4 /* LikesEditedNetworkService.swift */; };
+		586AC6EA2AB32B92001284E4 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6E92AB32B92001284E4 /* WebViewController.swift */; };
+		586AC6EC2AB3388C001284E4 /* CustomLikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */; };
 		5897B1EA2A9CDFF2006ADC33 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */; };
 		5897B1EC2A9E1F35006ADC33 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */; };
 		5897B1EE2A9E292C006ADC33 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5897B1ED2A9E292C006ADC33 /* Profile.swift */; };
@@ -100,6 +109,15 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		586AC6D22AAE2674001284E4 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		586AC6D42AAE2688001284E4 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		586AC6D62AAE2691001284E4 /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
+		586AC6D82AAE29C1001284E4 /* NavBarBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarBackButton.swift; sourceTree = "<group>"; };
+		586AC6E12AB198FA001284E4 /* LikesEditedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEditedRequest.swift; sourceTree = "<group>"; };
+		586AC6E32AB199BD001284E4 /* LikesEdited.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEdited.swift; sourceTree = "<group>"; };
+		586AC6E52AB19A59001284E4 /* LikesEditedNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesEditedNetworkService.swift; sourceTree = "<group>"; };
+		586AC6E92AB32B92001284E4 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLikeButton.swift; sourceTree = "<group>"; };
 		5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
 		5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		5897B1ED2A9E292C006ADC33 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -235,6 +253,7 @@
 				5897B22B2AA0B25E006ADC33 /* UserEditingNetworkService.swift */,
 				5897B2392AA7453E006ADC33 /* NFTNetworkService.swift */,
 				5897B23F2AA87DD6006ADC33 /* UserInfoNetworkService.swift */,
+				586AC6E52AB19A59001284E4 /* LikesEditedNetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -292,6 +311,7 @@
 				5897B2272AA0A6C7006ADC33 /* UserEditing.swift */,
 				5897B2352AA74360006ADC33 /* NFTModel.swift */,
 				5897B23B2AA87CFE006ADC33 /* UserInfo.swift */,
+				586AC6E32AB199BD001284E4 /* LikesEdited.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -304,8 +324,19 @@
 				5897B2292AA0B134006ADC33 /* UserEditingRequest.swift */,
 				5897B2372AA74476006ADC33 /* NFTRequest.swift */,
 				5897B23D2AA87DA9006ADC33 /* UserInfoRequest.swift */,
+				586AC6E12AB198FA001284E4 /* LikesEditedRequest.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		586AC6D12AAE264C001284E4 /* FavoritesNFT */ = {
+			isa = PBXGroup;
+			children = (
+				586AC6D22AAE2674001284E4 /* FavoritesViewController.swift */,
+				586AC6D42AAE2688001284E4 /* FavoritesViewModel.swift */,
+				586AC6D62AAE2691001284E4 /* FavoritesCell.swift */,
+			);
+			path = FavoritesNFT;
 			sourceTree = "<group>";
 		};
 		5897B1F72A9EA9CE006ADC33 /* EditProfile */ = {
@@ -331,6 +362,8 @@
 				5897B1FB2A9EB13F006ADC33 /* EditScreenCustomTextField.swift */,
 				5897B2202AA09469006ADC33 /* EditScreenCustomLabel.swift */,
 				5897B2232AA0985D006ADC33 /* TitleAndTextFieldStackView.swift */,
+				586AC6D82AAE29C1001284E4 /* NavBarBackButton.swift */,
+				586AC6EB2AB3388C001284E4 /* CustomLikeButton.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -341,6 +374,7 @@
 				59CAB7882A9AC16A00C4938D /* ProfileViewController.swift */,
 				5897B1E92A9CDFF2006ADC33 /* ProfileViewCell.swift */,
 				5897B1EB2A9E1F35006ADC33 /* ProfileViewModel.swift */,
+				586AC6E92AB32B92001284E4 /* WebViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -383,6 +417,7 @@
 		59CAB7842A9AC0E900C4938D /* ProfileFlow */ = {
 			isa = PBXGroup;
 			children = (
+				586AC6D12AAE264C001284E4 /* FavoritesNFT */,
 				5897B22E2AA29840006ADC33 /* NFTCollection */,
 				5897B22D2AA2982F006ADC33 /* Profile */,
 				5897B1F72A9EA9CE006ADC33 /* EditProfile */,
@@ -575,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59CAB7912A9AC85800C4938D /* Observable.swift in Sources */,
+				586AC6EA2AB32B92001284E4 /* WebViewController.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				5897B2242AA0985D006ADC33 /* TitleAndTextFieldStackView.swift in Sources */,
@@ -582,6 +618,7 @@
 				3F478ED129DB476500F6D39E /* Fonts.swift in Sources */,
 				5897B22C2AA0B25E006ADC33 /* UserEditingNetworkService.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				586AC6D92AAE29C2001284E4 /* NavBarBackButton.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				5897B1EC2A9E1F35006ADC33 /* ProfileViewModel.swift in Sources */,
 				5897B2362AA74360006ADC33 /* NFTModel.swift in Sources */,
@@ -591,6 +628,9 @@
 				5897B1EA2A9CDFF2006ADC33 /* ProfileViewCell.swift in Sources */,
 				5897B1F02A9E2AAF006ADC33 /* ProfileRequest.swift in Sources */,
 				5897B2342AA298E4006ADC33 /* NFTCollectionCell.swift in Sources */,
+				586AC6D32AAE2674001284E4 /* FavoritesViewController.swift in Sources */,
+				586AC6E42AB199BD001284E4 /* LikesEdited.swift in Sources */,
+				586AC6D52AAE2688001284E4 /* FavoritesViewModel.swift in Sources */,
 				5897B1F62A9E3C3E006ADC33 /* String+Extentions.swift in Sources */,
 				59CAB78F2A9AC20900C4938D /* StatisticsViewController.swift in Sources */,
 				5897B2402AA87DD6006ADC33 /* UserInfoNetworkService.swift in Sources */,
@@ -604,7 +644,9 @@
 				5897B2282AA0A6C7006ADC33 /* UserEditing.swift in Sources */,
 				5897B22A2AA0B134006ADC33 /* UserEditingRequest.swift in Sources */,
 				5897B2302AA29899006ADC33 /* NFTCollectionViewController.swift in Sources */,
+				586AC6EC2AB3388C001284E4 /* CustomLikeButton.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				586AC6E22AB198FA001284E4 /* LikesEditedRequest.swift in Sources */,
 				5897B23E2AA87DA9006ADC33 /* UserInfoRequest.swift in Sources */,
 				59CAB78D2A9AC1E100C4938D /* CartViewController.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
@@ -615,10 +657,12 @@
 				5897B2262AA09EFC006ADC33 /* EditProfileViewModel.swift in Sources */,
 				5897B1F42A9E3A18006ADC33 /* UIImageView+Extensions.swift in Sources */,
 				59CAB77E2A9AAA7000C4938D /* UIFont+Extensions.swift in Sources */,
+				586AC6D72AAE2691001284E4 /* FavoritesCell.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				5897B1F22A9E2BB2006ADC33 /* ProfileNetworkService.swift in Sources */,
 				5897B1FC2A9EB13F006ADC33 /* EditScreenCustomTextField.swift in Sources */,
 				59CAB78B2A9AC1B300C4938D /* CatalogueViewController.swift in Sources */,
+				586AC6E62AB19A59001284E4 /* LikesEditedNetworkService.swift in Sources */,
 				59CAB7802A9AAB8300C4938D /* UIImage+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
