@@ -2,11 +2,11 @@ import UIKit
 import ProgressHUD
 
 final class CatalogueViewController: UIViewController {
-    //MARK: Internal Properties
+    // MARK: Internal Properties
     lazy var catalogueView = CatalogueView(dataSource: self, delegate: self)
     var catalogueViewModel = CatalogueViewModel()
 
-    //MARK: View Controller Life Cycle
+    // MARK: View Controller Life Cycle
     override func loadView() {
         view = catalogueView
     }
@@ -19,7 +19,7 @@ final class CatalogueViewController: UIViewController {
         getCatalogue()
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func setNavigationBar() {
         let image = UIImage.NFTIcon.sorting
         let imageConfig = UIImage.SymbolConfiguration(

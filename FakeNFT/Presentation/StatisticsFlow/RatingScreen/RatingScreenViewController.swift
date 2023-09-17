@@ -19,7 +19,7 @@ final class RatingScreenViewController: UIViewController {
         ratingTableView.translatesAutoresizingMaskIntoConstraints = false
         return ratingTableView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -29,7 +29,7 @@ final class RatingScreenViewController: UIViewController {
         bind()
         viewModel.getListUsers()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         analyticsService.report(
@@ -38,7 +38,7 @@ final class RatingScreenViewController: UIViewController {
             param: nil
         )
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.dismissProgressHUD()
@@ -48,19 +48,19 @@ final class RatingScreenViewController: UIViewController {
             param: nil
         )
     }
-    
+
     private func bind() {
         viewModel.$listUsers.bind { [weak self] _ in
             guard let self = self else { return }
             self.ratingTableView.reloadData()
         }
-        
+
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
         }
     }
-    
+
     private func makeNavBarWithSortingButton() {
         let navBar = self.navigationController?.navigationBar
         let sortingButton = UIButton(type: .custom)
@@ -77,11 +77,11 @@ final class RatingScreenViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightNavBarItem
         self.navBar = navBar
     }
-    
+
     private func addSubviews() {
         view.addSubview(ratingTableView)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             ratingTableView.topAnchor.constraint(
@@ -101,7 +101,7 @@ final class RatingScreenViewController: UIViewController {
             )
         ])
     }
-    
+
     @objc private func didSortingButton() {
         analyticsService.report(
             screen: .screenStatistic,
@@ -125,7 +125,7 @@ extension RatingScreenViewController: UITableViewDataSource {
     ) -> Int {
         return viewModel.listUsers.count
     }
-    
+
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
@@ -136,7 +136,7 @@ extension RatingScreenViewController: UITableViewDataSource {
                 indexRow: indexPath.row
             )
         )
-        
+
         return cell
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 extension CatalogueViewController: UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,

@@ -54,7 +54,7 @@ final class FavoritesViewController: UIViewController {
         bind()
     }
 
-    //MARK: - Initializer
+    // MARK: - Initializer
     init(viewModel: FavoritesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -64,7 +64,7 @@ final class FavoritesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Objc methods
+    // MARK: - Objc methods
     @objc
     private func backButtonTapped() {
         navigationController?.popViewController(animated: true)

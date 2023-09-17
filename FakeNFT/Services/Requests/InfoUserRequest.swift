@@ -14,7 +14,7 @@ struct InfoUserRequest: NetworkRequest {
             URL(string: self.baseEndpoint + "users/\(userId)")
         }
     }
-    
+
     var httpMethod: HttpMethod {
         get {
             .get

@@ -9,10 +9,10 @@ import UIKit
 import ProgressHUD
 
 final class NFTScreenVC: UIViewController {
-    //MARK: Private Properties
+    // MARK: Private Properties
     private var catalogueCell: CatalogueCellModel
 
-    //MARK: Internal Properties
+    // MARK: Internal Properties
     lazy var NFTView = NFTScreenView(
         dataSource: self,
         collectionViewDelegate: self,
@@ -25,7 +25,7 @@ final class NFTScreenVC: UIViewController {
 
     let nftScreenViewModel: NFTScreenViewModel
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     init(catalogueCell: CatalogueCellModel) {
         nftScreenViewModel = NFTScreenViewModel(author: catalogueCell.author)
         self.catalogueCell = catalogueCell
@@ -36,7 +36,7 @@ final class NFTScreenVC: UIViewController {
         fatalError()
     }
 
-    //MARK: View Controller Life Cycle
+    // MARK: View Controller Life Cycle
     override func loadView() {
         view = NFTView
     }
@@ -62,8 +62,8 @@ final class NFTScreenVC: UIViewController {
         self.showTabBar()
     }
 
-    //MARK: Private Methods
-    //В расширение для всех
+    // MARK: Private Methods
+    // В расширение для всех
 //    private func hideTabBar() {
 //        if let tabBarController = self.tabBarController {
 //            UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut]) {
@@ -127,7 +127,7 @@ final class NFTScreenVC: UIViewController {
     }
 }
 
-//MARK: - UITextViewDelegate
+// MARK: - UITextViewDelegate
 extension NFTScreenVC: UITextViewDelegate {
     func textView(
         _ textView: UITextView,
@@ -143,7 +143,7 @@ extension NFTScreenVC: UITextViewDelegate {
     }
 }
 
-//MARK: - NFTCellDelegate
+// MARK: - NFTCellDelegate
 extension NFTScreenVC: NFTCellDelegate {
     func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
         nftScreenViewModel.addNFTToFavourites(id: id) { result in

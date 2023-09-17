@@ -6,7 +6,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setNavigationBarAndTabBarAppearance()
         RateManager.incrementCount()
         AnalyticsService.activate()
-        
+
         return true
     }
 

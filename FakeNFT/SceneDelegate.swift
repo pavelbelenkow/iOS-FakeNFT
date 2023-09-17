@@ -9,7 +9,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options _: UIScene.ConnectionOptions
     ) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        
+
         let window = UIWindow(windowScene: scene)
         window.makeKeyAndVisible()
         let onboardingViewController = OnboardingViewController()

@@ -15,24 +15,24 @@ final class OnboardingViewController: UIPageViewController {
             descriptionPage: OnboardingDescriptionPage.onboardingDescriptionOne.rawValue,
             isThirdPage: false
         )
-        
+
         let two = PageViewController(
             backgroundImage: UIImage.NFTImage.onboardingTwo,
             titlePage: OnboardingTitlePage.onboardingTitleTwo.rawValue,
             descriptionPage: OnboardingDescriptionPage.onboardingDescriptionTwo.rawValue,
             isThirdPage: false
         )
-        
+
         let three = PageViewController(
             backgroundImage: UIImage.NFTImage.onboardingThree,
             titlePage: OnboardingTitlePage.onboardingTitleThree.rawValue,
             descriptionPage: OnboardingDescriptionPage.onboardingDescriptionThree.rawValue,
             isThirdPage: true
         )
-        
+
         return [one, two, three]
     }()
-    
+
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
@@ -47,11 +47,11 @@ final class OnboardingViewController: UIPageViewController {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
-    
+
     override init(
         transitionStyle style: UIPageViewController.TransitionStyle,
         navigationOrientation: UIPageViewController.NavigationOrientation,
-        options: [UIPageViewController.OptionsKey : Any]? = nil
+        options: [UIPageViewController.OptionsKey: Any]? = nil
     ) {
         super.init(
             transitionStyle: .scroll,
@@ -59,7 +59,7 @@ final class OnboardingViewController: UIPageViewController {
             options: nil
         )
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(
             transitionStyle: .scroll,
@@ -67,15 +67,15 @@ final class OnboardingViewController: UIPageViewController {
             options: nil
         )
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Пока здесь, потом поставим на экран Каталог
+        // Пока здесь, потом поставим на экран Каталог
         RateManager.showRatesController()
-        
+
         dataSource = self
         delegate = self
-        
+
         if let first = pages.first {
             setViewControllers(
                 [first],
@@ -83,9 +83,9 @@ final class OnboardingViewController: UIPageViewController {
                 animated: true
             )
         }
-        
+
         view.addSubview(pageControl)
-        
+
         NSLayoutConstraint.activate([
             pageControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -106,7 +106,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
         guard previousIndex >= 0 else {
             return pages.last
         }
-        
+
         return pages[previousIndex]
     }
 
@@ -121,7 +121,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
         guard nextIndex < pages.count else {
             return pages.first
         }
-        
+
         return pages[nextIndex]
     }
 }
@@ -139,4 +139,3 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
         }
     }
 }
-

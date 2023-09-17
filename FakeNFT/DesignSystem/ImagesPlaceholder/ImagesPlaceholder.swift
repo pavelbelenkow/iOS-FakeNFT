@@ -9,12 +9,12 @@ import UIKit
 import Kingfisher
 
 final class ImagesPlaceholder: UIView {
-    //MARK: Private Properties
+    // MARK: Private Properties
     private let gradient = CAGradientLayer()
     private let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
     private var animationLayers = Set<CALayer>()
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         addGradient()
@@ -25,12 +25,12 @@ final class ImagesPlaceholder: UIView {
         super.init(coder: coder)
     }
 
-    //MARK: Overriden Methods
+    // MARK: Overriden Methods
     override func layoutSubviews() {
         gradient.frame = bounds
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func addGradient() {
         gradient.locations = [0, 0.1, 0.3]
         gradient.colors = [
@@ -56,8 +56,7 @@ final class ImagesPlaceholder: UIView {
     }
 }
 
-//MARK: Extension
+// MARK: Extension
 extension ImagesPlaceholder: Placeholder {
 
 }
-

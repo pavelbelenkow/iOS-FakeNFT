@@ -25,7 +25,7 @@ final class UserCollectionScreenViewController: UIViewController {
         userNFTsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         return userNFTsCollectionView
     }()
-    
+
     private let params = GeometricParams(
         cellCount: 3,
         leftInset: 16,
@@ -34,7 +34,7 @@ final class UserCollectionScreenViewController: UIViewController {
         bottomInset: .zero,
         cellSpacing: 9
     )
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -47,28 +47,28 @@ final class UserCollectionScreenViewController: UIViewController {
         bind()
         viewModel.getNFTsUser(nfts: nfts ?? [String()])
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.dismissProgressHUD()
     }
-    
+
     private func bind() {
         viewModel.$nfts.bind { [weak self] _ in
             guard let self = self else { return }
             self.userNFTsCollectionView.reloadData()
         }
-        
+
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
         }
     }
-    
+
     private func addSubviews() {
         view.addSubview(userNFTsCollectionView)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             userNFTsCollectionView.topAnchor.constraint(
@@ -99,7 +99,7 @@ extension UserCollectionScreenViewController: UICollectionViewDelegateFlowLayout
             height: cellSize.height
         )
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -112,7 +112,7 @@ extension UserCollectionScreenViewController: UICollectionViewDelegateFlowLayout
             right: params.rightInset
         )
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -120,7 +120,7 @@ extension UserCollectionScreenViewController: UICollectionViewDelegateFlowLayout
     ) -> CGFloat {
         return params.cellSpacing
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -128,7 +128,7 @@ extension UserCollectionScreenViewController: UICollectionViewDelegateFlowLayout
     ) -> CGFloat {
         return params.cellSpacing
     }
-    
+
     private func setCellSize(_ collectionView: UICollectionView) -> CGSize {
         let availableWidth = collectionView.frame.width - params.paddingWight
         let cellWidth = availableWidth / CGFloat(params.cellCount)
@@ -143,14 +143,14 @@ extension UserCollectionScreenViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         return viewModel.nfts.count
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -162,5 +162,3 @@ extension UserCollectionScreenViewController: UICollectionViewDataSource {
         return cell
     }
 }
-
-

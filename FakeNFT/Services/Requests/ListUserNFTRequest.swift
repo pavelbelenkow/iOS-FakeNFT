@@ -14,7 +14,7 @@ struct ListUserNFTRequest: NetworkRequest {
             URL(string: self.baseEndpoint + "nft/\(idNFT)")
         }
     }
-    
+
     var httpMethod: HttpMethod {
         get {
             .get

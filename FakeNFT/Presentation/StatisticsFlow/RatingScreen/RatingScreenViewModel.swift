@@ -11,13 +11,13 @@ final class RatingScreenViewModel {
     private let client = DefaultNetworkClient()
     private let request = ListUsersRequest()
     private let sortingOrderStorage = SortingOrderStorage()
-    
+
     @Observable
     private(set) var listUsers: [User] = []
-    
+
     @Observable
     private(set) var isLoading: Bool = false
-    
+
     func getListUsers() {
         isLoading = true
         client.send(
@@ -36,7 +36,7 @@ final class RatingScreenViewModel {
             }
         }
     }
-    
+
     func setInfoRatingTableViewCell(indexRow: Int) -> RatingTableViewCellModel {
         if let url = URL(string: listUsers[indexRow].avatar) {
             return RatingTableViewCellModel(
@@ -52,27 +52,27 @@ final class RatingScreenViewModel {
             rating: String()
         )
     }
-    
+
     func sortedByRatingAlert() {
         listUsers = sortedByRating(list: listUsers)
         sortingOrderStorage.isRatingOrder = true
     }
-    
+
     func sortedByNameAlert() {
         listUsers = sortedByName(list: listUsers)
         sortingOrderStorage.isRatingOrder = false
     }
-    
+
     private func sortedAccordingSortingOrder(list: [User]) -> [User] {
         return sortingOrderStorage.isRatingOrder ? sortedByRating(list: list) : sortedByName(list: list)
     }
-    
+
     private func sortedByRating(list: [User]) -> [User] {
         return list.sorted {
             $0.rating.toInt() > $1.rating.toInt()
         }
     }
-    
+
     private func sortedByName(list: [User]) -> [User] {
         return list.sorted {
             $0.name.lowercased() < $1.name.lowercased()

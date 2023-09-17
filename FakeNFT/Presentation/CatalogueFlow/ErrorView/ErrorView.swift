@@ -8,7 +8,7 @@
 import UIKit
 
 final class ErrorView: UIView {
-    //MARK: Private Properties
+    // MARK: Private Properties
     private let label: UILabel = {
         let label = UILabel()
         label.text = "Нет интернета"
@@ -18,7 +18,7 @@ final class ErrorView: UIView {
         return label
     }()
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeView()
@@ -28,7 +28,7 @@ final class ErrorView: UIView {
         fatalError()
     }
 
-    //MARK: Private Properties
+    // MARK: Private Properties
     private func makeView() {
         backgroundColor = UIColor.NFTColor.white
         addSubview()

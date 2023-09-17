@@ -8,7 +8,7 @@
 import UIKit
 
 final class NFTScreenView: UIView {
-    //MARK: Private Properties
+    // MARK: Private Properties
     private var coverImage: UIImageView = {
         let view = UIImageView()
 
@@ -73,7 +73,7 @@ final class NFTScreenView: UIView {
 
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+
         view.register(
             NFTScreenCell.self, forCellWithReuseIdentifier: NFTScreenCell.identifier
         )
@@ -85,7 +85,7 @@ final class NFTScreenView: UIView {
 
     private let placeholder = ImagesPlaceholder()
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeView()
@@ -106,7 +106,7 @@ final class NFTScreenView: UIView {
         authorLink.delegate = textViewDelegate
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func makeView() {
         setBackgroundColor()
         addSubviews()
@@ -227,7 +227,7 @@ final class NFTScreenView: UIView {
         coverImage.kf.setImage(with: url, placeholder: placeholder)
     }
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func updateCollectionView() {
         collectionView.reloadData()
     }

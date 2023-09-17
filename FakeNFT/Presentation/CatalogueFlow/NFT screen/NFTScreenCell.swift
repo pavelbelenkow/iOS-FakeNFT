@@ -9,10 +9,10 @@ import UIKit
 import Kingfisher
 
 final class NFTScreenCell: UICollectionViewCell {
-    //MARK: Static Properties
+    // MARK: Static Properties
     static let identifier = "NFTScreenCell"
 
-    //MARK: Private Properties
+    // MARK: Private Properties
     private var NFTImageView: UIImageView = {
         let view = UIImageView()
 
@@ -57,10 +57,10 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    //MARK: Internal Properties
+    // MARK: Internal Properties
     weak var delegate: NFTCellDelegate?
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeCell()
@@ -70,7 +70,7 @@ final class NFTScreenCell: UICollectionViewCell {
         fatalError()
     }
 
-    //MARK: Overriden Methods
+    // MARK: Overriden Methods
     override func prepareForReuse() {
         super.prepareForReuse()
 
@@ -81,7 +81,7 @@ final class NFTScreenCell: UICollectionViewCell {
         priceLabel.text = nil
     }
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func configCell(with model: NFTModel?, delegate: NFTCellDelegate) {
         guard let model else { return }
 
@@ -110,7 +110,7 @@ final class NFTScreenCell: UICollectionViewCell {
     }
 }
 
-//MARK: Private Extension
+// MARK: Private Extension
 private extension NFTScreenCell {
     @objc
     func likeButtonTap() {

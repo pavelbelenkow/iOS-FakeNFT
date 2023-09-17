@@ -13,11 +13,10 @@ struct ListLikedNFTRequest: NetworkRequest {
             URL(string: self.baseEndpoint + "profile/1")
         }
     }
-    
+
     var httpMethod: HttpMethod {
         get {
             .get
         }
     }
 }
-

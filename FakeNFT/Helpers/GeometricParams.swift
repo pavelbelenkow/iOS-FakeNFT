@@ -22,7 +22,7 @@ struct GeometricParams {
     let cellSpacing: CGFloat
     /// Общий отступ между ячейками и между ячейками и контейнером по горизонтали
     let paddingWight: CGFloat
-    
+
     /// Инициализатор
     /// - Parameters:
     ///   - cellCount: Количество ячеек по горизонтали

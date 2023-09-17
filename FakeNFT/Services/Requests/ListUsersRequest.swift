@@ -13,7 +13,7 @@ struct ListUsersRequest: NetworkRequest {
             URL(string: self.baseEndpoint + "users")
         }
     }
-    
+
     var httpMethod: HttpMethod {
         get {
             .get

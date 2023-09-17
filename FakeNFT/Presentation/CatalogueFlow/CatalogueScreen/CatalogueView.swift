@@ -8,7 +8,7 @@
 import UIKit
 
 final class CatalogueView: UIView {
-    //MARK: Private Properties
+    // MARK: Private Properties
     private let tableView: UITableView = {
         let view = UITableView()
 
@@ -22,7 +22,7 @@ final class CatalogueView: UIView {
         return view
     }()
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(frame: CGRect) {
         super.init(frame: frame)
         makeView()
@@ -38,7 +38,7 @@ final class CatalogueView: UIView {
         tableView.delegate = delegate
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func makeView() {
         backgroundColor = UIColor.NFTColor.white
         addSubviews()
@@ -67,7 +67,7 @@ final class CatalogueView: UIView {
         ])
     }
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func reloadTableView() {
         tableView.reloadData()
     }

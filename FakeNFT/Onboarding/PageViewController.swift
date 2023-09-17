@@ -12,7 +12,7 @@ final class PageViewController: UIViewController {
     private let titlePage: String
     private let descriptionPage: String
     private let isThirdPage: Bool
-    
+
     private lazy var backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
         backgroundImageView.image = backgroundImage
@@ -31,7 +31,7 @@ final class PageViewController: UIViewController {
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         return backgroundImageView
     }()
-    
+
     private lazy var closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.setImage(
@@ -48,7 +48,7 @@ final class PageViewController: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         return closeButton
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = titlePage
@@ -59,7 +59,7 @@ final class PageViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.text = descriptionPage
@@ -70,7 +70,7 @@ final class PageViewController: UIViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         return descriptionLabel
     }()
-    
+
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
         startButton.setTitle(
@@ -95,7 +95,7 @@ final class PageViewController: UIViewController {
         startButton.translatesAutoresizingMaskIntoConstraints = false
         return startButton
     }()
-    
+
     init(
         backgroundImage: UIImage,
         titlePage: String,
@@ -106,23 +106,23 @@ final class PageViewController: UIViewController {
         self.titlePage = titlePage
         self.descriptionPage = descriptionPage
         self.isThirdPage = isThirdPage
-        
+
         super.init(
             nibName: nil,
             bundle: nil
         )
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         makeConstraints()
     }
-    
+
     private func addSubviews() {
         view.addSubview(backgroundImageView)
         view.addSubview(closeButton)
@@ -130,7 +130,7 @@ final class PageViewController: UIViewController {
         view.addSubview(descriptionLabel)
         view.addSubview(startButton)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -138,7 +138,7 @@ final class PageViewController: UIViewController {
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             closeButton.heightAnchor.constraint(equalToConstant: 42),
             closeButton.widthAnchor.constraint(equalToConstant: 42),
@@ -151,7 +151,7 @@ final class PageViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(
                 equalTo: view.topAnchor,
@@ -166,7 +166,7 @@ final class PageViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor,
@@ -181,7 +181,7 @@ final class PageViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             startButton.heightAnchor.constraint(equalToConstant: 60),
             startButton.bottomAnchor.constraint(
@@ -198,11 +198,10 @@ final class PageViewController: UIViewController {
             )
         ])
     }
-    
+
     @objc private func didTabBarStart() {
         let tabBarController = TabBarController()
         UIApplication.shared.windows.first?.rootViewController = tabBarController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 }
-

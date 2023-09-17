@@ -30,16 +30,16 @@ extension UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.NFTColor.black
         self.title = title
     }
-    
+
     @objc private func didBackButtonToScreenWithHiddenTabBar() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+
     @objc private func didBackButtonToScreenWithNotHiddenTabBar() {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
-    
+
     func progressStatus(_ isLoadind: Bool) {
         if isLoadind {
             ProgressHUD.show()
@@ -47,15 +47,15 @@ extension UIViewController {
             ProgressHUD.dismiss()
         }
     }
-    
+
     func dismissProgressHUD() {
         ProgressHUD.dismiss()
     }
-    
+
     func showProgressHUD() {
         ProgressHUD.show()
     }
-    
+
     func hideTabBar() {
         if let tabBarController = self.tabBarController {
             UIView.animate(
@@ -74,7 +74,7 @@ extension UIViewController {
                 }
         }
     }
-    
+
     func showTabBar() {
         if let tabBarController = self.tabBarController {
             if !tabBarController.tabBar.isHidden {
@@ -93,7 +93,7 @@ extension UIViewController {
             }
         }
     }
-    
+
     private func setSelectorBackButton(isBackedToScreenWithHiddenTabBar: Bool) -> Selector {
         if isBackedToScreenWithHiddenTabBar {
             return #selector(didBackButtonToScreenWithHiddenTabBar)
@@ -101,7 +101,7 @@ extension UIViewController {
             return #selector(didBackButtonToScreenWithNotHiddenTabBar)
         }
     }
-    
+
     /**
      Отображает предупреждающее диалоговое окно
      - Parameters:

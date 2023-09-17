@@ -14,7 +14,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         numberView.translatesAutoresizingMaskIntoConstraints = false
         return numberView
     }()
-    
+
     private lazy var numberLabel: UILabel = {
         let numberLabel = UILabel()
         numberLabel.font = UIFont.NFTFont.regular15
@@ -22,7 +22,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         numberLabel.translatesAutoresizingMaskIntoConstraints = false
         return numberLabel
     }()
-    
+
     private lazy var cardView: UIView = {
         let cardView = UIView()
         cardView.layer.cornerRadius = 12
@@ -31,7 +31,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         return cardView
     }()
-    
+
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.layer.cornerRadius = 14
@@ -39,7 +39,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.NFTFont.bold22
@@ -48,7 +48,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-    
+
     private lazy var numberRatingLabel: UILabel = {
         let numberRatingLabel = UILabel()
         numberRatingLabel.font = UIFont.NFTFont.bold22
@@ -57,7 +57,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         numberRatingLabel.translatesAutoresizingMaskIntoConstraints = false
         return numberRatingLabel
     }()
-    
+
     override init(
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
@@ -71,18 +71,18 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         addSubviews()
         makeConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configureRatingTableViewCell(with model: RatingTableViewCellModel) {
         numberLabel.text = String(model.indexRow + 1)
         avatarImageView.loadImage(url: model.avatar)
         nameLabel.text = model.name
         numberRatingLabel.text = model.rating
     }
-    
+
     private func addSubviews() {
         numberView.addSubview(numberLabel)
         cardView.addSubview(avatarImageView)
@@ -91,7 +91,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
         contentView.addSubview(numberView)
         contentView.addSubview(cardView)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             numberView.heightAnchor.constraint(equalToConstant: 20),
@@ -101,7 +101,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
             numberLabel.centerYAnchor.constraint(equalTo: numberView.centerYAnchor),
             numberLabel.centerXAnchor.constraint(equalTo: numberView.centerXAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             cardView.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
@@ -117,7 +117,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
                 constant: -4
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             avatarImageView.heightAnchor.constraint(equalToConstant: 28),
             avatarImageView.widthAnchor.constraint(equalToConstant: 28),
@@ -127,7 +127,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
                 constant: 16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             nameLabel.widthAnchor.constraint(equalToConstant: 186),
             nameLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
@@ -136,7 +136,7 @@ final class RatingTableViewCell: UITableViewCell, ReuseIdentifying {
                 constant: 8
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             numberRatingLabel.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
             numberRatingLabel.trailingAnchor.constraint(

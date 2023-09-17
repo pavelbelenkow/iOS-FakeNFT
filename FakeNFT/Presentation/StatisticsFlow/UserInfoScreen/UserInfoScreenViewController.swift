@@ -19,21 +19,21 @@ final class UserInfoScreenViewController: UIViewController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         return cardView
     }()
-    
+
     private lazy var avatarAndNameView: UIView = {
         let avatarAndNameView = UIView()
         avatarAndNameView.backgroundColor = .clear
         avatarAndNameView.translatesAutoresizingMaskIntoConstraints = false
         return avatarAndNameView
     }()
-    
+
     private lazy var descriptionView: UIView = {
         let descriptionView = UIView()
         descriptionView.backgroundColor = .clear
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
         return descriptionView
     }()
-    
+
     private lazy var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.layer.cornerRadius = 35
@@ -41,7 +41,7 @@ final class UserInfoScreenViewController: UIViewController {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.NFTFont.bold22
@@ -50,7 +50,7 @@ final class UserInfoScreenViewController: UIViewController {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.font = UIFont.NFTFont.regular13
@@ -60,7 +60,7 @@ final class UserInfoScreenViewController: UIViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         return descriptionLabel
     }()
-    
+
     private lazy var goToSiteUserButton: UIButton = {
         let goToSiteUserButton = UIButton()
         goToSiteUserButton.setTitle(
@@ -83,7 +83,7 @@ final class UserInfoScreenViewController: UIViewController {
         goToSiteUserButton.translatesAutoresizingMaskIntoConstraints = false
         return goToSiteUserButton
     }()
-    
+
     private lazy var collectionNFTTableView: UITableView = {
         let collectionNFTTableView = UITableView()
         collectionNFTTableView.dataSource = self
@@ -96,7 +96,7 @@ final class UserInfoScreenViewController: UIViewController {
         collectionNFTTableView.translatesAutoresizingMaskIntoConstraints = false
         return collectionNFTTableView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.NFTColor.white
@@ -109,22 +109,22 @@ final class UserInfoScreenViewController: UIViewController {
         bind()
         viewModel.getInfoUser(userId: userId ?? "")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideTabBar()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.showTabBar()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.dismissProgressHUD()
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 13.0, *),
@@ -136,19 +136,19 @@ final class UserInfoScreenViewController: UIViewController {
             }
         }
     }
-    
+
     private func bind() {
         viewModel.$user.bind { [weak self] _ in
             guard let self = self else { return }
             self.setUserInfo(with: self.viewModel.setUserInfo())
         }
-        
+
         viewModel.$isLoading.bind { [weak self] isLoading in
             guard let self = self else { return }
             self.progressStatus(isLoading)
         }
     }
-    
+
     private func addSubviews() {
         avatarAndNameView.addSubview(avatarImageView)
         avatarAndNameView.addSubview(nameLabel)
@@ -159,7 +159,7 @@ final class UserInfoScreenViewController: UIViewController {
         view.addSubview(goToSiteUserButton)
         view.addSubview(collectionNFTTableView)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             cardView.heightAnchor.constraint(equalToConstant: 162),
@@ -174,7 +174,7 @@ final class UserInfoScreenViewController: UIViewController {
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             avatarAndNameView.heightAnchor.constraint(equalToConstant: 70),
             avatarAndNameView.topAnchor.constraint(equalTo: cardView.topAnchor),
@@ -187,21 +187,21 @@ final class UserInfoScreenViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             descriptionView.heightAnchor.constraint(equalToConstant: 72),
             descriptionView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor),
             descriptionView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
             descriptionView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: avatarAndNameView.topAnchor),
             avatarImageView.leadingAnchor.constraint(equalTo: avatarAndNameView.leadingAnchor),
             avatarImageView.bottomAnchor.constraint(equalTo: avatarAndNameView.bottomAnchor),
             avatarImageView.widthAnchor.constraint(equalToConstant: 70)
         ])
-        
+
         NSLayoutConstraint.activate([
             nameLabel.centerYAnchor.constraint(equalTo: avatarAndNameView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(
@@ -210,7 +210,7 @@ final class UserInfoScreenViewController: UIViewController {
             ),
             nameLabel.trailingAnchor.constraint(equalTo: avatarAndNameView.trailingAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: descriptionView.topAnchor),
             descriptionLabel.leadingAnchor.constraint(
@@ -222,7 +222,7 @@ final class UserInfoScreenViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             goToSiteUserButton.heightAnchor.constraint(equalToConstant: 40),
             goToSiteUserButton.topAnchor.constraint(
@@ -238,7 +238,7 @@ final class UserInfoScreenViewController: UIViewController {
                 constant: -16
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             collectionNFTTableView.heightAnchor.constraint(equalToConstant: 54),
             collectionNFTTableView.topAnchor.constraint(
@@ -249,7 +249,7 @@ final class UserInfoScreenViewController: UIViewController {
             collectionNFTTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
-    
+
     private func setUserInfo(with model: UserInfoSetModel) {
         avatarImageView.loadImage(url: model.avatar)
         nameLabel.text = model.name
@@ -257,7 +257,7 @@ final class UserInfoScreenViewController: UIViewController {
         website = model.website
         collectionNFTTableView.reloadData()
     }
-    
+
     @objc private func didGoToSiteUserButton() {
         analyticsService.report(
             screen: .screenStatistic,
@@ -280,7 +280,7 @@ extension UserInfoScreenViewController: UITableViewDataSource {
     ) -> Int {
         return 1
     }
-    
+
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
@@ -311,5 +311,3 @@ extension UserInfoScreenViewController: UITableViewDelegate {
         )
     }
 }
-
-

@@ -9,10 +9,10 @@ import UIKit
 import Kingfisher
 
 final class CatalogueCell: UITableViewCell {
-    //MARK: Static Properties
+    // MARK: Static Properties
     static let identifier = "CatalogueCell"
 
-    //MARK: Private Properties
+    // MARK: Private Properties
     private var collectionImageView: UIImageView = {
         let view = UIImageView()
 
@@ -38,7 +38,7 @@ final class CatalogueCell: UITableViewCell {
 
     private let placeholder = ImagesPlaceholder()
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeCell()
@@ -48,14 +48,14 @@ final class CatalogueCell: UITableViewCell {
         super.init(coder: coder)
     }
 
-    //MARK: Overrides Methods
+    // MARK: Overrides Methods
     override func prepareForReuse() {
-        //TODO: Чистить информацию ячейки
+        // TODO: Чистить информацию ячейки
         collectionImageView.backgroundColor = .clear
         super.prepareForReuse()
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func makeCell() {
         setBackgroundColor()
         addSubviews()
@@ -102,7 +102,7 @@ final class CatalogueCell: UITableViewCell {
         ])
     }
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func configCell(with model: CatalogueCellModel?) {
         guard let model else { return }
 

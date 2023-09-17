@@ -10,16 +10,16 @@ import Foundation
 final class UserCollectionScreenViewModel {
     private let client = DefaultNetworkClient()
     private var likedNFTs: [String] = []
-    
+
     @Observable
     private(set) var nfts: [NFT] = []
-    
+
     @Observable
     private(set) var isLoading: Bool = false
-    
+
     func getNFTsUser(nfts: [String]) {
         isLoading = true
-        
+
         getNFTsUser(idNFTs: nfts) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
@@ -33,7 +33,7 @@ final class UserCollectionScreenViewModel {
             }
         }
     }
-    
+
     func setUserNFTsCollectionViewCell(indexRow: Int) -> UserNFTsCollectionViewCellModel {
         if  let imageAddress = nfts[indexRow].images.first,
             let url = URL(string: imageAddress) {
@@ -46,7 +46,7 @@ final class UserCollectionScreenViewModel {
                 isLiked: likedNFTs.contains(nfts[indexRow].id)
             )
         }
-        
+
         return UserNFTsCollectionViewCellModel(
             name: String(),
             image: URL(fileURLWithPath: String()),
@@ -56,14 +56,14 @@ final class UserCollectionScreenViewModel {
             isLiked: Bool()
         )
     }
-    
+
     private func getNFTsUser(
         idNFTs: [String],
         completion: @escaping (Result<[NFT], Error>) -> Void
     ) {
         var nfts: [NFT] = []
         let group = DispatchGroup()
-        
+
         group.enter()
         let request = ListLikedNFTRequest()
         client.send(
@@ -81,7 +81,7 @@ final class UserCollectionScreenViewModel {
                 group.leave()
             }
         }
-        
+
         idNFTs.forEach { idNFT in
             group.enter()
             let request = ListUserNFTRequest(idNFT: idNFT)
@@ -103,4 +103,3 @@ final class UserCollectionScreenViewModel {
         }
     }
 }
-

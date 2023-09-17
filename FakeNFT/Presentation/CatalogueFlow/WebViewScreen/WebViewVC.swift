@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 
 final class WebViewVC: UIViewController, WKNavigationDelegate {
-    //MARK: Private Properties
+    // MARK: Private Properties
 //    private var webView: WKWebView!
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
@@ -17,12 +17,12 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
         webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
-    
+
     var urlString: String?
 
     private let progressView: UIProgressView = {
         let progressView = UIProgressView()
-        //поменял на синий
+        // поменял на синий
         progressView.tintColor = UIColor.NFTColor.blue
         progressView.progress = 0.0
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
 
     private var observer: NSKeyValueObservation?
 
-    //MARK: View Controller Life Cycle
+    // MARK: View Controller Life Cycle
 //    override func loadView() {
 //        let webConfiguration = WKWebViewConfiguration()
 //        webView = WKWebView(frame: .zero, configuration: webConfiguration)
@@ -62,7 +62,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
         observer?.invalidate()
     }
 
-    //MARK: Private Methods
+    // MARK: Private Methods
     private func loadPage() {
         if let urlString = urlString, let url = URL(string: urlString) {
             let request = URLRequest(url: url)
@@ -117,7 +117,7 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
                 equalTo: view.bottomAnchor
             )
         ])
-        
+
         NSLayoutConstraint.activate([
             progressView.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor

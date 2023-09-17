@@ -8,10 +8,10 @@
 import Foundation
 
 final class NFTScreenViewModel {
-    //MARK: File Private Properties
+    // MARK: File Private Properties
     fileprivate let api = "https://64e794a7b0fd9648b7902456.mockapi.io/api/v1/"
 
-    //MARK: Private Properties
+    // MARK: Private Properties
     @Observable
     private(set) var nftCollection: [NFTModel] = []
 
@@ -121,7 +121,7 @@ final class NFTScreenViewModel {
     }
 }
 
-//MARK: Private Methods
+// MARK: Private Methods
 private extension NFTScreenViewModel {
     func fetchNFTCollectionData(
         completion: @escaping (Result<[NFTModel], Error>) -> Void
@@ -132,7 +132,7 @@ private extension NFTScreenViewModel {
             dto: nil
         )
 
-        nftQueue.async() {
+        nftQueue.async {
             self.networkClient.send(
                 request: request,
                 type: [NFTModel].self
@@ -310,7 +310,7 @@ private extension NFTScreenViewModel {
             isOrdered: false
         )
 
-        nftQueue.async() {
+        nftQueue.async {
             self.networkClient.send(
                 request: request,
                 type: NFTOrderedModel.self
@@ -377,9 +377,3 @@ private extension NFTScreenViewModel {
         }
     }
 }
-
-
-
-
-
-

@@ -24,7 +24,7 @@ final class NFTCollectionViewController: UIViewController {
         bind()
     }
 
-    //MARK: - Initializer
+    // MARK: - Initializer
     init(viewModel: NFTCollectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

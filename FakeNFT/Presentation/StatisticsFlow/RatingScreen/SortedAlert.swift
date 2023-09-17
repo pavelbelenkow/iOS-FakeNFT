@@ -9,39 +9,39 @@ import UIKit
 
 final class SortedAlert {
     func callAlert(
-        nameAction: @escaping () -> (),
-        ratingAction: @escaping () -> ()
+        nameAction: @escaping () -> Void,
+        ratingAction: @escaping () -> Void
     ) -> UIAlertController {
         let alert = UIAlertController(
             title: "",
             message: "Сортировка",
             preferredStyle: .actionSheet)
-        
+
         let nameAction = UIAlertAction(
             title: "По имени",
             style: .default
         ) { _ in
             nameAction()
         }
-        
+
         let ratingAction = UIAlertAction(
             title: "По рейтингу",
             style: .default
         ) { _ in
             ratingAction()
         }
-        
+
         let cancelAction = UIAlertAction(
             title: "Закрыть",
             style: .cancel
         ) { _ in
             alert.dismiss(animated: true)
         }
-        
+
         alert.addAction(nameAction)
         alert.addAction(ratingAction)
         alert.addAction(cancelAction)
-        
+
         return alert
     }
 }

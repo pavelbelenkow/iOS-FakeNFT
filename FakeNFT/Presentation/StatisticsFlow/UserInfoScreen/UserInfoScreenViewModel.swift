@@ -35,7 +35,7 @@ final class UserInfoScreenViewModel {
             }
         }
     }
-    
+
     func setUserInfo() -> UserInfoSetModel {
         if
             let user = user,
@@ -54,11 +54,11 @@ final class UserInfoScreenViewModel {
             website: String()
         )
     }
-    
+
     func setCountCollectionNFT() -> Int {
         return user?.nfts.count ?? .zero
     }
-    
+
     func getNFTs() -> [String]? {
         if let user = user {
             if user.nfts.count == .zero {
@@ -70,4 +70,3 @@ final class UserInfoScreenViewModel {
         return nil
     }
 }
-

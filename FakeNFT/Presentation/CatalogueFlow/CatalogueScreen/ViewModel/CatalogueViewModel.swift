@@ -8,7 +8,7 @@
 import Foundation
 
 final class CatalogueViewModel {
-    //MARK: Private Properties
+    // MARK: Private Properties
     @Observable
     private(set) var catalogue: [CatalogueCellModel] = []
 
@@ -17,7 +17,7 @@ final class CatalogueViewModel {
     private let catalogueQueue = DispatchQueue(label: "com.catalogue.queue", attributes: .concurrent)
     private let mainQueue = DispatchQueue.main
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func getCatalogue(completion: @escaping (Result<Void, Error>) -> Void) {
         catalogueQueue.async {
             self.networkClient.send(

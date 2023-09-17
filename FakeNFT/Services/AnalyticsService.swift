@@ -22,7 +22,7 @@ enum Event: String {
 }
 
 enum Item: String {
-    //Профиль
+    // Профиль
     case myNFTProfile
     case likedNFTProfile
     case aboutDeveloperProfile
@@ -34,13 +34,13 @@ enum Item: String {
     case editImageAddressProfile
     case sortingNFTsProfile
     case setLikeNotLikeNFTProfile
-    //Каталог
+    // Каталог
     case sortingNFTsCatalog
     case collectionNFTsCatalog
     case authorCollectionNFTsCatalog
     case setLikeNotLikeNFTCatalog
     case setAddDeleteCartNFTCatalog
-    //Корзина
+    // Корзина
     case deleteNFTCart
     case confirmDeleteNFTCart
     case confitmReturnNFTCart
@@ -48,7 +48,7 @@ enum Item: String {
     case toPayNFTCart
     case paymentMethodCart
     case payNFTCart
-    //Статистика
+    // Статистика
     case sortingNFTsStatistic
     case userSiteStatistic
     case collectionUserNFTsStatistic
@@ -63,7 +63,7 @@ struct AnalyticsService {
         ) else { return }
         YMMYandexMetrica.activate(with: configuration)
     }
-    
+
     func report(
         screen: Screen,
         event: Event,

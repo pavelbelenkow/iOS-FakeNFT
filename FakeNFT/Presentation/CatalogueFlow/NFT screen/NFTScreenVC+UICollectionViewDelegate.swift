@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 extension NFTScreenVC: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

@@ -14,7 +14,7 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         itemsView.translatesAutoresizingMaskIntoConstraints = false
         return itemsView
     }()
-    
+
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "Коллекция NFT"
@@ -24,7 +24,7 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
-    
+
     private lazy var countLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.NFTFont.bold17
@@ -33,14 +33,14 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         return titleLabel
     }()
-    
+
     private lazy var chevronForwardImageView: UIImageView = {
         let chevronForwardImageView = UIImageView()
         chevronForwardImageView.image = UIImage.NFTIcon.chevronForward
         chevronForwardImageView.translatesAutoresizingMaskIntoConstraints = false
         return chevronForwardImageView
     }()
-    
+
     override init(
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
@@ -54,22 +54,22 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         addSubviews()
         makeConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configureCollectionNFTTableViewCell(countCollectionNFT: Int) {
         countLabel.text = "(\(countCollectionNFT))"
     }
-    
+
     private func addSubviews() {
         itemsView.addSubview(titleLabel)
         itemsView.addSubview(countLabel)
         itemsView.addSubview(chevronForwardImageView)
         contentView.addSubview(itemsView)
     }
-    
+
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             itemsView.heightAnchor.constraint(equalToConstant: 22),
@@ -83,12 +83,12 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             ),
             itemsView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: itemsView.leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: itemsView.centerYAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             countLabel.leadingAnchor.constraint(
                 equalTo: titleLabel.trailingAnchor,
@@ -96,12 +96,10 @@ final class CollectionNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             ),
             countLabel.centerYAnchor.constraint(equalTo: itemsView.centerYAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             chevronForwardImageView.trailingAnchor.constraint(equalTo: itemsView.trailingAnchor),
             chevronForwardImageView.centerYAnchor.constraint(equalTo: itemsView.centerYAnchor)
         ])
     }
 }
-
-
