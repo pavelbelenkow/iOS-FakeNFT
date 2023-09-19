@@ -9,15 +9,7 @@ import Foundation
 
 struct InfoUserRequest: NetworkRequest {
     let userId: String
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "users/\(userId)")
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "users/\(userId)") }
 
-    var httpMethod: HttpMethod {
-        get {
-            .get
-        }
-    }
+    var httpMethod: HttpMethod { .get }
 }

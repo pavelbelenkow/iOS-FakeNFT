@@ -8,21 +8,9 @@ struct LikesEditedRequest: NetworkRequest {
         self.listOfLikes = listOfLikes
     }
 
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "profile/1")
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "profile/1") }
 
-    var httpMethod: HttpMethod {
-        get {
-            .put
-        }
-    }
+    var httpMethod: HttpMethod { .put }
 
-    var dto: Encodable? {
-        get {
-            listOfLikes
-        }
-    }
+    var dto: Encodable? { listOfLikes }
 }

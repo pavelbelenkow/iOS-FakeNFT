@@ -23,7 +23,7 @@ final class ProfileViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
         activateConstraints()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor.NFTColor.white
     }
 
     required init?(coder: NSCoder) {
