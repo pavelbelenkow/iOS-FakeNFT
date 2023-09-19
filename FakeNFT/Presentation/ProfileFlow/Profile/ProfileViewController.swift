@@ -54,7 +54,7 @@ final class ProfileViewController: UIViewController {
         label.text = ""
         label.numberOfLines = .zero
         label.font = .headline3
-        label.textColor = .black
+        label.textColor = UIColor.NFTColor.black
         return label
     }()
 
@@ -63,7 +63,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .caption2
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = UIColor.NFTColor.black
         label.numberOfLines = 0
         label.text = ""
         return label

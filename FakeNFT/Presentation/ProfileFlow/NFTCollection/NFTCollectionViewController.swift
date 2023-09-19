@@ -43,13 +43,14 @@ final class NFTCollectionViewController: UIViewController {
         tableview.dataSource = self
         tableview.separatorStyle = .none
         tableview.allowsSelection = false
+        tableview.backgroundColor = .NFTColor.white
         return tableview
     }()
 
     private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "NFTSort"), for: .normal)
+        button.setImage(UIImage(named: "Sorting"), for: .normal)
         button.tintColor = UIColor.NFTColor.black
         let width = Constants.navBarButtonSize
         button.frame.size = CGSize(width: width, height: width)
@@ -131,7 +132,7 @@ final class NFTCollectionViewController: UIViewController {
     }
 
     private func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .NFTColor.white
         view.addSubview(tableView)
         view.addSubview(plugLabel)
         let edge: CGFloat = 16
@@ -162,8 +163,11 @@ extension NFTCollectionViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: NFTCollectionCell.reuseIdentifier) as? NFTCollectionCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: NFTCollectionCell.reuseIdentifier
+            ) as? NFTCollectionCell
         else { return NFTCollectionCell() }
+
         let nft = viewModel.nfts[indexPath.row]
         let authorName = viewModel.authorsNames[indexPath.row]
 

@@ -145,6 +145,8 @@ final class NFTCollectionCell: UITableViewCell {
     }
     // MARK: - SetupView
     private func setupView() {
+        contentView.backgroundColor = .NFTColor.white
+
         contentView.addSubview(nftImageView)
         contentView.addSubview(infoStackView)
         contentView.addSubview(priceStackView)
@@ -177,7 +179,8 @@ final class NFTCollectionCell: UITableViewCell {
             infoStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
             priceStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.hInset-40)
+            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                     constant: -Constants.hInset-40)
         ])
     }
 }

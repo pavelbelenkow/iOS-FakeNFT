@@ -26,6 +26,7 @@ final class FavoritesViewController: UIViewController {
         collectionView.isScrollEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = .NFTColor.white
         return collectionView
     }()
 

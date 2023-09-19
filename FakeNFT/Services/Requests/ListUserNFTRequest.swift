@@ -9,15 +9,8 @@ import Foundation
 
 struct ListUserNFTRequest: NetworkRequest {
     let idNFT: String
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "nft/\(idNFT)")
-        }
-    }
 
-    var httpMethod: HttpMethod {
-        get {
-            .get
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "nft/\(idNFT)") }
+
+    var httpMethod: HttpMethod { .get }
 }
