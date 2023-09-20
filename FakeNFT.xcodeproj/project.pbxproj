@@ -43,6 +43,7 @@
 		5910BB482AB07F350038A13B /* SuccessPayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB472AB07F350038A13B /* SuccessPayment.mp3 */; };
 		5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5910BB4B2AB07FC60038A13B /* PaymentResultSoundPlayer.swift */; };
 		5910BB512AB086000038A13B /* FailurePayment.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5910BB502AB086000038A13B /* FailurePayment.mp3 */; };
+		592158A12ABB6C3F00B41027 /* RatingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78E2A9AC20900C4938D /* RatingScreenViewController.swift */; };
 		5923ACEC2A9BCEC300E31FA5 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACEB2A9BCEC300E31FA5 /* UIButton+Extensions.swift */; };
 		5923ACF12A9BDCB500E31FA5 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF02A9BDCB500E31FA5 /* PaymentViewController.swift */; };
 		5923ACF42A9C072000E31FA5 /* RemoveNftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5923ACF32A9C072000E31FA5 /* RemoveNftViewController.swift */; };
@@ -52,7 +53,6 @@
 		592508752AB5F0270037EED9 /* PaymentResultNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592508722AB5F0270037EED9 /* PaymentResultNetworkModel.swift */; };
 		592508762AB5F0270037EED9 /* OrderNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592508732AB5F0270037EED9 /* OrderNetworkModel.swift */; };
 		592508782AB624BE0037EED9 /* NFTNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592508772AB624BE0037EED9 /* NFTNetworkModel.swift */; };
-		5932F7582ABB611C006FB022 /* RatingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CAB78E2A9AC20900C4938D /* RatingScreenViewController.swift */; };
 		5932F75A2ABB62C4006FB022 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5932F7592ABB62C4006FB022 /* .swiftlint.yml */; };
 		594F50B72AA6551600856829 /* ImageCacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F50B62AA6551600856829 /* ImageCacheHelper.swift */; };
 		596D411B2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596D411A2AA0D1D6007F2669 /* UIBlockingProgressHUD.swift */; };
@@ -1128,7 +1128,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5932F7582ABB611C006FB022 /* RatingScreenViewController.swift in Sources */,
 				598072B82AB75913002F52AF /* NFTCollectionViewController.swift in Sources */,
 				6CF8FCA82AA9F936001CF864 /* UIViewController+Extensions.swift in Sources */,
 				6C94E67B2AA0948100D9E593 /* UserCollectionScreenViewController.swift in Sources */,
@@ -1152,6 +1151,7 @@
 				6CA179F72AB356EB0060025C /* NFTScreenViewModel.swift in Sources */,
 				5897B22C2AA0B25E006ADC33 /* UserEditingNetworkService.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				592158A12ABB6C3F00B41027 /* RatingScreenViewController.swift in Sources */,
 				6CD6EA972A9C95E30039D3D4 /* RatingTableViewCell.swift in Sources */,
 				6CA17A082AB356EB0060025C /* CatalogueCell.swift in Sources */,
 				592508782AB624BE0037EED9 /* NFTNetworkModel.swift in Sources */,
