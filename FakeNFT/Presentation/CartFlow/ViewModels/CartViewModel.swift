@@ -5,39 +5,37 @@ import Foundation
 /**
 ``CartViewModelProtocol`` определяет интерфейс для работы с моделью(``CartViewModel``) корзины
  
-Содержит свойства и методы для получения списка ``NFT``, удаления ``NFT``, очистки корзины и т.д.
+Содержит свойства и методы для получения списка ``MyNFT``, удаления ``MyNFT``, очистки корзины и т.д.
 */
 protocol CartViewModelProtocol {
 
-    /// Вычисляемое свойство с актуальными ``NFT`` в заказе
+    /// Вычисляемое свойство с актуальными ``MyNFT`` в заказе
     var listNfts: [MyNFT] { get }
 
     /**
-     Привязывает замыкание к изменению списка ``NFT`` в корзине
-     - Parameter completion: Замыкание, которое вызывается при изменении списка ``NFT`` в корзине
+     Привязывает замыкание к изменению списка ``MyNFT`` в корзине
+     - Parameter completion: Замыкание, которое вызывается при изменении списка ``MyNFT`` в корзине
      */
     func bindNfts(_ completion: @escaping ([MyNFT]) -> Void)
 
     /**
      Получает заказ
-     - Parameters:
-        - completion: Замыкание, которое вызывается при завершении запроса на получение заказа
-            - Если запрос завершился успешно, возвращает отсортированный список ``NFT`` в корзине
-            - Если запрос завершился неудачно, возвращает ошибку
+     - Если запрос завершился успешно, возвращает отсортированный список ``MyNFT`` в корзине
+     - Если запрос завершился неудачно, показывает сообщение об ошибке
      */
-    func getOrder(_ completion: @escaping (Error) -> Void)
+    func getOrder()
 
     /**
-     Получает общую стоимость ``NFT`` в корзине
-     - Returns: Общая стоимость ``NFT`` в корзине
+     Получает общую стоимость ``MyNFT`` в корзине
+     - Returns: Общая стоимость ``MyNFT`` в корзине
      */
     func getNftsTotalValue() -> Float
 
     /**
-     Удаляет ``NFT`` из корзины
+     Удаляет ``MyNFT`` из корзины
      - Parameters:
-        - id: ``NFT/id`` удаляемого ``NFT``
-        - completion: Замыкание, которое вызывается при завершении удаления ``NFT`` из корзины
+        - id: ``MyNFT/id`` удаляемого ``MyNFT``
+        - completion: Замыкание, которое вызывается при завершении удаления ``MyNFT`` из корзины
             - Если удаление прошло успешно, возвращает `nil`
             - Если удаление завершилось неудачно, возвращает ошибку
      */
@@ -91,11 +89,11 @@ final class CartViewModel {
 private extension CartViewModel {
 
     /**
-     Сортирует ``NFT`` в соответствии с текущим типом и направлением сортировки
+     Сортирует ``MyNFT`` в соответствии с текущим типом и направлением сортировки
      
-     По умолчанию, если не был ранее установлен тип и направление сортировки, она будет произведена по ``SortDirection/ascending`` и по ``SortOption/name`` ``NFT``
-     - Parameter nfts: Список ``NFT``, который нужно отсортировать
-     - Returns: Отсортированный список ``NFT``
+     По умолчанию, если не был ранее установлен тип и направление сортировки, она будет произведена по ``SortDirection/ascending`` и по ``SortOption/name`` ``MyNFT``
+     - Parameter nfts: Список ``MyNFT``, который нужно отсортировать
+     - Returns: Отсортированный список ``MyNFT``
      */
     func sortNfts(_ nfts: [MyNFT]) -> [MyNFT] {
         let sortOption = sortStorageManager.sortOption
@@ -115,21 +113,21 @@ extension CartViewModel: CartViewModelProtocol {
         $nfts.bind(action: completion)
     }
 
-    func getOrder(_ completion: @escaping (Error) -> Void) {
+    func getOrder() {
         UIBlockingProgressHUD.show()
 
         cartService.fetchOrder { [weak self] result in
             guard let self else { return }
 
             DispatchQueue.main.async {
-                UIBlockingProgressHUD.dismiss()
 
                 switch result {
                 case .success(let nfts):
                     let sortedNfts = self.sortNfts(nfts)
                     self.nfts = sortedNfts
-                case .failure(let error):
-                    completion(error)
+                    UIBlockingProgressHUD.dismiss()
+                case .failure:
+                    UIBlockingProgressHUD.showFailed(with: Constants.Cart.failedToFetchCart)
                 }
             }
         }
@@ -147,11 +145,22 @@ extension CartViewModel: CartViewModelProtocol {
     }
 
     func removeNft(by id: String, _ completion: @escaping (Error?) -> Void) {
-        if let index = nfts.firstIndex(where: { $0.id == id }) {
-            nfts.remove(at: index)
-            let nfts = nfts.map { $0.id }
-            cartService.putOrder(with: nfts) { error in
-                completion(error)
+        guard let index = nfts.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let nftsIds = nfts
+            .filter { $0.id != id }
+            .map { $0.id }
+
+        cartService.putOrder(with: nftsIds) { error in
+            DispatchQueue.main.async {
+                if let error {
+                    completion(error)
+                } else {
+                    self.nfts.remove(at: index)
+                    completion(nil)
+                }
             }
         }
     }

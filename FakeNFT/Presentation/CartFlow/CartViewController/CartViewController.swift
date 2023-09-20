@@ -213,42 +213,20 @@ private extension CartViewController {
 
 private extension CartViewController {
 
-    /**
-     Отображает диалоговое окно с сообщением об ошибке при получении заказа с ``NFT``, кнопками "Повторить" и "Отменить"
-     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
-     */
-    func showErrorAlert(_ error: Error) {
-        let errorData = NetworkErrorHandler.handleError(error)
-
-        showAlert(
-            title: errorData.title,
-            message: errorData.message
-        ) { [weak self] in
-            UIBlockingProgressHUD.show()
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
-                self?.updateCart()
-                UIBlockingProgressHUD.dismiss()
-            }
-        }
-    }
-
     /// Обновляет данные корзины, получая актуальный заказ с помощью ``CartViewModel/getOrder(_:)``
     func updateCart() {
-        viewModel.getOrder { [weak self] error in
-            self?.showErrorAlert(error)
-        }
+        viewModel.getOrder()
     }
 
-    /// Обновляет надпись с количеством ``NFT`` в корзине
+    /// Обновляет надпись с количеством ``MyNFT`` в корзине
     func updateNftAmountLabel() {
         let nftCount = viewModel.listNfts.count
         nftAmountLabel.text = "\(nftCount) " + Constants.Cart.nftText
     }
 
     /**
-     Форматирует значение общей стоимости ``NFT`` в корзине
-     - Parameter value: Общая стоимость ``NFT`` в корзине
+     Форматирует значение общей стоимости ``MyNFT`` в корзине
+     - Parameter value: Общая стоимость ``MyNFT`` в корзине
      - Returns: Отформатированное значение общей стоимости
      */
     func formatTotalValue(_ value: Float) -> String {

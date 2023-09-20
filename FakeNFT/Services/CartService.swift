@@ -146,8 +146,8 @@ extension CartService: CartServiceProtocol {
                         switch result {
                         case .success(let fetchedNfts):
                             completion(.success(fetchedNfts))
-                        case .failure(let error):
-                            completion(.failure(error))
+                        case .failure:
+                            print("Failed to fetch nfts from order")
                         }
                     }
                 } catch {
