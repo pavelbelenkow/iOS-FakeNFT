@@ -47,7 +47,7 @@ protocol CartViewModelProtocol {
     func clearCart()
 
     /**
-     Сортирует ``NFT`` в корзине
+     Сортирует ``MyNFT`` в корзине
      - Parameter option: Тип ``SortOption`` сортировки
      */
     func sortBy(option: SortOption)
@@ -58,13 +58,13 @@ protocol CartViewModelProtocol {
 /**
 ``CartViewModel`` - это вью-модель корзины
  
-Cодержит методы для работы с корзиной, такие как получение заказа, удаление ``NFT`` из корзины, очистка корзины и т.д.
+Cодержит методы для работы с корзиной, такие как получение заказа, удаление ``MyNFT`` из корзины, очистка корзины и т.д.
 */
 final class CartViewModel {
 
     // MARK: - Properties
 
-    /// Наблюдаемое свойство списка ``NFT`` в корзине
+    /// Наблюдаемое свойство списка ``MyNFT`` в корзине
     @Observable var nfts: [MyNFT]
 
     /// Сетевой сервис корзины

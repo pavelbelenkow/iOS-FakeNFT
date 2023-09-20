@@ -5,19 +5,19 @@ import Foundation
 /**
  Протокол ``CartServiceProtocol`` определяет методы для работы с объектом ``CartService``
  
- ``CartServiceProtocol`` содержит методы для получения списка ``NFT`` и отправки заказа
+ ``CartServiceProtocol`` содержит методы для получения списка ``MyNFT`` и отправки заказа
  */
 protocol CartServiceProtocol {
     /**
-     Получает список ``NFT``, необходимых для оформления заказа
-     - Parameter completion: Блок кода, который будет выполнен после получения списка ``NFT``
+     Получает список ``MyNFT``, необходимых для оформления заказа
+     - Parameter completion: Блок кода, который будет выполнен после получения списка ``MyNFT``
      */
     func fetchOrder(_ completion: @escaping (Result<[MyNFT], Error>) -> Void)
 
     /**
      Отправляет заказ на сервер
      - Parameters:
-        - nfts: Массив строк, содержащий ``NFT/id``, которые необходимо заказать
+        - nfts: Массив строк, содержащий ``MyNFT/id``, которые необходимо заказать
         - completion: Блок кода, который будет выполнен после отправки заказа
      */
     func putOrder(with nfts: [String], _ completion: @escaping (Error?) -> Void)
@@ -26,9 +26,9 @@ protocol CartServiceProtocol {
 // MARK: - CartService class
 
 /**
- Класс ``CartService`` предоставляет методы для получения списка ``NFT`` и отправки заказа
+ Класс ``CartService`` предоставляет методы для получения списка ``MyNFT`` и отправки заказа
  
- ``CartService`` содержит методы для получения списка ``NFT`` и отправки заказа с помощью сетевых запросов
+ ``CartService`` содержит методы для получения списка ``MyNFT`` и отправки заказа с помощью сетевых запросов
  */
 final class CartService {
 
@@ -37,10 +37,10 @@ final class CartService {
     /// Декодер для декодирования данных в формате JSON
     private let decoder = JSONDecoder()
 
-    /// Массив ``NFT``, полученных в результате запроса
+    /// Массив ``MyNFT``, полученных в результате запроса
     private var nfts: [MyNFT] = []
 
-    /// Кэш для хранения полученных ``NFT``
+    /// Кэш для хранения полученных ``MyNFT``
     private var nftsCache: [String: MyNFT] = [:]
 
     /// Сетевой клиент для отправки сетевых запросов
@@ -62,9 +62,9 @@ final class CartService {
 private extension CartService {
 
     /**
-     Конвертирует сетевую модель ``NFTNetworkModel`` в модель ``NFT`` приложения
+     Конвертирует сетевую модель ``NFTNetworkModel`` в модель ``MyNFT`` приложения
      - Parameter model: Сетевая модель
-     - Returns: Модель ``NFT`` приложения
+     - Returns: Модель ``MyNFT`` приложения
      */
     func convert(from model: NFTNetworkModel) -> MyNFT {
         MyNFT(
@@ -77,10 +77,10 @@ private extension CartService {
     }
 
     /**
-     Получает массив ``NFT`` по массиву ``OrderNetworkModel/nfts``
+     Получает массив ``MyNFT`` по массиву ``OrderNetworkModel/nfts``
      - Parameters:
-        - ids: Массив строк, содержащий ``NFT/id``, которые необходимо получить
-        - completion: Блок кода, который будет выполнен после получения массива ``NFT``
+        - ids: Массив строк, содержащий ``MyNFT/id``, которые необходимо получить
+        - completion: Блок кода, который будет выполнен после получения массива ``MyNFT``
      */
     func fetchNfts(by ids: [String], completion: @escaping (Result<[MyNFT], Error>) -> Void) {
         nfts.removeAll()

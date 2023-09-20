@@ -7,6 +7,6 @@ import Foundation
  */
 struct OrderNetworkModel: Codable {
 
-    /// Массив ``NFT/id`` ``NFT``, входящих в заказ
+    /// Массив ``MyNFT/id`` ``MyNFT``, входящих в заказ
     let nfts: [String]
 }

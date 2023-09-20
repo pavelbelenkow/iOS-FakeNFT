@@ -11,7 +11,7 @@ enum SortOption: String {
     /**
      Сравнительная функция для сортировки
      - Parameter sortDirection: Направление сортировки
-     - Returns: Функция, которая принимает два ``NFT`` и возвращает **true**, если первый элемент должен быть раньше в отсортированном массиве
+     - Returns: Функция, которая принимает два ``MyNFT`` и возвращает **true**, если первый элемент должен быть раньше в отсортированном массиве
      */
     func compareFunction(sortDirection: SortDirection) -> (MyNFT, MyNFT) -> Bool {
         switch self {

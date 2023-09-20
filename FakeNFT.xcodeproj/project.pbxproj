@@ -93,7 +93,6 @@
 		59D1BE732AA8CD93008EC168 /* OrderPaymentResultRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1BE722AA8CD93008EC168 /* OrderPaymentResultRequest.swift */; };
 		59D1BE792AA8EF11008EC168 /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */; };
 		59D8CBD02A9EA5F30075038E /* OrderRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8CBCF2A9EA5F30075038E /* OrderRequests.swift */; };
-		59DEE05A2AB11B760064603F /* NetworkErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */; };
 		6C15C1812AAB4B4000643912 /* ListLikedNFTRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C15C1802AAB4B4000643912 /* ListLikedNFTRequest.swift */; };
 		6C15C1832AAB4C7700643912 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C15C1822AAB4C7700643912 /* Profile.swift */; };
 		6C2B92A82A9CD13F0091C7D9 /* ListUsersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B92A72A9CD13F0091C7D9 /* ListUsersRequest.swift */; };
@@ -261,7 +260,6 @@
 		59D1BE722AA8CD93008EC168 /* OrderPaymentResultRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPaymentResultRequest.swift; sourceTree = "<group>"; };
 		59D1BE782AA8EF11008EC168 /* PaymentResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
 		59D8CBCF2A9EA5F30075038E /* OrderRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequests.swift; sourceTree = "<group>"; };
-		59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkErrorHandler.swift; sourceTree = "<group>"; };
 		6C15C1802AAB4B4000643912 /* ListLikedNFTRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLikedNFTRequest.swift; sourceTree = "<group>"; };
 		6C15C1822AAB4C7700643912 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		6C2B92A72A9CD13F0091C7D9 /* ListUsersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListUsersRequest.swift; sourceTree = "<group>"; };
@@ -492,7 +490,6 @@
 				3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */,
 				3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */,
 				3F6806D429CBBEC700B4F915 /* NetworkTask.swift */,
-				59DEE0592AB11B760064603F /* NetworkErrorHandler.swift */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -1216,7 +1213,6 @@
 				5910BB4C2AB07FC60038A13B /* PaymentResultSoundPlayer.swift in Sources */,
 				59D1BE792AA8EF11008EC168 /* PaymentResultViewController.swift in Sources */,
 				592508762AB5F0270037EED9 /* OrderNetworkModel.swift in Sources */,
-				59DEE05A2AB11B760064603F /* NetworkErrorHandler.swift in Sources */,
 				5897B2282AA0A6C7006ADC33 /* UserEditing.swift in Sources */,
 				5897B22A2AA0B134006ADC33 /* UserEditingRequest.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,

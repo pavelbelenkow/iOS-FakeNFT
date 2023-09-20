@@ -3,9 +3,9 @@ import UIKit
 // MARK: - RemoveNftViewController class
 
 /**
- ``RemoveNftViewController`` - это контроллер, который отображает экран удаления ``NFT`` из корзины
+ ``RemoveNftViewController`` - это контроллер, который отображает экран удаления ``MyNFT`` из корзины
 
- Содержит ``NFT/image``, кнопки для удаления ``NFT`` и возврата в ``CartViewController`` и т.д.
+ Содержит ``MyNFT/image``, кнопки для удаления ``MyNFT`` и возврата в ``CartViewController`` и т.д.
  */
 final class RemoveNftViewController: UIViewController {
 
@@ -18,7 +18,7 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
 
-    /// Вертикальный стек-контейнер с информацией об удаляемом ``NFT`` и кнопками
+    /// Вертикальный стек-контейнер с информацией об удаляемом ``MyNFT`` и кнопками
     private lazy var nftContainerView: UIStackView = {
         let view = UIStackView()
         view.backgroundColor = .clear
@@ -30,14 +30,14 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
 
-    /// Контейнер для изображения ``NFT`` и надписи подтверждения удаления
+    /// Контейнер для изображения ``MyNFT`` и надписи подтверждения удаления
     private lazy var detailNftView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    /// Изображение ``NFT``
+    /// Изображение ``MyNFT``
     private lazy var nftImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -47,7 +47,7 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
 
-    /// Надпись подтверждения удаления ``NFT``
+    /// Надпись подтверждения удаления ``MyNFT``
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.Cart.removeFromCart
@@ -69,7 +69,7 @@ final class RemoveNftViewController: UIViewController {
         return view
     }()
 
-    /// Кнопка для подтверждения удаления ``NFT`` из корзины
+    /// Кнопка для подтверждения удаления ``MyNFT`` из корзины
     private lazy var removeNftButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(
@@ -85,7 +85,7 @@ final class RemoveNftViewController: UIViewController {
         return button
     }()
 
-    /// Кнопка для отмены подтверждения удаления ``NFT`` из корзины
+    /// Кнопка для отмены подтверждения удаления ``MyNFT`` из корзины
     private lazy var cancelActionButton: UIButton = {
         let button = UIButton(type: .system)
         button.configure(with: .other, for: Constants.Cart.back)
@@ -100,7 +100,7 @@ final class RemoveNftViewController: UIViewController {
     /// Вью-модель корзины
     private let viewModel: CartViewModelProtocol
 
-    /// Удаляемый ``NFT``
+    /// Удаляемый ``MyNFT``
     private var nft: MyNFT?
 
     // MARK: - Initializers
@@ -109,7 +109,7 @@ final class RemoveNftViewController: UIViewController {
      Создает новый объект ``RemoveNftViewController`` с указанной вью-моделью корзины
      - Parameters:
         - viewModel: ``CartViewModelProtocol`` корзины
-        - nft: ``NFT``, который нужно удалить
+        - nft: ``MyNFT``, который нужно удалить
      */
     init(viewModel: CartViewModelProtocol, nft: MyNFT) {
         self.viewModel = viewModel
@@ -201,7 +201,7 @@ private extension RemoveNftViewController {
         }
     }
 
-    /// Загружает и кэширует изображение ``NFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
+    /// Загружает и кэширует изображение ``MyNFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
     func setNftImage() {
         guard let nft else { return }
         let imageURL = URL(string: nft.image)

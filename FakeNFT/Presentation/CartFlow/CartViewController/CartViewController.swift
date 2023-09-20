@@ -3,15 +3,15 @@ import UIKit
 // MARK: - CartViewController class
 
 /**
-``CartViewController`` - это контроллер, отображающий ``NFT`` в корзине и позволяющий пользователю посмотреть заказ
+``CartViewController`` - это контроллер, отображающий ``MyNFT`` в корзине и позволяющий пользователю посмотреть заказ
  
-Cодержит ``CartTableView`` с ``NFT``, кнопку сортировки, информацию о количестве ``NFT`` и их общей стоимости, а также кнопку для перехода на экран оплаты заказа и т.д.
+Cодержит ``CartTableView`` с ``MyNFT``, кнопку сортировки, информацию о количестве ``MyNFT`` и их общей стоимости, а также кнопку для перехода на экран оплаты заказа и т.д.
 */
 final class CartViewController: UIViewController {
 
     // MARK: - Properties
 
-    /// Кнопка сортировки ``NFT``
+    /// Кнопка сортировки ``MyNFT``
     private lazy var sortingButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage.NFTIcon.sorting, for: .normal)
@@ -24,7 +24,7 @@ final class CartViewController: UIViewController {
         return button
     }()
 
-    /// Элемент управления для обновления заказа с ``NFT``
+    /// Элемент управления для обновления заказа с ``MyNFT``
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
         control.addTarget(
@@ -35,7 +35,7 @@ final class CartViewController: UIViewController {
         return control
     }()
 
-    /// Таблица со списком ``NFT`` в заказе
+    /// Таблица со списком ``MyNFT`` в заказе
     private lazy var cartTableView: UITableView = {
         let view = CartTableView(viewModel: viewModel, viewController: self)
         view.refreshControl = refreshControl
@@ -73,7 +73,7 @@ final class CartViewController: UIViewController {
         return view
     }()
 
-    /// Надпись о количестве ``NFT`` в корзине
+    /// Надпись о количестве ``MyNFT`` в корзине
     private lazy var nftAmountLabel: UILabel = {
         let label = UILabel()
         label.text = "0 " + Constants.Cart.nftText
@@ -83,7 +83,7 @@ final class CartViewController: UIViewController {
         return label
     }()
 
-    /// Надпись об общей стоимости ``NFT`` в корзине
+    /// Надпись об общей стоимости ``MyNFT`` в корзине
     private lazy var totalValueLabel: UILabel = {
         let label = UILabel()
         label.text = "00,00 " + Constants.Cart.currency
@@ -258,7 +258,7 @@ private extension CartViewController {
         return valueString + " " + Constants.Cart.currency
     }
 
-    /// Обновляет надпись с общей стоимостью ``NFT`` в корзине
+    /// Обновляет надпись с общей стоимостью ``MyNFT`` в корзине
     func updateTotalValueLabel() {
         let totalValue = viewModel.getNftsTotalValue()
         let formattedTotalValue = formatTotalValue(totalValue)
@@ -278,7 +278,7 @@ private extension CartViewController {
         updateTotalValueLabel()
     }
 
-    /// Обновляет интерфейс после привязки списка ``NFT`` в корзине к вью-модели
+    /// Обновляет интерфейс после привязки списка ``MyNFT`` в корзине к вью-модели
     func updateUIAfterBindingNfts() {
         UIBlockingProgressHUD.dismiss()
 
@@ -299,7 +299,7 @@ private extension CartViewController {
         }
     }
 
-    /// Скроллит ``CartTableView`` в начало списка ``NFT`` в корзине, если она не находится там уже
+    /// Скроллит ``CartTableView`` в начало списка ``MyNFT`` в корзине, если она не находится там уже
     func scrollToTopIfNeeded() {
         let topIndexPath = IndexPath(row: 0, section: 0)
         if cartTableView.contentOffset.y > 0 {
