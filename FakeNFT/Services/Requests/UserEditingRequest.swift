@@ -15,21 +15,9 @@ struct UserEditingRequest: NetworkRequest {
         self.userToUpdate = userToUpdate
     }
 
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "profile/1")
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "profile/1") }
 
-    var httpMethod: HttpMethod {
-        get {
-            .put
-        }
-    }
+    var httpMethod: HttpMethod { .put }
 
-    var dto: Encodable? {
-        get {
-            userToUpdate
-        }
-    }
+    var dto: Encodable? { userToUpdate }
 }

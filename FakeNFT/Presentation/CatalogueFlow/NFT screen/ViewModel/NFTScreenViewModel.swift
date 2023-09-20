@@ -23,14 +23,14 @@ final class NFTScreenViewModel {
     private let nftQueue = DispatchQueue(label: "com.nftScreen.queue", attributes: .concurrent)
     private let mainQueue = DispatchQueue.main
 
-    //MARK: Initialisers
+    // MARK: Initialisers
     init(author: String) {
         self.author = author
     }
 
-    //MARK: Internal Methods
+    // MARK: Internal Methods
     func getNFTCollection(completion: @escaping (Result<Void, Error>) -> Void) {
-        fetchNFTCollectionData() { result in
+        fetchNFTCollectionData { result in
             switch result {
             case .success(let model):
                 self.fetchOrderedNFTs(nftCollection: model) { result in
@@ -61,7 +61,7 @@ final class NFTScreenViewModel {
             case .success(let model):
                 self.sendFavourites(favouritesModel: model, id: id) { result in
                     switch result {
-                    case .success( _):
+                    case .success:
                         completion(.success(()))
                     case .failure(let error):
                         completion(.failure(error))
@@ -80,7 +80,7 @@ final class NFTScreenViewModel {
             case .success(let model):
                 self.sendOrders(id: id, ordersModel: model) { result in
                     switch result {
-                    case .success( _):
+                    case .success:
                         completion(.success(()))
                     case .failure(let error):
                         completion(.failure(error))
@@ -140,7 +140,7 @@ private extension NFTScreenViewModel {
                 self.mainQueue.async {
                     switch result {
                     case .success(let model):
-                        completion(.success(model.filter( { $0.author == self.author } )))
+                        completion(.success(model.filter({ $0.author == self.author })))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -272,7 +272,7 @@ private extension NFTScreenViewModel {
             self.networkClient.send(request: putRequest) { result in
                 self.mainQueue.async {
                     switch result {
-                    case .success( _):
+                    case .success:
                         if favouritesModel.isLiked {
                             for index in 0..<self.nftCollection.count {
                                 if self.nftCollection[index].id == id {
@@ -354,7 +354,7 @@ private extension NFTScreenViewModel {
             self.networkClient.send(request: request) { result in
                 self.mainQueue.async {
                     switch result {
-                    case .success( _):
+                    case .success:
                         if ordersModel.isOrdered {
                             for index in 0..<self.nftCollection.count {
                                 if self.nftCollection[index].id == id {

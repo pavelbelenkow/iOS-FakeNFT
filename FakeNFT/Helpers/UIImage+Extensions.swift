@@ -37,7 +37,7 @@ extension UIImage {
         static let successPaymentResult = UIImage(named: "SuccessPaymentResult") ?? UIImage(systemName: "checkmark.circle")!
         static let failurePaymentResult = UIImage(named: "FailurePaymentResult") ?? UIImage(systemName: "xmark.circle")!
     }
-    
+
     class func colorForTabBar(color: UIColor) -> UIImage {
         let rect = CGRectMake(
             0.0,

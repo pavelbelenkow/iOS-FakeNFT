@@ -8,15 +8,7 @@ struct UserInfoRequest: NetworkRequest {
         self.id = id
     }
 
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "users/\(id)")
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "users/\(id)") }
 
-    var httpMethod: HttpMethod {
-        get {
-            .get
-        }
-    }
+    var httpMethod: HttpMethod { .get }
 }

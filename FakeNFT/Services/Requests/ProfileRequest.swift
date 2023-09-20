@@ -8,15 +8,7 @@ struct ProfileRequest: NetworkRequest {
         self.id = id
     }
 
-    var endpoint: URL? {
-        get {
-            URL(string: self.baseEndpoint + "profile/\(id)")
-        }
-    }
+    var endpoint: URL? { URL(string: self.baseEndpoint + "profile/\(id)") }
 
-    var httpMethod: HttpMethod {
-        get {
-            .get
-        }
-    }
+    var httpMethod: HttpMethod { .get }
 }

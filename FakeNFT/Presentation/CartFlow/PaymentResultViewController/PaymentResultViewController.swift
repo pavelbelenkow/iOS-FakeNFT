@@ -3,7 +3,8 @@ import UIKit
 // MARK: - PaymentResultViewController class
 
 /**
- ``PaymentResultViewController`` - это контроллер, который отображает результат оплаты заказа и позволяет пользователю вернуться в корзину или перейти в каталог
+ ``PaymentResultViewController`` - это контроллер, который отображает результат оплаты заказа и
+ позволяет пользователю вернуться в корзину или перейти в каталог
  
  В зависимости от результата оплаты, на экране отображается изображение, лейбл и кнопка для перехода к каталогу или повторной оплаты.
  Также класс обрабатывает нажатие на кнопку и передает результат оплаты в ``OrderPaymentViewModel``.
@@ -75,7 +76,8 @@ final class PaymentResultViewController: UIViewController {
     /**
      Создает новый объект ``PaymentResultViewController`` с указанной вью-моделью результата оплаты заказа
      
-     В инициализаторе также создаются экземпляры генератора тактильной обратной связи `UINotificationFeedbackGenerator` и проигрывателя звука результата оплаты ``PaymentResultSoundPlayer``
+     В инициализаторе также создаются экземпляры генератора тактильной обратной связи `UINotificationFeedbackGenerator` и
+     проигрывателя звука результата оплаты ``PaymentResultSoundPlayer``
      - Parameters:
         - isSuccess: Флаг успешности оплаты - ``PaymentResultNetworkModel/success``
         - viewModel: ``OrderPaymentViewModelProtocol`` для обработки результата оплаты

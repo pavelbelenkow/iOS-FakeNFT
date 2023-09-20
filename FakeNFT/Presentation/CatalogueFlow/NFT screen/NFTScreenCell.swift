@@ -118,7 +118,7 @@ private extension NFTScreenCell {
             switch result {
             case .success(()):
                 self.likeButton.layer.removeAllAnimations()
-            case .failure( _):
+            case .failure:
                 self.likeButton.layer.removeAllAnimations()
                 self.showError(button: self.likeButton)
             }
@@ -132,7 +132,7 @@ private extension NFTScreenCell {
             switch result {
             case .success(()):
                 self.cartButton.layer.removeAllAnimations()
-            case .failure( _):
+            case .failure:
                 self.cartButton.layer.removeAllAnimations()
                 self.showError(button: self.cartButton)
             }

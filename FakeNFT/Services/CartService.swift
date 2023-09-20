@@ -50,7 +50,8 @@ final class CartService {
 
     /**
      Инициализирует объект ``CartService``
-     - Parameter networkClient: Сетевой клиент для отправки сетевых запросов (необязательный параметр, по умолчанию - ``DefaultNetworkClient``)
+     - Parameter networkClient: Сетевой клиент для отправки сетевых запросов (необязательный параметр,
+     по умолчанию - ``DefaultNetworkClient``)
      */
     init(networkClient: NetworkClient = DefaultNetworkClient()) {
         self.networkClient = networkClient

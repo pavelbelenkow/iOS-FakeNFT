@@ -201,7 +201,10 @@ private extension RemoveNftViewController {
         }
     }
 
-    /// Загружает и кэширует изображение ``MyNFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
+    /**
+     Загружает и кэширует изображение ``MyNFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``,
+     и устанавливает его в `nftImageView`
+     */
     func setNftImage() {
         guard let nft else { return }
         let imageURL = URL(string: nft.image)

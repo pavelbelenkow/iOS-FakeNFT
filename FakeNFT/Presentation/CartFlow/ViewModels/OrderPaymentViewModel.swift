@@ -5,7 +5,8 @@ import Foundation
 /**
 ``OrderPaymentViewModelProtocol`` определяет интерфейс для работы с моделью(``OrderPaymentViewModel``) оплаты заказа
  
- Содержит свойства и методы для получения списка ``Currency``, получения результата оплаты заказа(``PaymentResultNetworkModel/success``) и т.д.
+ Содержит свойства и методы для получения списка ``Currency``,
+ получения результата оплаты заказа(``PaymentResultNetworkModel/success``) и т.д.
 */
 protocol OrderPaymentViewModelProtocol {
 

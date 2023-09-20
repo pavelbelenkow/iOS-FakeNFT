@@ -82,11 +82,11 @@ final class CatalogueViewController: UIViewController {
 
     private func getCatalogue() {
         ProgressHUD.show()
-        catalogueViewModel.getCatalogue() { result in
+        catalogueViewModel.getCatalogue { result in
             switch result {
             case .success(()):
                 ProgressHUD.dismiss()
-            case .failure( _):
+            case .failure:
                 ProgressHUD.showFailed()
                 let errorView = ErrorView()
                 self.view = errorView

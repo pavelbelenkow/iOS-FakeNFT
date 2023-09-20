@@ -196,7 +196,8 @@ private extension CartCell {
 private extension CartCell {
 
     /**
-     Загружает и кэширует изображение ``MyNFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``, и устанавливает его в `nftImageView`
+     Загружает и кэширует изображение ``MyNFT`` с помощью ``NFTImageCache/loadAndCacheImage(for:with:)``,
+     и устанавливает его в `nftImageView`
      - Parameter image: Ссылка на ``MyNFT/image``
      */
     func setImage(from image: String) {
@@ -207,7 +208,8 @@ private extension CartCell {
     /**
      Создает `UIImageView` для отображения рейтинга ``MyNFT``
      
-     При вызове метода для каждой ячейки с ``MyNFT`` очищается `ratingStackView` и снова заполняется при помощи `UIImageView` желтыми или прозрачными звездами в зависимости от рейтинга ``MyNFT``
+     При вызове метода для каждой ячейки с ``MyNFT`` очищается `ratingStackView` и снова заполняется при помощи `UIImageView`
+     желтыми или прозрачными звездами в зависимости от рейтинга ``MyNFT``
      - Parameter rating: Значение ``NFT/rating``
      */
     func setRating(from rating: Int) {
