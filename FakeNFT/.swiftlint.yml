@@ -1,0 +1,13 @@
+disabled_rules:
+    - todo
+    - identifier_name
+    - function_body_length
+    - for_where
+    - void_function_in_ternary
+    - multiple_closures_with_trailing_closure
+    - closure_parameter_position
+    
+line_length:
+    warning: 140
+file_length:
+    warning: 500
