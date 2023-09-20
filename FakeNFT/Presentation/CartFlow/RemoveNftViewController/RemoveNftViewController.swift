@@ -209,26 +209,11 @@ private extension RemoveNftViewController {
     }
 
     /**
-     Отображает диалоговое окно с сообщением об ошибке при запросе удаления ``NFT``, кнопками "Повторить" и "Отменить"
-     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
-     */
-    func showErrorAlert(_ error: Error) {
-        let errorData = NetworkErrorHandler.handleError(error)
-
-        showAlert(
-            title: errorData.title,
-            message: errorData.message
-        ) { [weak self] in
-            self?.removeNftFromCart()
-        }
-    }
-
-    /**
-     Метод, который вызывается при нажатии на кнопку подтверждения удаления ``NFT`` из корзины
+     Метод, который вызывается при нажатии на кнопку подтверждения удаления ``MyNFT`` из корзины
      
      Вызывает метод ``CartViewModelProtocol/removeNft(by:_:)``, который будет выполнять запрос ``CartServiceProtocol/putOrder(with:_:)``
-      - В случае успешности запроса - ``NFT`` будет удалена из ``CartTableView`` и в ``OrderNetworkModel`` на сервере
-      - В случае неуспешности запроса - будет показано диалоговое окно с предложением повторить запрос на удаление или отменить действие
+      - В случае успешности запроса - ``MyNFT`` будет удалена из ``CartTableView`` и в ``OrderNetworkModel`` на сервере
+      - В случае неуспешности запроса - будет показано диалоговое окно с ошибкой удаления
      */
     @objc func removeNftFromCart() {
         guard let nft else { return }
@@ -237,17 +222,20 @@ private extension RemoveNftViewController {
             guard let self else { return }
 
             if let error {
-                self.showErrorAlert(error)
+                UIBlockingProgressHUD.showError(
+                    with: Constants.Cart.failedToRemoveNft,
+                    icon: .exclamation
+                )
+                dismiss(animated: true)
+                print(error)
             } else {
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true)
-                }
+                dismiss(animated: true)
             }
         }
     }
 
     /**
-     Обрабатывает нажатие на кнопку отмены подтверждения удаления ``NFT`` из корзины
+     Обрабатывает нажатие на кнопку отмены подтверждения удаления ``MyNFT`` из корзины
      
      Cкрывает ``RemoveNftViewController``
      */
