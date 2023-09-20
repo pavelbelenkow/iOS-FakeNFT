@@ -20,12 +20,10 @@ protocol OrderPaymentViewModelProtocol {
 
     /**
      Получает список валют для оплаты
-     - Parameters:
-        - completion: Замыкание, которое вызывается при завершении запроса на получение списка валют:
-            - Если запрос завершился успешно, возвращает список валют
-            - Если запрос завершился неудачно, возвращает ошибку
+     - Если запрос завершился успешно, возвращает список валют
+     - Если запрос завершился неудачно, возвращает сообщение об ошибке
      */
-    func getCurrencies(_ completion: @escaping (Error) -> Void)
+    func getCurrencies()
 
     /**
      Получает результат оплаты заказа.
@@ -86,20 +84,20 @@ extension OrderPaymentViewModel: OrderPaymentViewModelProtocol {
         $currencies.bind(action: completion)
     }
 
-    func getCurrencies(_ completion: @escaping (Error) -> Void) {
+    func getCurrencies() {
         UIBlockingProgressHUD.show()
 
         orderPaymentService.fetchCurrencies { [weak self] result in
             guard let self else { return }
 
             DispatchQueue.main.async {
-                UIBlockingProgressHUD.dismiss()
 
                 switch result {
                 case .success(let currencies):
                     self.currencies = currencies
-                case .failure(let error):
-                    completion(error)
+                    UIBlockingProgressHUD.dismiss()
+                case .failure:
+                    UIBlockingProgressHUD.showFailed(with: Constants.Cart.failedToFetchCurrencies)
                 }
             }
         }
@@ -111,11 +109,11 @@ extension OrderPaymentViewModel: OrderPaymentViewModelProtocol {
         orderPaymentService.fetchOrderPaymentResult(by: currencyId) { result in
 
             DispatchQueue.main.async {
-                UIBlockingProgressHUD.dismiss()
 
                 switch result {
                 case .success(let isSuccess):
                     completion(.success(isSuccess))
+                    UIBlockingProgressHUD.dismiss()
                 case .failure(let error):
                     completion(.failure(error))
                 }

@@ -206,51 +206,17 @@ private extension PaymentViewController {
 
 private extension PaymentViewController {
 
-    /**
-     Отображает диалоговое окно с сообщением об ошибке при получении списка валют, и кнопками "Повторить" и "Отменить"
-     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
-     */
-    func showCurrenciesErrorAlert(_ error: Error) {
-        let errorData = NetworkErrorHandler.handleError(error)
-
-        showAlert(
-            title: errorData.title,
-            message: errorData.message
-        ) { [weak self] in
-            UIBlockingProgressHUD.show()
-
-            DispatchQueue.main.async {
-                self?.updateCurrencies()
-                UIBlockingProgressHUD.dismiss()
-            }
-        }
-    }
-
     /// Обновляет данные коллекции, получая актуальный список валют
     func updateCurrencies() {
-        viewModel.getCurrencies { [weak self] error in
-            self?.showCurrenciesErrorAlert(error)
-        }
+        viewModel.getCurrencies()
     }
 
     /// Связывает вью-модель с контроллером, обновляя коллекцию с списком доступных валют
     func bindViewModel() {
-        UIBlockingProgressHUD.show()
-
         viewModel.bindCurrencies { [weak self] _ in
             guard let self else { return }
             self.currencyCollectionView.reloadData()
-            UIBlockingProgressHUD.dismiss()
         }
-    }
-
-    /// Отображает диалоговое окно с сообщением об ошибке и кнопкой "OK", если пользователь не выбрал валюту для оплаты
-    func showUnselectedCurrencyAlert() {
-        showAlert(
-            title: Constants.Cart.unselectedPaymentMethod,
-            message: Constants.Cart.selectCurrencyForPayment,
-            retryTitle: Constants.Cart.ok
-        )
     }
 
     /**
@@ -262,26 +228,6 @@ private extension PaymentViewController {
         viewController.modalPresentationStyle = .overFullScreen
         viewController.modalTransitionStyle = .crossDissolve
         navigationController?.present(viewController, animated: true)
-    }
-
-    /**
-     Отображает диалоговое окно с сообщением об ошибке при запросе на оплату заказа, кнопками "Повторить" и "Отменить"
-     - Parameter error: Ошибка, которая будет отображена в диалоговом окне
-     */
-    func showPaymentErrorAlert(_ error: Error) {
-        let errorData = NetworkErrorHandler.handleError(error)
-
-        showAlert(
-            title: errorData.title,
-            message: errorData.message
-        ) { [weak self] in
-            UIBlockingProgressHUD.show()
-
-            DispatchQueue.main.async {
-                self?.paymentButtonTapped()
-                UIBlockingProgressHUD.dismiss()
-            }
-        }
     }
 
     /// Обрабатывает нажатие на шеврон в навигационном баре и возвращает на ``CartViewController``
@@ -302,15 +248,13 @@ private extension PaymentViewController {
     /**
      Обрабатывает нажатие на ссылку пользовательского соглашения
      
-     Показывает пользовательское соглашение в контроллере просмотра Safari
+     Показывает пользовательское соглашение в контроллере просмотра ``WebViewVC``
      */
     @objc func userAgreementButtonTapped() {
-        guard let url = URL(string: Constants.Cart.userAgreementURL) else {
-            return
-        }
+        let webViewVC = WebViewVC()
+        webViewVC.urlString = Constants.Cart.userAgreementURL
 
-        let safariViewController = SFSafariViewController(url: url)
-        navigationController?.present(safariViewController, animated: true)
+        navigationController?.pushViewController(webViewVC, animated: true)
     }
 
     /**
@@ -319,11 +263,14 @@ private extension PaymentViewController {
      - Если пользователь уже выбрал валюту для оплаты, то метод получает результат оплаты заказа с помощью выбранной валюты:
         - Если оплата прошла успешно, метод отображает ``PaymentResultViewController``
         - Если произошла ошибка при оплате, метод отображает сообщение с информацией об ошибке
-     - Если пользователь не выбрал валюту для оплаты, метод отображает диалоговое окно с просьбой выбрать валюту
+     - Если пользователь не выбрал валюту для оплаты, метод отображает диалоговое окно с просьбой выбрать способ оплаты
      */
     @objc func paymentButtonTapped() {
         guard let selectedIndexPath = currencyCollectionView.selectedIndexPath else {
-            showUnselectedCurrencyAlert()
+            UIBlockingProgressHUD.showError(
+                with: Constants.Cart.selectCurrencyForPayment,
+                icon: .card
+            )
             return
         }
 
@@ -335,8 +282,11 @@ private extension PaymentViewController {
             switch result {
             case .success(let isSuccess):
                 self.showViewController(isSuccess)
-            case .failure(let error):
-                self.showPaymentErrorAlert(error)
+            case .failure:
+                UIBlockingProgressHUD.showError(
+                    with: Constants.Cart.failedToProceedPayment,
+                    icon: .exclamation
+                )
             }
         }
     }
