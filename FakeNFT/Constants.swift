@@ -64,13 +64,4 @@ enum Constants {
             self.paddingWidth = leftInset + rightInset + CGFloat(cellCount - 1) * cellSpacing
         }
     }
-
-    struct ErrorMessage {
-        static let networkErrorTitle = "Ошибка сети"
-        static let networkErrorMessage = "Проверьте подключение к сети и попробуйте еще раз"
-        static let serverErrorTitle = "Ошибка сервера"
-        static let serverErrorMessage = "Пожалуйста, попробуйте позже"
-        static let unknownErrorTitle = "Неизвестная ошибка"
-        static let unknownErrorMessage = "Произошла неизвестная ошибка. Пожалуйста, попробуйте еще раз"
-    }
 }
