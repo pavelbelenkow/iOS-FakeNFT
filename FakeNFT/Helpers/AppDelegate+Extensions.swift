@@ -28,6 +28,10 @@ extension AppDelegate {
                     alpha: 0.0
                 )
             )
+            tabBarApperance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.NFTColor.blue]
+            tabBarApperance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.NFTColor.black]
+            tabBarApperance.stackedLayoutAppearance.normal.iconColor = UIColor.NFTColor.black
+            tabBarApperance.stackedLayoutAppearance.selected.iconColor = UIColor.NFTColor.blue
             UITabBar.appearance().scrollEdgeAppearance = tabBarApperance
             UITabBar.appearance().standardAppearance = tabBarApperance
         } else {

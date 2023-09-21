@@ -4,7 +4,6 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.unselectedItemTintColor = UIColor.NFTColor.black
 
         let cartViewModel = CartViewModel()
 
