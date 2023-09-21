@@ -57,8 +57,6 @@ final class NFTScreenCell: UICollectionViewCell {
         return label
     }()
 
-    private var cellModel: NFTModel?
-
     // MARK: Internal Properties
     weak var delegate: NFTCellDelegate?
 
@@ -87,7 +85,6 @@ final class NFTScreenCell: UICollectionViewCell {
     func configCell(with model: NFTModel?, delegate: NFTCellDelegate) {
         guard let model else { return }
 
-        cellModel = model
         setRatingImage(rating: model.rating)
         nameLabel.text = model.name
         priceLabel.text = "\(model.price) ETH"
@@ -131,17 +128,10 @@ private extension NFTScreenCell {
 
     @objc
     func cartButtonTap() {
-        delegate?.cartNFT(id: nftID, isOrdered: cellModel?.isOrdered) { result in
+        delegate?.cartNFT(id: nftID) { result in
             switch result {
             case .success(()):
                 self.cartButton.layer.removeAllAnimations()
-                if self.cellModel != nil, self.cellModel?.isOrdered != nil {
-                    if self.cellModel!.isOrdered! {
-                        self.cellModel!.isOrdered! = false
-                    } else {
-                        self.cellModel!.isOrdered! = true
-                    }
-                }
             case .failure:
                 self.cartButton.layer.removeAllAnimations()
                 self.showError(button: self.cartButton)

@@ -9,5 +9,5 @@ import Foundation
 
 protocol NFTCellDelegate: AnyObject {
     func addNFTToFavourites(id: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func cartNFT(id: String, isOrdered: Bool?, completion: @escaping (Result<Void, Error>) -> Void)
+    func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void)
 }

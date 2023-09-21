@@ -132,26 +132,11 @@ final class CartViewController: UIViewController {
         addSubviews()
         bindViewModel()
         updateUI()
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(removeCellFromCart(_:)),
-            name: Notification.Name("RemoveFromCart"),
-            object: nil
-        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateCart()
-    }
-
-    @objc
-    private func removeCellFromCart(_ notification: NSNotification) {
-        guard let id = notification.userInfo?["RemovedCell"] as? String else {
-            return
-        }
-        viewModel.removeNft(by: id) { _ in }
     }
 }
 

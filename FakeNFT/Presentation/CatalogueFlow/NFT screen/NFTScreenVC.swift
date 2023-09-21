@@ -126,19 +126,10 @@ extension NFTScreenVC: NFTCellDelegate {
         }
     }
 
-    func cartNFT(id: String, isOrdered: Bool?, completion: @escaping (Result<Void, Error>) -> Void) {
+    func cartNFT(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
         nftScreenViewModel.cartNFT(id: id) { result in
             switch result {
             case .success(()):
-                if let isOrdered {
-                    if isOrdered {
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name(rawValue: "RemoveFromCart"),
-                            object: nil,
-                            userInfo: ["RemovedCell": id]
-                        )
-                    }
-                }
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
