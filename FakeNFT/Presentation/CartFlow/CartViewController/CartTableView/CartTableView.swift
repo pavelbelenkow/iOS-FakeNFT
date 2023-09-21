@@ -66,7 +66,17 @@ extension CartTableView: UITableViewDataSource {
         forRowAt indexPath: IndexPath
     ) {
         let deletedNftId = viewModel.listNfts[indexPath.row].id
-        viewModel.removeNft(by: deletedNftId) { _ in }
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        viewModel.removeNft(by: deletedNftId) { error in
+
+            if let error {
+                UIBlockingProgressHUD.showError(
+                    with: Constants.Cart.failedToRemoveNft,
+                    icon: .exclamation
+                )
+                print(error)
+            } else {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
     }
 }

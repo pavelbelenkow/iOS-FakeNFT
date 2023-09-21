@@ -250,7 +250,6 @@ private extension CartViewController {
 
         emptyCartLabel.isHidden = !isCartEmpty
         sortingButton.isHidden = isCartEmpty
-        cartTableView.isHidden = isCartEmpty
         paymentContainerView.isHidden = isCartEmpty
 
         updateNftAmountLabel()

@@ -35,9 +35,6 @@ final class OrderPaymentService {
 
     // MARK: - Properties
 
-    /// Декодер для декодирования данных в формате JSON
-    private let decoder = JSONDecoder()
-
     /// Сетевой клиент для отправки сетевых запросов
     private let networkClient: NetworkClient
 
@@ -79,18 +76,16 @@ extension OrderPaymentService: OrderPaymentServiceProtocol {
     func fetchCurrencies(_ completion: @escaping (Result<[Currency], Error>) -> Void) {
         let request = CurrenciesRequest()
 
-        networkClient.send(request: request) { [weak self] result in
+        networkClient.send(
+            request: request,
+            type: [CurrencyNetworkModel].self
+        ) { [weak self] result in
             guard let self else { return }
 
             switch result {
-            case .success(let data):
-                do {
-                    let currencyModels = try self.decoder.decode([CurrencyNetworkModel].self, from: data)
-                    let currencies = currencyModels.map { self.convert(from: $0) }
-                    completion(.success(currencies))
-                } catch {
-                    completion(.failure(error))
-                }
+            case .success(let models):
+                let currencies = models.map { self.convert(from: $0) }
+                completion(.success(currencies))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -100,18 +95,15 @@ extension OrderPaymentService: OrderPaymentServiceProtocol {
     func fetchOrderPaymentResult(by currencyId: String, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         let request = OrderPaymentResultRequest(id: currencyId)
 
-        networkClient.send(request: request) { [weak self] result in
-            guard let self else { return }
+        networkClient.send(
+            request: request,
+            type: PaymentResultNetworkModel.self
+        ) { result in
 
             switch result {
-            case .success(let data):
-                do {
-                    let resultModel = try self.decoder.decode(PaymentResultNetworkModel.self, from: data)
-                    let isSuccessResult = resultModel.success
-                    completion(.success(isSuccessResult))
-                } catch {
-                    completion(.failure(error))
-                }
+            case .success(let model):
+                let isSuccessResult = model.success
+                completion(.success(isSuccessResult))
             case .failure(let error):
                 completion(.failure(error))
             }
