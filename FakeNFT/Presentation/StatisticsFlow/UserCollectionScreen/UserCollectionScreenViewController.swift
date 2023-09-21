@@ -182,6 +182,7 @@ extension UserCollectionScreenViewController: NFTCellDelegate {
     
     func cartNFT(
         id: String,
+        isOrdered: Bool?,
         completion: @escaping (Result<Void, Error>) -> Void) {
             nftScreenViewModel.cartNFT(id: id) { result in
                 switch result {

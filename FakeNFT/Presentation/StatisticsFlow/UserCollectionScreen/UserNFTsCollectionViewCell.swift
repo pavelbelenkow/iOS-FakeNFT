@@ -214,7 +214,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         )
         isAddToCart.toggle()
         setCartButtonImage()
-        delegate?.cartNFT(id: id) { result in
+        delegate?.cartNFT(id: id, isOrdered: nil) { result in
             switch result {
             case .success(()):
                 break
