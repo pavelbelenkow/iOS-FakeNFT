@@ -34,20 +34,11 @@ final class CartService {
 
     // MARK: - Properties
 
-    /// Очередь для выполнения операций в асинхронном режиме
-    private let queue = DispatchQueue(label: "com.example.fetchQueue", attributes: .concurrent)
-
     /// Массив ``MyNFT``, полученных в результате запроса
     private var nfts: [MyNFT] = []
 
     /// Кэш для хранения полученных ``MyNFT``
     private var nftsCache: [String: MyNFT] = [:]
-
-    /// Множество ``OrderNetworkModel/nfts``, которые еще не были загружены
-    private var missingIds: Set<String> = []
-
-    /// Замыкание для вызова по завершении операции получения заказа
-    private var fetchCompletion: ((Result<[MyNFT], Error>) -> Void)?
 
     /// Сетевой клиент для отправки сетевых запросов
     private let networkClient: NetworkClient
@@ -90,42 +81,43 @@ private extension CartService {
         - completion: Блок кода, который будет выполнен после получения массива ``MyNFT``
      */
     func fetchNfts(by ids: [String], completion: @escaping (Result<[MyNFT], Error>) -> Void) {
-        for id in ids {
+        nfts.removeAll()
+
+        let dispatchGroup = DispatchGroup()
+
+        // Filter out already fetched NFT from the ids array
+        let missingIds = Set(ids).subtracting(nftsCache.keys)
+
+        for id in missingIds {
+            dispatchGroup.enter()
             let request = NFTRequest(id: id)
 
-            queue.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            networkClient.send(
+                request: request,
+                type: NFTNetworkModel.self
+            ) { [weak self] result in
+                defer { dispatchGroup.leave() }
                 guard let self else { return }
 
-                self.networkClient.send(
-                    request: request,
-                    type: NFTNetworkModel.self
-                ) { [weak self] result in
-                    guard let self else { return }
-
-                    switch result {
-                    case .success(let model):
-                        let nft = self.convert(from: model)
-                        self.nfts.append(nft) // Append the fetched NFT to the nfts array
-                        self.nftsCache[id] = nft // Store the fetched NFT in the cache
-
-                        // Check if the fetched NFT was part of missingIds
-                        if self.missingIds.contains(id) {
-                            self.missingIds.remove(id)
-                        }
-
-                        // Complete the fetch if all NFTs have been fetched
-                        if self.missingIds.isEmpty, let completion = self.fetchCompletion {
-                            completion(.success(self.nfts))
-                            self.fetchCompletion = nil
-                        }
-                    case .failure(let error):
-                        if let completion = self.fetchCompletion {
-                            completion(.failure(error))
-                            self.fetchCompletion = nil
-                        }
-                    }
+                switch result {
+                case .success(let model):
+                    let nft = self.convert(from: model)
+                    self.nfts.append(nft) // Append the fetched NFT to the nfts array
+                    self.nftsCache[id] = nft // Store the fetched NFT in the cache
+                case .failure(let error):
+                    completion(.failure(error))
                 }
             }
+        }
+
+        // Filter out already fetched NFT from the cache
+        let cachedNfts = ids.compactMap { nftsCache[$0] }
+
+        // Append the fetched NFT from cache to the nfts array
+        nfts.append(contentsOf: cachedNfts)
+
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            completion(.success(self.nfts))
         }
     }
 }
@@ -147,13 +139,13 @@ extension CartService: CartServiceProtocol {
             case .success(let order):
                 let ids = order.nfts.map { $0 }
 
-                self.fetchCompletion = completion
-                self.missingIds = Set(ids).subtracting(self.nftsCache.keys)
-
-                if self.missingIds.isEmpty {
-                    completion(.success(self.nfts))
-                } else {
-                    self.fetchNfts(by: Array(self.missingIds), completion: completion)
+                self.fetchNfts(by: ids) { result in
+                    switch result {
+                    case .success(let fetchedNfts):
+                        completion(.success(fetchedNfts))
+                    case .failure:
+                        print("Failed to fetch nfts from order")
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -171,7 +163,6 @@ extension CartService: CartServiceProtocol {
             switch result {
             case .success:
                 self.nfts.removeAll()
-                self.nftsCache.removeAll()
                 completion(nil)
             case .failure(let error):
                 completion(error)
