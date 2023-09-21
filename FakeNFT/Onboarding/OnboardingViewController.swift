@@ -70,8 +70,6 @@ final class OnboardingViewController: UIPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Пока здесь, потом поставим на экран Каталог
-        RateManager.showRatesController()
 
         dataSource = self
         delegate = self

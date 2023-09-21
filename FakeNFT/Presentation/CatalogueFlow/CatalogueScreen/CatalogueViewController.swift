@@ -17,6 +17,7 @@ final class CatalogueViewController: UIViewController {
         setNavigationBar()
         bind()
         getCatalogue()
+        RateManager.showRatesController()
     }
 
     // MARK: Private Methods

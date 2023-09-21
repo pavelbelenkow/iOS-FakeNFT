@@ -229,10 +229,10 @@ private extension RemoveNftViewController {
                     with: Constants.Cart.failedToRemoveNft,
                     icon: .exclamation
                 )
-                dismiss(animated: true)
+                self.dismiss(animated: true)
                 print(error)
             } else {
-                dismiss(animated: true)
+                self.dismiss(animated: true)
             }
         }
     }

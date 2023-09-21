@@ -20,4 +20,6 @@ struct UserNFTsCollectionViewCellModel {
     let id: String
     /// Лайкнут ли NFT профилем
     let isLiked: Bool
+    /// Добавлен ли NFT в корзину
+    let isAddToCart: Bool
 }

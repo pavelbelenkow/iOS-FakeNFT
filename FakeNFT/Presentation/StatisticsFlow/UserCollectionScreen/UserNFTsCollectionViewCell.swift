@@ -8,6 +8,7 @@
 import UIKit
 
 final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+    weak var delegate: NFTCellDelegate?
     private let analyticsService = AnalyticsService()
     private lazy var cardView: UIView = {
         let cardView = UIView()
@@ -79,7 +80,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 
     private var id = String()
     private var isLiked = false
-    private var isAddCart = false
+    private var isAddToCart = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,15 +92,19 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureUserNFTsCollectionViewCell(with model: UserNFTsCollectionViewCellModel) {
+    func configureUserNFTsCollectionViewCell(
+        with model: UserNFTsCollectionViewCellModel,
+        delegate: NFTCellDelegate) {
         imageNFTImageView.loadImage(url: model.image)
         ratingImageView.image = setRatingStars(rating: model.rating)
         nameLabel.text = model.name
         priceLabel.text = String(format: "%.2f", model.price) + " ETH"
         id = model.id
         isLiked = model.isLiked
+        isAddToCart = model.isAddToCart
         setLikeButtonImage()
         setCartButtonImage()
+        self.delegate = delegate
     }
 
     private func addSubviews() {
@@ -194,7 +199,7 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     private func setCartButtonImage() {
-        let image = isAddCart ? UIImage.NFTIcon.cartDelete : UIImage.NFTIcon.cartAdd
+        let image = isAddToCart ? UIImage.NFTIcon.cartDelete : UIImage.NFTIcon.cartAdd
         cartButton.setImage(
             image,
             for: .normal
@@ -207,9 +212,16 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             event: .click,
             param: .setAddDeleteCartNFTStatistic
         )
-        isAddCart.toggle()
+        isAddToCart.toggle()
         setCartButtonImage()
-        print("id \(id) - \(isAddCart ? "addCart" : "deleteCart")")// передать через delegate???
+        delegate?.cartNFT(id: id) { result in
+            switch result {
+            case .success(()):
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     @objc private func didLikedButton() {
@@ -220,6 +232,13 @@ final class UserNFTsCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         )
         isLiked.toggle()
         setLikeButtonImage()
-        print("id \(id) - \(isLiked ? "like" : "notLike")")// передать через delegate???
+        delegate?.addNFTToFavourites(id: id) { result in
+            switch result {
+            case .success(()):
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

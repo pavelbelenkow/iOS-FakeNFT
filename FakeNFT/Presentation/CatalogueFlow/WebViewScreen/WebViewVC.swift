@@ -10,7 +10,6 @@ import WebKit
 
 final class WebViewVC: UIViewController, WKNavigationDelegate {
     // MARK: Private Properties
-//    private var webView: WKWebView!
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
@@ -22,7 +21,6 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
 
     private let progressView: UIProgressView = {
         let progressView = UIProgressView()
-        // поменял на синий
         progressView.tintColor = UIColor.NFTColor.blue
         progressView.progress = 0.0
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,16 +31,8 @@ final class WebViewVC: UIViewController, WKNavigationDelegate {
     private var observer: NSKeyValueObservation?
 
     // MARK: View Controller Life Cycle
-//    override func loadView() {
-//        let webConfiguration = WKWebViewConfiguration()
-//        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-//        webView.navigationDelegate = self
-//        view = webView
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // добавил
         view.backgroundColor = UIColor.NFTColor.white
         self.makeNavBarWithBackButtonAndTitle(
             title: "",

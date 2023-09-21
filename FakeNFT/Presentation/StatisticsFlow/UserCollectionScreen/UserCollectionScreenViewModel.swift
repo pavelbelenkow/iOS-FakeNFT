@@ -10,6 +10,7 @@ import Foundation
 final class UserCollectionScreenViewModel {
     private let client = DefaultNetworkClient()
     private var likedNFTs: [String] = []
+    private var cartNFTs: [String] = []
 
     @Observable
     private(set) var nfts: [NFT] = []
@@ -43,7 +44,8 @@ final class UserCollectionScreenViewModel {
                 rating: nfts[indexRow].rating,
                 price: nfts[indexRow].price,
                 id: nfts[indexRow].id,
-                isLiked: likedNFTs.contains(nfts[indexRow].id)
+                isLiked: likedNFTs.contains(nfts[indexRow].id),
+                isAddToCart: cartNFTs.contains(nfts[indexRow].id)
             )
         }
 
@@ -53,7 +55,8 @@ final class UserCollectionScreenViewModel {
             rating: Int(),
             price: Double(),
             id: String(),
-            isLiked: Bool()
+            isLiked: Bool(),
+            isAddToCart: Bool()
         )
     }
 
@@ -75,6 +78,24 @@ final class UserCollectionScreenViewModel {
                 switch result {
                 case .success(let profile):
                     self.likedNFTs = profile.likes
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        let requestOrder = GetOrderRequest()
+        client.send(
+            request: requestOrder,
+            type: OrderNetworkModel.self
+        ) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let order):
+                    self.cartNFTs = order.nfts
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
