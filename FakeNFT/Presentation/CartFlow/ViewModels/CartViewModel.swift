@@ -154,12 +154,12 @@ extension CartViewModel: CartViewModelProtocol {
             .filter { $0.id != id }
             .map { $0.id }
 
-        cartService.putOrder(with: nftsIds) { error in
+        cartService.putOrder(with: nftsIds) { [weak self] error in
             DispatchQueue.main.async {
                 if let error {
                     completion(error)
                 } else {
-                    self.nfts.remove(at: index)
+                    self?.nfts.remove(at: index)
                     completion(nil)
                 }
             }

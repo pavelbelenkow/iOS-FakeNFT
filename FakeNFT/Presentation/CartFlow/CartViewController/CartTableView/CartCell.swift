@@ -94,11 +94,11 @@ final class CartCell: UITableViewCell {
         return button
     }()
 
-    /// ``MyNFT``, отображаемый в ячейке
-    var nft: MyNFT?
-
     /// ``delegate`` ячейки корзины
     weak var delegate: CartCellDelegate?
+    
+    /// ``MyNFT``, отображаемый в ячейке
+    var nft: MyNFT?
 
     // MARK: - Lifecycle
 
